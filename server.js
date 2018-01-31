@@ -24,6 +24,9 @@ con.connect(function(err){
     console.log("Now connected to mysql db and can make queries");
 });
 
+//body parser for forms
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended:true}));
 
 //main launch page
 app.get('/', function(req, res){
@@ -32,6 +35,16 @@ app.get('/', function(req, res){
 		title: 'MyCritic'
 	});
 });
+
+//signup page
+app.get('/register.ejs', function(req,res){
+    res.render('register');
+});
+
+app.post('/register', function(req,res) {
+    console.log(req.body.email);
+});
+
 
 //404
 app.get('*', function(req, res){
@@ -55,6 +68,7 @@ app.get('*', function(req, res){
 		}
 	});
 });
+
 
 var server = http.listen(PORT, function() {
 	console.log('Running Server');
