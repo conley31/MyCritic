@@ -1,11 +1,16 @@
 var mysql = require('mysql');
+var nconf = require('nconf');
 
-var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "", //Enter the MySql password you created when installing mysql-server
-    database: "mycritic"
-});
+nconf.file({
+    file: './config.json'
+    });
+    if(!Object.keys(nconf.get()).length){
+        throw new Error('Unable to load config file. Make sure MyCritic/db/config.json exists');
+    }
+
+
+
+var con = mysql.createConnection(nconf.get('mysql'));
 
 con.connect(function(err){
     if(err) throw err;
