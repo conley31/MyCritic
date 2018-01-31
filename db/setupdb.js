@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var nconf = require('nconf');
 
 nconf.file({
-    file: './config.json'
+    file: 'db/config.json'
     });
     if(!Object.keys(nconf.get()).length){
         throw new Error('Unable to load config file. Make sure MyCritic/db/config.json exists');

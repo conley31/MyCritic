@@ -5,9 +5,25 @@ var express = require('express');
 	
 var app = express();
 var http = require('http').Server(app)
+var nconf = require('nconf');
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
+
+//MySql connection
+var mysql = require('mysql');
+nconf.file({
+    file: './db/config.json'
+    });
+    if(!Object.keys(nconf.get()).length) {
+        throw new Error('Unable to load config file. Make sure db/config.json exists');
+    }
+var con = mysql.createConnection(nconf.get('mysql'));
+con.connect(function(err){
+    if(err) throw err;
+    console.log("Now connected to mysql db and can make queries");
+});
+
 
 //main launch page
 app.get('/', function(req, res){
