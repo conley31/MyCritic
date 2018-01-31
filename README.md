@@ -13,6 +13,7 @@ Public contains the javascript for the functionality. Its the directory the serv
 3. Start the MySql service `sudo service mysql start`
 4. Login to your server `mysql -u root -p` , enter your password when prompted
 5. You are now at the MySql console. To create the database, enter `CREATE DATABASE mycritic;`
-6. Open up `/MyCritic/db/setupdb.js` and enter the MySql password you created.
-6. Now, in your normal terminal, while in the /MyCritic directory, run `node db/setupdb.js` This builds the Tables.
-7. In the MySql console, ensure the tables are there with `USE mycritic;` and `SHOW TABLES;` 
+6. Open up a normal terminal, navigate to the MyCritic directory, and run `cp db/config.template.json db/config.json`
+7. Edit the config file you just copied `vim db/config.json` Add your MySql Password from step 2 in the password field, and save
+8. To build the tables, run `node db/setupdb.js`
+9. In the MySql console, ensure the tables are there with `USE mycritic;` and `SHOW TABLES;` 
