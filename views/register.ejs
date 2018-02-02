@@ -1,11 +1,25 @@
 <!DOCTYPE html>
+<% var message ="hi"; %>
 <html>
     <body>
         <h1>MyCritic</h1>
-        <form action="/register" method="post">
-            <label for="email">Enter email: </label>
+        <form action="/checkEmail" method="post">
+            <label for="email">To start, enter your email: </label>
             <input id="email" type="text" name="email" value="youremail@domain">
-            <input type="submit" value="OK">
         </form>
+            <% if(typeof userExists != 'undefined') { %>
+                <% if(userExists == 'yes'){ %>
+                    <h2> That email is already in use!</h2>
+                <% } else { %>
+                    <form action="/register" method="post">
+                        <label for="username"> Enter your desired username: </label>
+                        <input id="username" type="text" name="username">
+                        <label for="passwword"> Enter password: </label>
+                        <input id="password" type="password" name="password">
+                        <input type="submit" value="OK">
+                    </form>
+                    <h2><%= message %></h2>
+                <% } %>
+            <% } %>
     </body>
 </html>
