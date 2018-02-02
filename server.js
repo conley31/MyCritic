@@ -54,50 +54,48 @@ app.get('/', function(req, res){
 app.get('/register.ejs', function(req,res){
     res.render('register');
 });
-var email;
-app.post('/checkEmail', function(req,res) {
+
+//register function
+app.post('/register', function(req, res) {
     //first, ensure that the email is not already in use
-    console.log(req.body.email);
+    var email;
+    var username;
+    var password;
     email = req.body.email;
+    username = req.body.username;
+    password = req.body.password;
     con.query('SELECT * FROM Users WHERE email = ?', [email], function(err,result){
     if(err){
         throw err;
     }
     else{
-        var userExists
         if(result.length > 0){
-             userExists = "yes";
+             res.render('register',{message:'That email is already in-use!'});
+             console.log("USER NOT REGISTERED, email in use");
         }
         else{
-            userExists = "no";
+            //check if username is taken
+            con.query('SELECT * FROM Users WHERE username = ?', [username], function(err,result){
+                if(err) throw err;
+                if(result.length > 0){
+                    res.render('register', {message:"that username is already in use..."});
+                    console.log("USER NOT REGISTERED, uername in use");
+                }
+                else{
+                    //add the user to the database
+                    con.query('INSERT INTO Users(email,username,password) VALUES (?,?,?)',[email,username,password], function(err,result){
+                        if(err) throw err;
+                        else{
+                            res.render('register', {message: "Registration Successful!"});
+                            console.log("USER REGISTERED SUCCESSFULLY");
+                        }
+                    });
+                }
+            });
+            
         }
-        console.log(userExists);
-        res.render('register',{userExists: userExists
-        });
-    }    
-    });
-});
-
-//actually register
-app.post('/register', function(req, res) {
-    //check if username is taken
-    var username = req.body.username;
-    var password = req.body.password;
-    con.query('SELECT * FROM Users WHERE username = ?', [username], function(err,result){
-        if(err) throw err;
-        if(result.length > 0){
-            res.render('register', {message:"that username is already in use..."});
         }
-        else{
-           //add the user to the database
-           con.query('INSERT INTO Users(email,username,password) VALUES (?,?,?)',[email,username,password], function(err,result){
-               if(err) throw err;
-               else{
-                   console.log("user added");
-               }
-           });
-        }
-    });
+        });    
 });
 
 //404
