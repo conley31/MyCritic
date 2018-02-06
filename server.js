@@ -51,8 +51,23 @@ app.get('/', function(req, res){
 });
 
 //signup page
-app.get('/register.ejs', function(req,res){
-    res.render('register');
+app.get('/register', function(req,res){
+    res.render('register.ejs');
+});
+
+//view the profile page
+app.get('/profile', function(req,res){
+    res.render('profile.ejs');
+});
+
+//get the list of recent movies
+app.get('/movies', function(req,res){
+    res.render('movies.ejs');
+});
+
+//get the list of recent Songs
+app.get('/music', function(req,res){
+    res.render('music.ejs');
 });
 
 //register function
@@ -70,7 +85,7 @@ app.post('/register', function(req, res) {
     }
     else{
         if(result.length > 0){
-             res.render('register',{message:'That email is already in-use!'});
+             res.render('register.ejs',{message:'That email is already in-use!'});
              console.log("USER NOT REGISTERED, email in use");
         }
         else{
@@ -78,7 +93,7 @@ app.post('/register', function(req, res) {
             con.query('SELECT * FROM Users WHERE username = ?', [username], function(err,result){
                 if(err) throw err;
                 if(result.length > 0){
-                    res.render('register', {message:"that username is already in use..."});
+                    res.render('register.ejs', {message:"that username is already in use..."});
                     console.log("USER NOT REGISTERED, uername in use");
                 }
                 else{
@@ -86,7 +101,7 @@ app.post('/register', function(req, res) {
                     con.query('INSERT INTO Users(email,username,password) VALUES (?,?,?)',[email,username,password], function(err,result){
                         if(err) throw err;
                         else{
-                            res.render('register', {message: "Registration Successful!"});
+                            res.render('register.ejs', {message: "Registration Successful!"});
                             console.log("USER REGISTERED SUCCESSFULLY");
                         }
                     });
