@@ -6,6 +6,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app)
 var nconf = require('nconf');
+var request = require('request');
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
@@ -70,8 +71,38 @@ app.get('/music', function(req,res){
     res.render('music.ejs');
 });
 
+//initilizaion of spotify api key
+
+var clientID = "2136cc56a70c45608fb9097d77ce7632";
+var secret = "3abb65ea376f4a21b5ea42c8aa0f45f3";
+var token = "";
+var authOptions = {
+  url: 'https://accounts.spotify.com/api/token',
+  headers: {
+    'Authorization': 'Basic ' + (new Buffer(clientID + ':' + secret).toString('base64'))
+  },
+  form: {
+    grant_type: 'client_credentials'
+  },
+  json: true
+};
+
+request.post(authOptions, function(error, response, body) {
+  if (!error && response.statusCode === 200) {
+
+    // use the access token to access the Spotify Web API
+    token = body.access_token;
+
+  }
+});
+app.get('/access', function(req,res){
+	res.setHeader('Content-Type', 'text/plain');
+    res.send(token);
+});
+
+//display information on a specific song
 app.get('/song/:id', function(req,res){
-    res.render('song.ejs');
+    res.render('song.ejs', {access: token});
 });
 
 //register function
