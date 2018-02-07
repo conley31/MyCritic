@@ -70,6 +70,10 @@ app.get('/music', function(req,res){
     res.render('music.ejs');
 });
 
+app.get('/song/:id', function(req,res){
+    res.render('song.ejs');
+});
+
 //register function
 app.post('/register', function(req, res) {
     //first, ensure that the email is not already in use
