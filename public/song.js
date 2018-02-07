@@ -20,21 +20,36 @@ var songInfo = function(){
 	while(songName.search("%20") != -1){
 		var songName = songName.replace("%20", " ");
 	}
-	while(songName.search("\(") != -1){
-		var songName = songName.replace("(", "");
-	}
-	while(songName.search("\)") != -1){
-		var songName = songName.replace(")", "");		
-	}
+	/*if( songName.search("\\\(") != -1){
+		var songName = songName.replace("\\\(", "\n");
+	}*/
+	/*while(songName.search("\\\)") != -1){
+		var songName = songName.replace("\\\)", "");		
+	}*/
 
 	console.log(songName);
+	var bodyDiv = document.getElementById("songInfo");
+	var html = "<h1>" + songName + "</h1>";
 
 	prev = spotifyApi.searchTracks(songName, {limit: 5});
 	prev.then(function(data) {
 
 		// ...render list of search results...
 		console.log(data);
+		if(data["tracks"]["items"] != null){
+			actualsong = spotifyApi.getTrack(data["tracks"]["items"][0]["id"]);
+			actualsong.then(function(data2) {
 
+				// ...render list of search results...
+				console.log(data2);
+				html += "<h3>" + data2["artists"][0]["name"] + "</h3>";
+				html += "<h5 style=\"margin-top: 20px\">Popularity " + data2["popularity"] + "</h5>";
+				
+				bodyDiv.innerHTML = html;
+			}, function(err) {
+				console.error(err);
+			});
+		}
 	}, function(err) {
 		console.error(err);
 	});
