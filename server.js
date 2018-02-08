@@ -96,6 +96,11 @@ request.post(authOptions, function(error, response, body) {
   }
 });
 app.get('/access', function(req,res){
+	if(req.headers.referer == null){
+		res.setHeader('Content-Type', 'text/plain');
+    	res.send("Access Denied");
+    	return;
+	}
 	res.setHeader('Content-Type', 'text/plain');
     res.send(token);
 });
