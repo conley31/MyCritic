@@ -50,6 +50,11 @@ app.get('/', function(req, res){
 	});
 });
 
+//login page
+app.get('/login.ejs', function(req,res){
+    res.render('login');
+});
+
 //signup page
 app.get('/register.ejs', function(req,res){
     res.render('register');
