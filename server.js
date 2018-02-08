@@ -71,8 +71,12 @@ app.get('/music', function(req,res){
     res.render('music.ejs');
 });
 
-//initilizaion of spotify api key
+//get the list of top books
+app.get('/books', function(req,res){
+    res.render('books.ejs');
+});
 
+//initilizaion of spotify api key
 var clientID = "2136cc56a70c45608fb9097d77ce7632";
 var secret = "3abb65ea376f4a21b5ea42c8aa0f45f3";
 var token = "";
