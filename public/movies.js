@@ -3,7 +3,7 @@ $.getJSON('https://api.themoviedb.org/3/discover/movie?api_key=d26e26ba96250fb46
 	var bodyDiv = document.getElementById("movieList");
 	var html = "";
 	for ( i = 0; i < 20; i++) {
-		html += "<div style=\"margin-left: 10%; border-bottom-style: solid, border-width: 2px\"; onclick=\"window.location=\'/movie/'" + json["feed"]["entry"][i]["im:name"]["label"] + "\'\"'><h1>" + json["feed"]["entry"][i]["im:name"]["label"] + "</h1></div>";
+		html += "<div style=\"margin-left: 10%; border-bottom-style: solid, border-width: 2px\"; onclick=\"window.location=\'/movie/'" + json["title"]["vote_average"][i]["popularity"]["backdrop_path"] + "\'\"'><h1>" + json["title"]["vote_average"][i]["popularity"]["backdrop_path"] + "</h1></div>";
 	}
 	bodyDiv.innerHtml = html;
 });
