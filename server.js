@@ -121,13 +121,18 @@ app.post('/login', function (req, res) {
             //User exists
             if (result.length > 0) {
                 res.render('login', { message: "Email Found!" });
-
-                con.query('SELECT email FROM Users WHERE email,password = ?,?', [result.email,password], function (err, result) {
+                    if(result.password == password){
+                        console.log("USER LOGIN SUCCESSFUL");  
+                    }
+                    else{
+                        throw err;
+                    }
+               /* con.query('SELECT email FROM Users WHERE email,password = ?,?', [result.email,password], function (err, result) {
                     if (err) { throw err; }
                     else {
                         console.log("USER LOGIN SUCCESSFUL");
                     }
-                });                    
+                });          */          
             }
         }
     }
