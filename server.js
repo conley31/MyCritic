@@ -50,10 +50,7 @@ app.get('/', function(req, res){
 	});
 });
 
-//login page
-app.get('/login.ejs', function(req,res){
-    res.render('login');
-});
+
 
 //signup page
 app.get('/register.ejs', function(req,res){
@@ -61,6 +58,54 @@ app.get('/register.ejs', function(req,res){
 });
 
 //register function
+app.post('/register', function(req, res) {
+    //first, ensure that the email is not already in use
+    var email;
+    var username;
+    var password;
+    email = req.body.email;
+    username = req.body.username;
+    password = req.body.password;
+    con.query('SELECT * FROM Users WHERE email = ?', [email], function(err,result){
+    if(err){
+        throw err;
+    }
+    else{
+        if(result.length > 0){
+             res.render('register',{message:'That email is already in-use!'});
+             console.log("USER NOT REGISTERED, email in use");
+        }
+        else{
+            //check if username is taken
+            con.query('SELECT * FROM Users WHERE username = ?', [username], function(err,result){
+                if(err) throw err;
+                if(result.length > 0){
+                    res.render('register', {message:"that username is already in use..."});
+                    console.log("USER NOT REGISTERED, uername in use");
+                }
+                else{
+                    //add the user to the database
+                    con.query('INSERT INTO Users(email,username,password) VALUES (?,?,?)',[email,username,password], function(err,result){
+                        if(err) throw err;
+                        else{
+                            res.render('register', {message: "Registration Successful!"});
+                            console.log("USER REGISTERED SUCCESSFULLY");
+                        }
+                    });
+                }
+            });
+            
+        }
+        }
+        });    
+});
+
+//login page
+app.get('/login.ejs', function(req,res){
+    res.render('login');
+});
+
+//login function
 app.post('/register', function(req, res) {
     //first, ensure that the email is not already in use
     var email;
