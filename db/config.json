@@ -1,8 +1,0 @@
-{  
-  "mysql": {
-    "host": "localhost",
-    "user": "root",
-    "password": "temptemptemp",
-    "database": "myCritic"
-  }
-}
