@@ -76,6 +76,12 @@ app.get('/books', function(req,res){
     res.render('books.ejs');
 });
 
+<<<<<<< HEAD
+app.get('/bookInfo/:name', function(req,res){
+    res.render('bookInfo.ejs');
+});
+
+=======
 //games
 app.get('/games', function(req,res){
     res.render('games.ejs');
@@ -102,10 +108,10 @@ app.get('/accessNewGames', function(req,res){
     });  
 });
 
-app.get('/bookInfo/:name', function(req,res){
-    res.render('bookInfo.ejs');
-});
 
+    
+
+>>>>>>> 35fcafe7e197c6f2febc1400452592de3521322b
 //initilizaion of spotify api key
 var clientID = "2136cc56a70c45608fb9097d77ce7632";
 var secret = "3abb65ea376f4a21b5ea42c8aa0f45f3";
