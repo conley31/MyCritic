@@ -7,6 +7,7 @@ var app = express();
 var http = require('http').Server(app)
 var nconf = require('nconf');
 var request = require('request');
+var convert = require('xml-js');
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
@@ -155,10 +156,11 @@ app.get('/getBook', function(req,res){
 	request.get(options, function(error, response, body) {
 	  if (!error && response.statusCode === 200) {
 
+	  	var json = convert.xml2json(body, {compact: true, spaces: 4})
+
 	    // use the access token to access the Spotify Web API
-	    console.log(response);
-	    res.setHeader('Content-Type', 'text/plain');
-    	res.send(body);
+	    res.setHeader('Content-Type', 'application/json');
+    	res.send(json);
 
 	  }
 	});
