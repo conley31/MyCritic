@@ -120,12 +120,18 @@ app.post('/login', function (req, res) {
         else {
             //User exists
             if (result.length > 0) {
-                res.render('login', { message: "Login Successful!" });
-                console.log("USER LOGIN SUCCESSFUL");
+                res.render('login', { message: "Email Found!" });
+
+                con.query('SELECT email FROM Users WHERE email,password = ?,?', [result.email,password], function (err, result) {
+                    if (err) { throw err; }
+                    else {
+                        console.log("USER LOGIN SUCCESSFUL");
+                    }
+                });                    
             }
         }
-    } 
-);
+    }
+    );
 });
 //404
 app.get('*', function (req, res) {
