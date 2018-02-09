@@ -107,7 +107,7 @@ app.get('/login.ejs', function (req, res) {
 
 //login function
 app.post('/login', function (req, res) {
-    console.log("Hi");
+  //  console.log("Hi");
     var email;
     var password;
     email = req.body.email;
@@ -122,7 +122,7 @@ app.post('/login', function (req, res) {
          //       res.render('login', { message: "Email Found!" });                
 
                     if(result[0].password == password){
-                        res.render('login', { message: "Password Found!" });
+//                        res.render('login', { message: "Password Found!" });
     res.render('login', { message: "USER LOGIN SUCCESSFUL!" });                
 
                         console.log("USER LOGIN SUCCESSFUL");  
