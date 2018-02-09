@@ -113,20 +113,18 @@ app.post('/login', function (req, res) {
     email = req.body.email;
     password = req.body.password;
     con.query('SELECT * FROM Users WHERE email = ?', [email], function (err, result) {
-        console.log("BELOLOW");
-        console.log(result[0].password);
         if (err) {
             throw err;
         }
         else {
             //User exists
             if (result.length > 0) {
-                res.render('login', { message: "Email Found!" });
-                console.log(result["password"]);
-                
+         //       res.render('login', { message: "Email Found!" });                
 
                     if(result[0].password == password){
                         res.render('login', { message: "Password Found!" });
+    res.render('login', { message: "USER LOGIN SUCCESSFUL!" });                
+
                         console.log("USER LOGIN SUCCESSFUL");  
                     }
                     else{
