@@ -112,7 +112,8 @@ app.post('/login', function (req, res) {
     var password;
     email = req.body.email;
     password = req.body.password;
-    con.query('SELECT * FROM Users WHERE email,password = ?,?', [email, password], function (err, result) {
+    con.query('SELECT * FROM Users WHERE email = ?', [email], function (err, result) {
+        console.log(result);
         if (err) {
             throw err;
         }
