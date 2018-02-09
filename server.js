@@ -86,7 +86,8 @@ etime.toString();
 etime += "000";
 console.log(etime);
 const igdbOptions = {
-    url: 'https://api-2445582011268.apicast.io/release_dates/?fields=game,game.name&order=date:desc&filter[date][lt]=' + etime + '&expand=game',
+    //gets recent releases on PC
+    url: 'https://api-2445582011268.apicast.io/release_dates/?fields=game,game.name&order=date:desc&filter[date][lt]=' + etime + '&filter[platform][eq]=6&expand=game&limit=50',
     method: 'GET',
     headers: {
         'user-key' : '8b727bcfa8aac10e024257ebf5494be3',
@@ -96,7 +97,7 @@ const igdbOptions = {
 
 app.get('/accessNewGames', function(req,res){
     request(igdbOptions, function(err, response, body){
-        console.log(body);
+        //console.log(body);
         res.send(body);
     });  
 });
