@@ -113,6 +113,7 @@ app.post('/login', function (req, res) {
     email = req.body.email;
     password = req.body.password;
     con.query('SELECT * FROM Users WHERE email = ?', [email], function (err, result) {
+        console.log("BELOLOW");
         console.log(result);
         if (err) {
             throw err;
