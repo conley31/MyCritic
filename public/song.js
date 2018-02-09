@@ -18,7 +18,7 @@ var songInfo = function(){
 
 	var songName = songName.slice(6, songName.length);
 	while(songName.search("%20") != -1){
-		var songName = songName.replace("%20", " ");
+		songName = songName.replace("%20", " ");
 	}
 	/*if( songName.search("\\\(") != -1){
 		var songName = songName.replace("\\\(", "\n");
