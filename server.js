@@ -107,6 +107,7 @@ app.get('/login.ejs', function (req, res) {
 
 //login function
 app.post('/login', function (req, res) {
+    console.log("Hi");
     var email;
     var password;
     email = req.body.email;
