@@ -1,17 +1,27 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-inverse justify-content-end" role="navigation">
 <div class="container-fluid">
 
     <div class="navbar-header">
-        <a class="navbar-brand" href="#">
+        <a style="color: #33ff00" class="navbar-brand" href="#">
             <span class="glyphicon glyphicon glyphicon-tree-deciduous"></span>
             MyCritic
         </a>
 
         <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
-            <li><a href="/register.ejs">Register</a></li>
-            <li><a href="login.ejs">Login</a></li>
+
+            <li><a style="color: #d8d8d8" href="/">Home</a></li>
+            <li><a style="color: #d8d8d8" href="/movies">Movies</a></li>
+            <li><a style="color: #d8d8d8" href="/music">Music</a></li>
+            <li><a style="color: #d8d8d8" href="/games">Games</a></li>
+            <li><a style="color: #d8d8d8" href="/books">Books</a></li>
         </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <input style="border-radius: 20px; padding-left: 10px; border: 2px solid grey; position: absolute; right: 30px; top: 13px;" type="text" name="name" id="name" value="" tabindex="1" placeholder="Search..."/>
+          <li><a style="color: #d8d8d8" href="/profile">My Profile</a></li>
+          <li><a style="color: #d8d8d8" href="/register">Register</a></li>
+        </ul>
+
     </div>
 
 </div>
