@@ -122,6 +122,7 @@ app.post('/login', function (req, res) {
             if (result.length > 0) {
                 res.render('login', { message: "Email Found!" });
                     if(result.password == password){
+                        res.render('login', { message: "Password Found!" });
                         console.log("USER LOGIN SUCCESSFUL");  
                     }
                     else{
