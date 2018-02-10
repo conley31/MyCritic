@@ -221,7 +221,6 @@ app.get('/login', function (req, res) {
 
 //login function
 app.post('/login', function (req, res) {
-  //  console.log("Hi");
     var email;
     var password;
     email = req.body.email;
@@ -231,25 +230,19 @@ app.post('/login', function (req, res) {
             throw err;
         }
         else {
-            //User exists
             if (result.length > 0) {
-         //       res.render('login', { message: "Email Found!" });                
-
-                    if(result[0].password == password){
-//                        res.render('login', { message: "Password Found!" });
-    res.render('login', { message: "USER LOGIN SUCCESSFUL!" });                
-
-                        console.log("USER LOGIN SUCCESSFUL");  
-                    }
-                    else{
-                        throw err;
-                    }
-               /* con.query('SELECT email FROM Users WHERE email,password = ?,?', [result.email,password], function (err, result) {
-                    if (err) { throw err; }
-                    else {
-                        console.log("USER LOGIN SUCCESSFUL");
-                    }
-                });          */          
+                //user exists
+                if(result[0].password == password){
+                    res.render('login', { message: "USER LOGIN SUCCESSFUL!" });                
+                    console.log("USER LOGIN SUCCESSFUL");  
+                }
+                else{
+                    res.render('login', { message: "INCORRECT PASSWORD"});
+                }
+            }
+            else{
+                //user does not exist
+                res.render('login', { message: "USER NOT REGISTERED"});
             }
         }
     }
