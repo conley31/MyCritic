@@ -52,11 +52,6 @@ app.get('/', function(req, res){
 	});
 });
 
-//login page
-app.get('/login.ejs', function(req,res){
-    res.render('login');
-});
-
 //signup page
 app.get('/register', function(req,res){
     res.render('register.ejs');

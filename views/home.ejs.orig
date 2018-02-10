@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ./partials/head %>
+</head>
+
+	<body>
+        <header>
+            <% include ./partials/header %>
+        </header>
+<<<<<<< HEAD
+        <h1 style="padding-top: 10vh; font-size: 5em; text-align: center; font-family: Helvetica">MyCritic</h1>
+        <h2 style="font-size: 1.23em; text-align: center; font-style: italic; font-family: Helvetica">Movies, music, games, books, ratings</h2>
+        <div style="text-align: center; padding-top: 5vh;">
+          <a style="margin-right: 3vh;" class="btn btn-success btn-lg" href="#">Login</button>
+          <a class="btn btn-danger btn-lg" href="/register">Register</a></button>
+        </div>
+
+=======
+        <h1>MyCritic</h1>
+        <li><a href="register.ejs">Register</a></li>
+	<li><a href="profile.ejs">My Profile</a></li>
+
+	<li><a href="login.ejs">Login</a></li>
+>>>>>>> LoginPage
+    </body>
+</html>
