@@ -214,6 +214,48 @@ app.post('/register', function(req, res) {
         });    
 });
 
+//login page
+app.get('/login', function (req, res) {
+    res.render('login.ejs');
+});
+
+//login function
+app.post('/login', function (req, res) {
+  //  console.log("Hi");
+    var email;
+    var password;
+    email = req.body.email;
+    password = req.body.password;
+    con.query('SELECT * FROM Users WHERE email = ?', [email], function (err, result) {
+        if (err) {
+            throw err;
+        }
+        else {
+            //User exists
+            if (result.length > 0) {
+         //       res.render('login', { message: "Email Found!" });                
+
+                    if(result[0].password == password){
+//                        res.render('login', { message: "Password Found!" });
+    res.render('login', { message: "USER LOGIN SUCCESSFUL!" });                
+
+                        console.log("USER LOGIN SUCCESSFUL");  
+                    }
+                    else{
+                        throw err;
+                    }
+               /* con.query('SELECT email FROM Users WHERE email,password = ?,?', [result.email,password], function (err, result) {
+                    if (err) { throw err; }
+                    else {
+                        console.log("USER LOGIN SUCCESSFUL");
+                    }
+                });          */          
+            }
+        }
+    }
+    );
+});
+
 //404
 app.get('*', function(req, res){
 	if(req.xhr) {
