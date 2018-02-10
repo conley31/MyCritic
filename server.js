@@ -57,7 +57,7 @@ app.get('/', function (req, res) {
 //signup page
 app.get('/register.ejs', function (req, res) {
     res.render('register');
-=======
+	
 app.get('/register', function(req,res){
     res.render('register.ejs');
 });
@@ -190,7 +190,7 @@ app.post('/register', function (req, res) {
     con.query('SELECT * FROM Users WHERE email = ?', [email], function (err, result) {
         if (err) {
             throw err;
-=======
+
     con.query('SELECT * FROM Users WHERE email = ?', [email], function(err,result){
     if(err){
         throw err;
