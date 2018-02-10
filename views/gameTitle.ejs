@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<% include ./partials/head %>
+</head>
+	<body>
+	<header>
+		<% include ./partials/header %>
+    </header>
+    <% if(typeof message != 'undefined') { %>
+        <h2><%= message %></h2>
+    <% } %>
+    <div id="gameInfo"></div>
+	</body>
+	<% include ./partials/gameTitleScripts %>
+</html>
