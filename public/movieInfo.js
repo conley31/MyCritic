@@ -4,9 +4,10 @@ request.responseType = 'text';
 request.onload = function() {
 	movieInfo();
 }
+request.send();
 var movieInfo = function() {
 	var movieId = window.location.pathname;
-
+//	console.log(request.reponse);
 	var movieId = movieId.slice(7, movieId.length);
 
 	console.log(movieId);
