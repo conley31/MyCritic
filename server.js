@@ -131,6 +131,9 @@ app.get('/accessNewGames', function(req,res){
 app.get('/bookInfo/:name', function(req,res){
     res.render('bookInfo.ejs');
 });
+app.get('/movie/:id', function(req,res){
+    res.render('movInfo.ejs');
+});
 
 //initilizaion of spotify api key
 var clientID = "2136cc56a70c45608fb9097d77ce7632";
