@@ -1,3 +1,9 @@
+var request = new XMLHttpRequest();
+request.open('GET', "/access");
+request.responseType = 'text';
+request.onload = function() {
+	movieInfo();
+}
 var movieInfo = function() {
 	var movieId = window.location.pathname;
 
