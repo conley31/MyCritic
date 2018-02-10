@@ -9,6 +9,34 @@ var nconf = require('nconf');
 var request = require('request');
 var convert = require('xml-js');
 
+//body parser for forms
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended:true}));
+
+//client-side authentication sessions
+var session = require("client-sessions");
+
+app.use(session({
+    cookieName: 'session',
+    secret: "rPpwd7lzdE4u3dGpURJzdC6zdMJXfh",
+    duration: 30 * 60 * 1000
+}));
+
+//global middleware for client session
+app.use(function(req, res, next){
+    if(req.session && req.session.user){
+        //these 'res' values can be accessed client side to verify
+        req.user = req.session.user;
+        res.locals.login = true;
+        res.locals.user = req.session.user;
+    }
+    else{
+        res.locals.login = false;
+    }
+    //continue either way
+    next();
+});
+
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 
@@ -40,9 +68,6 @@ con.connect(function(err){
     console.log("Now connected to mysql db and can make queries");
 });
 
-//body parser for forms
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended:true}));
 
 //main launch page
 app.get('/', function(req, res){
@@ -202,6 +227,9 @@ app.post('/register', function(req, res) {
                     con.query('INSERT INTO Users(email,username,password) VALUES (?,?,?)',[email,username,password], function(err,result){
                         if(err) throw err;
                         else{
+                            //set session
+                            req.session.user = email;
+                            res.locals.login = true;
                             res.render('register.ejs', {message: "Registration Successful!"});
                             console.log("USER REGISTERED SUCCESSFULLY");
                         }
@@ -219,6 +247,12 @@ app.get('/login', function (req, res) {
     res.render('login.ejs');
 });
 
+//logout button
+app.get('/logout', function(req, res){
+    req.session.reset();
+    res.redirect('/');
+});
+
 //login function
 app.post('/login', function (req, res) {
     var email;
@@ -233,6 +267,9 @@ app.post('/login', function (req, res) {
             if (result.length > 0) {
                 //user exists
                 if(result[0].password == password){
+                    //set sesion
+                    req.session.user = email;
+                    res.locals.login = true;
                     res.render('login', { message: "USER LOGIN SUCCESSFUL!" });                
                     console.log("USER LOGIN SUCCESSFUL");  
                 }
