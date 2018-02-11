@@ -15,6 +15,7 @@ var populateHtml = function(){
     console.log(games);
     var html = '';
     var bodyDiv = document.getElementById("searchList");
+<<<<<<< HEAD
    
     //list songs
     html += "<div style=\"margin-left: 5%\"><h1>Songs</h1></div>";
@@ -24,8 +25,12 @@ var populateHtml = function(){
 
     //list games
     html += "<div style=\"margin-left: 5%; margin-top: 15px\"><h1>Games</h1></div>";
-    for( i = 0; i < games.length; i++){
+    for( i = 0; i < 5; i++){
         html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/gameTitle/" + games[i]["id"] + "\'\"'><h1>" + games[i]["name"] + "</h1></div>";
+=======
+    for( i = 0; i < games.length; i++){
+        html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/gameTitle/" + games[i].id + "\'\"'><h1>" + games[i].name+ "</h1></div>";
+>>>>>>> 43b749d4a69239c5a67d061c9cd6f3428b9eb833
     }
     bodyDiv.innerHTML = html;
 }
