@@ -190,7 +190,12 @@ app.get('/access', function(req,res){
     res.send(token);
 });
 
-var searchResultJson;
+var searchResultJson = {
+    movies: {},
+    songs: {},
+    games: {},
+    books: {}
+};
 app.get('/search', function(req,res){
     res.render('search.ejs');
 });
@@ -198,10 +203,28 @@ app.get('/search', function(req,res){
 app.get('/searchQ', function(req,res){
     console.log(req.query.search);
     var searchFor = req.query.search;
+    var requestSong = require('request');
     var gamesList;
     var songsList;
     var moviesList;
     var booksList;
+
+    var songSearchRequest = {
+        url: "https://api.spotify.com/v1/search?q="+searchFor+"&type=artist,track,album&limit=5",
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        form: {
+            grant_type: 'client_credentials'
+        },
+        json: true
+    }
+
+    requestSong(songSearchRequest, function(err,response,body){
+        songsList = body;
+        searchResultJson["songs"] = songsList;
+        //res.send('/search')    
+    });
     
     //search through games..
     var gameSearchRequest = {
@@ -214,9 +237,7 @@ app.get('/searchQ', function(req,res){
     };
     request(gameSearchRequest, function(err,response,body){
         gamesList = body;
-        searchResultJson = ({
-            games: gamesList
-        });
+        searchResultJson["games"] = gamesList;
         res.send('/search');
     });
 });
