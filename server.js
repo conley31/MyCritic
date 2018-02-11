@@ -217,7 +217,7 @@ app.get('/searchQ', function(req,res){
         searchResultJson = ({
             games: gamesList
         });
-        res.send('search');
+        res.send('/search');
     });
 });
 
