@@ -18,8 +18,9 @@ document.getElementById("searchBar").addEventListener("keyup", function(event) {
 		var request = new XMLHttpRequest();
 		request.open('GET', "/searchQ?search=" + query);
         request.onload = function(){
-            window.location = request.response;
-            console.log(window.location);
+            var json = JSON.parse(request.response);
+            console.log(json['page']);
+            window.location = json['page'];
         };
 		request.send();
 

@@ -196,8 +196,34 @@ app.get('/search', function(req,res){
 
 app.get('/searchQ', function(req,res){
     console.log(req.query.search);
-    res.send("search");
-});
+    var searchFor = req.query.search;
+    var gamesList;
+    var songsList;
+    var moviesList;
+    var booksList;
+    
+    //search through games..
+    var gameSearchRequest = {
+        url: 'https://api-2445582011268.apicast.io/games/?search=' + searchFor + '&fields=name&limit=5',
+        method: 'GET',
+        headers: {
+            'user-key' : '8b727bcfa8aac10e024257ebf5494be3',
+            'Accept': 'application/json'
+        }
+    };
+    request(gameSearchRequest, function(err,response,body){
+        gamesList = body;
+        res.json({
+            page: 'search',
+            games: gamesList
+        });
+        //res.write('search');
+        //res.write(gamesList);
+        res.end();
+
+    });
+
+    });
 
 
 app.get('/getBook', function(req,res){
