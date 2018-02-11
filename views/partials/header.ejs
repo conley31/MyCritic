@@ -17,7 +17,7 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <input style="border-radius: 20px; padding-left: 10px; border: 2px solid grey; position: absolute; right: 30px; top: 13px;" type="text" name="name" id="name" value="" tabindex="1" placeholder="Search..."/>
+          <input style="border-radius: 20px; padding-left: 10px; border: 2px solid grey; position: absolute; right: 30px; top: 13px;" type="text" name="name" id="searchBar" value="" tabindex="1" placeholder="Search..."/>
           <% if (login) { %>
 
               <li><a style="color: #d8d8d8" href="/profile">My Profile</a></li>
@@ -27,13 +27,10 @@
               <li><a style="color: #d8d8d8" href="/register">Register</a></li>
 
           <% } %>
-
-
-              
+   
             
           </ul>
-
     </div>
-
+    <% include ./searchScript %>
 </div>
 </nav>

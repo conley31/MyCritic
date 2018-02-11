@@ -176,6 +176,12 @@ app.get('/access', function(req,res){
     res.send(token);
 });
 
+app.get('/search', function(req,res){
+    console.log(req.query.search);
+
+    res.render("/search.ejs");
+});
+
 app.get('/getBook', function(req,res){
 	var GRAPI = "GhFElaxrPCsozAErWzDA";
 	if(req.headers.referer == null){
