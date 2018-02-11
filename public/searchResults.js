@@ -35,7 +35,7 @@ var populateHtml = function(){
     //list movies
     html += "<div style=\"margin-left: 5%; margin-top: 15px\"><h1>Movies</h1></div>";
     for (i = 0; i < movies["total_results"] && i < 5; i++){
-	html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/movies/" + movies["results"][i]["id"] + "\'\"'><h1>" + movies["results"][i]["title"] + "</h1></div>";
+	html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/movie/" + movies["results"][i]["id"] + "\'\"'><h1>" + movies["results"][i]["title"] + "</h1></div>";
     }
 
 
