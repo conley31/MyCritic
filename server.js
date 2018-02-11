@@ -112,27 +112,42 @@ etime.toString();
 etime += "000";
 console.log(etime);
 const igdbOptions = {
-    //gets recent releases on PC
-    //url: 'https://api-2445582011268.apicast.io/release_dates/?fields=game,game.name&order=date:desc&filter[date][lt]=' + etime + '&filter[platform][eq]=6&expand=game&limit=50',
-    url: 'https://api-2445582011268.apicast.io/release_dates/?fields=game,platform&order=date:desc&filter[date][lt]=' + etime + '&filter[platform][eq]=6&limit=50',
+    //gets most popular games
+    url:' https://api-2445582011268.apicast.io/games/?fields=name,popularity&order=popularity:desc&limit=50',
     method: 'GET',
     headers: {
+        //'user-agent': 'request'
         'user-key' : '8b727bcfa8aac10e024257ebf5494be3',
         'Accept': 'application/json'
-    }
+     }
 };
-var newGamesList;
 app.get('/accessNewGames', function(req,res){
     request(igdbOptions, function(err, response, body){
-    newGamesList = body;
-        console.log(body);
+    console.log(body);
         res.send(body);
     });  
 });
 
 app.get('/gameTitle/:id', function(req,res){
-    console.log(newGamesList);
-    res.render('gameTitle.ejs', {message: newGamesList});
+    res.render('gameTitle.ejs');
+});
+
+app.get('/getGame', function(req,res){
+    var gameId = req.headers.referer.substring(req.headers.referer.indexOf("/gameTitle/") + 11, req.headers.referer.length);
+    console.log(gameId);
+    var gameRequest = {
+        url: 'https://api-2445582011268.apicast.io/games/' + gameId + '/?fields=name,total_rating,summary,screenshots',
+        method: 'GET',
+        headers: {
+            'user-key' : '8b727bcfa8aac10e024257ebf5494be3',
+            'Accept': 'application/json'
+        }
+    };
+    console.log(gameRequest);
+    request(gameRequest, function(err,response,body){
+        console.log(body);
+        res.send(body);
+    });
 });
 
 
