@@ -225,6 +225,14 @@ app.get('/searchQ', function(req,res){
         searchResultJson["songs"] = songsList;
         //res.send('/search')    
     });
+
+    var GRAPI = "GhFElaxrPCsozAErWzDA";
+    var bookSearchRequest = {url: "https://www.goodreads.com/search/index.xml?key="+ GRAPI+ "&q=" + searchFor};
+    request(bookSearchRequest, function(err,response,body){
+        var booksList = convert.xml2json(body, {compact: true, spaces: 4});
+        searchResultJson["books"] = booksList;
+
+    });
     
     //search through games..
     var gameSearchRequest = {

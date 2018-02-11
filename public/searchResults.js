@@ -11,8 +11,10 @@ request.send();
 var populateHtml = function(){
     var games = JSON.parse(results["games"]);
     var songs = results["songs"];
+    var books = JSON.parse(results["books"]);
     console.log(songs);
     console.log(games);
+    console.log(books);
     var html = '';
     var bodyDiv = document.getElementById("searchList");
    
@@ -26,6 +28,11 @@ var populateHtml = function(){
     html += "<div style=\"margin-left: 5%; margin-top: 15px\"><h1>Games</h1></div>";
     for( i = 0; i < games.length; i++){
         html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/gameTitle/" + games[i]["id"] + "\'\"'><h1>" + games[i]["name"] + "</h1></div>";
+    }
+
+    html += "<div style=\"margin-left: 5%; margin-top: 15px\"><h1>Books</h1></div>";
+    for( i = 0; i < books["GoodreadsResponse"]["search"]["results"]["work"].length && i < 5; i++){
+        html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/bookInfo/" + books["GoodreadsResponse"]["search"]["results"]["work"][i]["best_book"]["id"]["_text"] + "\'\"'><h1>" + books["GoodreadsResponse"]["search"]["results"]["work"][i]["best_book"]["title"]["_text"] + "</h1></div>";
     }
     bodyDiv.innerHTML = html;
 }
