@@ -28,7 +28,7 @@ var songInfo = function(){
 
 	prev = spotifyApi.getTrack(songName);
 	prev.then(function(data) {
-			var html = "<h1 style=\"margin-left: 10%\">" + data["name"] + "</h1>";
+		var html = "<h1 style=\"margin-left: 10%\">" + data["name"] + "</h1>";
 		html += "<h3 style=\"margin-left: 10%\">" + data["artists"][0]["name"] + "</h3>";
 		html += "<h5 style=\"margin-left: 10%\">Popularity " + data["popularity"] + "</h5>";
 				
