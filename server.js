@@ -191,6 +191,12 @@ app.get('/access', function(req,res){
     res.send(token);
 });
 
+app.get('/search', function(req,res){
+    console.log(req.query.search);
+
+    res.render("/search.ejs");
+});
+
 app.get('/getBook', function(req,res){
 	var GRAPI = "GhFElaxrPCsozAErWzDA";
 	if(req.headers.referer == null){
@@ -200,14 +206,12 @@ app.get('/getBook', function(req,res){
 	}
 
 	var bookName = req.headers.referer.substring(req.headers.referer.indexOf("/bookInfo/")+ 10, req.headers.referer.length );
-	while(bookName.search("%20") != -1){
-		bookName = bookName.replace("%20", " ");
-	}
-	var options = { url: "https://www.goodreads.com/book/title.xml?key=" + GRAPI + "&title=" + bookName};
+	
+	var options = { url: "https://www.goodreads.com/book/show/"+bookName+".xml?key=" + GRAPI};
 	request.get(options, function(error, response, body) {
 	  if (!error && response.statusCode === 200) {
 
-	  	var json = convert.xml2json(body, {compact: true, spaces: 4})
+	  	var json = convert.xml2json(body, {compact: true, spaces: 4});
 
 	    // use the access token to access the Spotify Web API
 	    res.setHeader('Content-Type', 'application/json');
@@ -216,6 +220,26 @@ app.get('/getBook', function(req,res){
 	  }
 	});
 });
+
+app.get('/getBookID', function(req, res){
+    var GRAPI = "GhFElaxrPCsozAErWzDA";
+    if(req.headers.referer == null){
+        res.setHeader('Content-Type', 'text/plain');
+        res.send("Access Denied");
+        return;
+    }
+    var options = { url: "https://www.goodreads.com/book/title.xml?key=" + GRAPI + "&title=" + req.query.title};
+    request.get(options, function(error, response, body) {
+      if (!error && response.statusCode === 200) {
+        var json = convert.xml2json(body, {compact: true, spaces: 4});
+
+        // use the access token to access the Spotify Web API
+        res.setHeader('Content-Type', 'application/json');
+        res.send(json);
+
+      }
+    });
+})
 
 //display information on a specific song
 app.get('/song/:id', function(req,res){
