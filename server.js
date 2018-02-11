@@ -190,6 +190,7 @@ app.get('/access', function(req,res){
     res.send(token);
 });
 
+var searchResultJson;
 app.get('/search', function(req,res){
     res.render('search.ejs');
 });
@@ -213,17 +214,16 @@ app.get('/searchQ', function(req,res){
     };
     request(gameSearchRequest, function(err,response,body){
         gamesList = body;
-        res.json({
-            page: 'search',
+        searchResultJson = ({
             games: gamesList
         });
-        //res.write('search');
-        //res.write(gamesList);
-        res.end();
-
+        res.send('search');
     });
+});
 
-    });
+app.get('/searchResults', function(req, res){
+    res.send(searchResultJson);
+});
 
 
 app.get('/getBook', function(req,res){
