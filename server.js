@@ -39,6 +39,9 @@ app.use(function(req, res, next){
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
+app.set('views',__dirname + '/views');
+ app.engine('html', require('ejs').renderFile);
+
 
 //Passport configuration
 var LocalStrategy = require('passport-local').Strategy;
@@ -107,10 +110,10 @@ app.get('/games', function(req,res){
     res.render('games.ejs');
 });
 
+
 var etime = Math.round(new Date().getTime()/1000.0);
 etime.toString();
 etime += "000";
-console.log(etime);
 const igdbOptions = {
     //gets most popular games
     url:' https://api-2445582011268.apicast.io/games/?fields=name,popularity&order=popularity:desc&limit=50',
@@ -123,7 +126,6 @@ const igdbOptions = {
 };
 app.get('/accessNewGames', function(req,res){
     request(igdbOptions, function(err, response, body){
-    console.log(body);
         res.send(body);
     });  
 });
@@ -134,7 +136,6 @@ app.get('/gameTitle/:id', function(req,res){
 
 app.get('/getGame', function(req,res){
     var gameId = req.headers.referer.substring(req.headers.referer.indexOf("/gameTitle/") + 11, req.headers.referer.length);
-    console.log(gameId);
     var gameRequest = {
         url: 'https://api-2445582011268.apicast.io/games/' + gameId + '/?fields=name,total_rating,summary,screenshots',
         method: 'GET',
@@ -143,9 +144,7 @@ app.get('/getGame', function(req,res){
             'Accept': 'application/json'
         }
     };
-    console.log(gameRequest);
     request(gameRequest, function(err,response,body){
-        console.log(body);
         res.send(body);
     });
 });
@@ -192,10 +191,14 @@ app.get('/access', function(req,res){
 });
 
 app.get('/search', function(req,res){
-    console.log(req.query.search);
-
-    res.render("/search.ejs");
+    res.render('search.ejs');
 });
+
+app.get('/searchQ', function(req,res){
+    console.log(req.query.search);
+    res.send("search");
+});
+
 
 app.get('/getBook', function(req,res){
 	var GRAPI = "GhFElaxrPCsozAErWzDA";
