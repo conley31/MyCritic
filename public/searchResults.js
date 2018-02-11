@@ -15,7 +15,7 @@ var populateHtml = function(){
     console.log(games[0]);
     var html = '';
     var bodyDiv = document.getElementById("searchList");
-    for( i = 0; i < 5; i++){
+    for( i = 0; i < games.length; i++){
         html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/gameTitle/" + games[i].id + "\'\"'><h1>" + games[i].name+ "</h1></div>";
     }
     bodyDiv.innerHTML = html;
