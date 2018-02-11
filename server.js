@@ -233,7 +233,16 @@ app.get('/searchQ', function(req,res){
         searchResultJson["books"] = booksList;
 
     });
-    
+
+
+    //movie search
+    var movieSearchRequest = {url: 'https://api.themoviedb.org/3/search/movie?api_key=d26e26ba96250fb462f04e8c480e3351&language=en-US&query=' + searchFor + '&page=1&include_adult=false'};
+    request(movieSearchRequest, function(err, response, body){
+	var moviesList = body;
+	searchResultJson["movies"] = moviesList;
+    });
+
+
     //search through games..
     var gameSearchRequest = {
         url: 'https://api-2445582011268.apicast.io/games/?search=' + searchFor + '&fields=name&limit=5',

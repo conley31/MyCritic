@@ -12,6 +12,8 @@ var populateHtml = function(){
     var games = JSON.parse(results["games"]);
     var songs = results["songs"];
     var books = JSON.parse(results["books"]);
+    var movies = JSON.parse(results["movies"]);
+    console.log(movies);
     console.log(songs);
     console.log(games);
     console.log(books);
@@ -29,6 +31,14 @@ var populateHtml = function(){
     for( i = 0; i < games.length; i++){
         html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/gameTitle/" + games[i]["id"] + "\'\"'><h1>" + games[i]["name"] + "</h1></div>";
     }
+
+    //list movies
+    html += "<div style=\"margin-left: 5%; margin-top: 15px\"><h1>Movies</h1></div>";
+    for (i = 0; i < movies["total_results"] && i < 5; i++){
+	html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/movies/" + movies["results"][i]["id"] + "\'\"'><h1>" + movies["results"][i]["title"] + "</h1></div>";
+    }
+
+
 
     html += "<div style=\"margin-left: 5%; margin-top: 15px\"><h1>Books</h1></div>";
     for( i = 0; i < books["GoodreadsResponse"]["search"]["results"]["work"].length && i < 5; i++){
