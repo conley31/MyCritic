@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8282
 
 //Imports
 var express = require('express');
@@ -368,6 +368,37 @@ app.get('/login', function (req, res) {
 app.get('/logout', function(req, res){
     req.session.reset();
     res.redirect('/');
+});
+
+//change password function
+app.post('/changePassword', function(req, res) {
+	var email;
+	var password;
+	var newPassword;
+	email = req.body.email;
+	password = req.body.password;
+	newPassword = req.body.newPassword;
+	con.query('SELECT * FROM Users WHERE email = ?', [email], function (err, result) {
+		if (err) {
+			throw err;
+		} else {
+			if (result.length > 0) {
+				//user exists
+				if (result[0].password == password){
+					con.query('UPDATE Users SET password = ? WHERE email = res.locals.email', [newPassword], function(err, result){
+						if (err) {
+							throw err;
+						} else {
+							res.render('profile', { message: "PASSWORD CHANGE SUCCESSFUL" });
+							console.log("password change successful!");
+						}
+					});
+				} else {
+					res.render('profile', { message: "INCORRECT PASSWORD"});
+				}
+			}
+		}
+	});
 });
 
 //login function
