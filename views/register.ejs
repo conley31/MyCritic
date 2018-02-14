@@ -24,11 +24,22 @@
         <% } %>
 
         <script>
-        /*
+
           $(document).ready(function() {
             $(document.getElementById('anIdForHiding')).hide();
           });
-          */
+
+          $(document.getElementById('email')).bind('input', function() {
+            $(document.getElementById('anIdForHiding')).fadeIn(1000);
+          });
+
+          $(document.getElementById('username')).bind('input', function() {
+            $(document.getElementById('anIdForHiding')).fadeIn(1000);
+          });
+
+          $(document.getElementById('password')).bind('input', function() {
+            $(document.getElementById('anIdForHiding')).fadeIn(1000);
+          });
 
         </script>
 
