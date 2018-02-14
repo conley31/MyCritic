@@ -7,23 +7,47 @@
         <header>
             <% include ./partials/header %>
         </header>
-        <h1>Login</h1>
 
-        <form action="/login" method="post">
-            <p>
-            <label for="email">Enter your email: </label>
-            <input id="email" type="text" name="email">
-            </p>
-            <p>
-            <label for="password"> Enter password: </label>
-            <input id="password" type="password" name="password" required pattern="[a-zA-Z0-9!@#$%^&*_-]{6,16}"title="Password may contain alphanumerics and !@#$%^&*-_ special characters. Must be between 6 and 16 characters" >
-            <p>
-            <input type="submit" value="OK">
+        <h1 style="font-size: 4em; text-align: center; font-family: Helvetica; padding-top: 10vh;">MyCritic</h1>
+        <h2 style="font-size: 1.5em; text-align: center; font-family: Helvetica; padding-bottom: 4vh">Login</h2>
+        <h2 style="color: green; font-size: 1.23em; text-align: center; font-family: Helvetica; font-style: italic; padding-bottom: 4.5vh">Good to see you again!</h2>
+        <form style="text-align: center; font-family: Helvetica; font-size: 1.25em;" action="/login" method="post">
+            <label for="email">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: </label>
+            <input style="margin-bottom: 3vh; padding: 3px 10px; border-radius: 4px; border: 1px solid black;" placeholder="Email" id="email" type="text" name="email"><br>
+            <label for="password"> Password: </label>
+            <input style="margin-bottom: 8vh; padding: 3px 10px; border-radius: 4px;
+             border: 1px solid black;" placeholder="Password" id="password" type="password"
+              name="password" required pattern="[a-zA-Z0-9!@#$%^&*_-]{6,16}"
+              title="Password may contain alphanumerics and !@#$%^&*-_ special characters. Must be between 6 and 16 characters" ><br>
+            <input id="idForHiding" style="color: green" type="submit" value="Login">
         </form>
 
-   
+
         <% if(typeof message != 'undefined') { %>
             <h2><%= message %></h2>
         <% } %>
+
+        <script>
+        
+          $(document).ready(function() {
+            $(document.getElementById('idForHiding')).hide();
+          });
+
+          $(document.getElementById('email')).bind('input', function(){
+            $(document.getElementById('idForHiding')).fadeIn(1000);
+          });
+
+          $(document.getElementById('password')).bind('input', function(){
+            $(document.getElementById('idForHiding')).fadeIn(1000);
+          });
+
+/*
+          function fieldsChanged() {
+              $(document.getElementById('idForHiding')).fadeIn(1000);
+          }
+*/
+
+        </script>
+
     </body>
 </html>
