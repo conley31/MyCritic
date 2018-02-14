@@ -8,7 +8,9 @@
             <% include ./partials/header %>
         </header>
 
-        <h1 style="font-size: 4em; text-align: center; font-family: Helvetica; padding-top: 10vh;">MyCritic</h1>
+        <h1 style = "padding-top: 10vh; font-family: Georgia, serif; font-size: 4.8em; text-align: center; 
+        letter-spacing: 0.2px; word-spacing: -4px; color: #0D870B; font-weight: 700; text-decoration: none; font-style:
+        italic; font-variant: normal;">myCritic</h1>
         <h2 style="font-size: 1.5em; text-align: center; font-family: Helvetica; padding-bottom: 4vh">Login</h2>
         <h2 id="greeting" style="color: green; font-size: 1.23em; text-align: center; font-family: Helvetica; font-style: italic; padding-bottom: 4.5vh">Good to see you again!</h2>
         <form style="text-align: center; font-family: Helvetica; font-size: 1.25em;" action="/login" method="post">
@@ -31,16 +33,16 @@
 
           $(document).ready(function() {
             $(document.getElementById('idForHiding')).hide();
-            
+
             $(document.getElementById('greeting')).hide().fadeIn(2000);
           });
 
           $(document.getElementById('email')).bind('input', function(){
-            $(document.getElementById('idForHiding')).fadeIn(1000);
+            $(document.getElementById('idForHiding')).fadeIn(500);
           });
 
           $(document.getElementById('password')).bind('input', function(){
-            $(document.getElementById('idForHiding')).fadeIn(1000);
+            $(document.getElementById('idForHiding')).fadeIn(500);
           });
 
 /*
