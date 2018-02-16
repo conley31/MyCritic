@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || 8282
+const PORT = process.env.PORT || 8080
 
 //Imports
 var express = require('express');

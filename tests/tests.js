@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe';
 
 fixture 'Media Pages'
-    .page `https://localhost:8282`;
+    .page `http://localhost:8080`;
 
 test(`My first test`, async t => {
 	await t
