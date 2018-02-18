@@ -22,7 +22,7 @@ var movieInfo = function() {
 		console.log(json["title"]);
 		console.log(json["original_title"]);
 		html += "<h1 style=\"margin-left: 10%\">" + json["title"] + "</h1>";
-		html += "<h3 style=\"margin-left: 10%\">Average Score: " + json["vote_average"] + "</h3>";
+		html += "<h3 id=\"voteAverage\" style=\"margin-left: 10%\">Average Score: " + json["vote_average"] + "</h3>";
 		html += "<h5 style=\"margin-left: 10%\">" + json["overview"] + "</h5>";
 		bodyDiv.innerHTML = html;
 	});
