@@ -385,7 +385,7 @@ app.post('/changePassword', function(req, res) {
 			if (result.length > 0) {
 				//user exists
 				if (result[0].password == password){
-					con.query('UPDATE Users SET password = ? WHERE email = ?', [newPassword], [email], function(err, result){
+					con.query('UPDATE Users SET password = ? WHERE email = ?', [newPassword, email], function(err, result){
 						if (err) {
 							throw err;
 						} else {
