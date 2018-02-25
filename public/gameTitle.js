@@ -17,7 +17,7 @@ request.onload = function(){
 
     html += "<h5 style=\"font-family: Arial; font-size: 1.2em; width: 70%; margin-bottom: 4%;\">" + gameObj[0].summary + "</h5>";
 
-    html += "<h5 style=\"margin-left: 10%\">Total Rating: " + gameObj[0].total_rating + "%</h5>";
+    html += "<h5 style=\"margin-left: 10%\">Total Rating: " + rating + "</h5>";
 
     html += "</div>";
     bodyDiv.innerHTML = html;
