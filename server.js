@@ -137,7 +137,7 @@ app.get('/gameTitle/:id', function(req,res){
 app.get('/getGame', function(req,res){
     var gameId = req.headers.referer.substring(req.headers.referer.indexOf("/gameTitle/") + 11, req.headers.referer.length);
     var gameRequest = {
-        url: 'https://api-2445582011268.apicast.io/games/' + gameId + '/?fields=name,total_rating,summary,screenshots',
+        url: 'https://api-2445582011268.apicast.io/games/' + gameId + '/?fields=name,total_rating,summary,cover,screenshots',
         method: 'GET',
         headers: {
             'user-key' : '8b727bcfa8aac10e024257ebf5494be3',
