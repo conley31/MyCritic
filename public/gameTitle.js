@@ -6,9 +6,11 @@ request.onload = function(){
     var bodyDiv = document.getElementById('gameInfo');
 
     gameObj = request.response;
-
-    console.log(gameObj);
-
+    var rating = gameObj[0].total_rating;
+    if(rating == undefined){
+        rating = "This game currently has no ratings!"
+    }
+    else rating += '%';
     var html = "<h1 style=\"font-size: 3.5em; text-align: center; margin-top: 3%\">" + gameObj[0].name + "</h1>";
 
     html += "<div width=\"60%\" style=\"margin-top: 5%; margin-left: 24%\">";
@@ -18,7 +20,6 @@ request.onload = function(){
     html += "<h5 style=\"margin-left: 10%\">Total Rating: " + gameObj[0].total_rating + "%</h5>";
 
     html += "</div>";
-
     bodyDiv.innerHTML = html;
 };
 

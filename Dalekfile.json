@@ -1,0 +1,6 @@
+"browsers": [{
+   "chrome": {
+     "port": 8282,
+     "binary": "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+   }
+ }]

@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || 8282
+const PORT = process.env.PORT || 8080
 
 //Imports
 var express = require('express');
@@ -137,7 +137,7 @@ app.get('/gameTitle/:id', function(req,res){
 app.get('/getGame', function(req,res){
     var gameId = req.headers.referer.substring(req.headers.referer.indexOf("/gameTitle/") + 11, req.headers.referer.length);
     var gameRequest = {
-        url: 'https://api-2445582011268.apicast.io/games/' + gameId + '/?fields=name,total_rating,summary,screenshots',
+        url: 'https://api-2445582011268.apicast.io/games/' + gameId + '/?fields=name,total_rating,summary,cover,screenshots',
         method: 'GET',
         headers: {
             'user-key' : '8b727bcfa8aac10e024257ebf5494be3',
@@ -385,7 +385,7 @@ app.post('/changePassword', function(req, res) {
 			if (result.length > 0) {
 				//user exists
 				if (result[0].password == password){
-					con.query('UPDATE Users SET password = ? WHERE email = ?', [newPassword], [email], function(err, result){
+					con.query('UPDATE Users SET password = ? WHERE email = ?', [newPassword, email], function(err, result){
 						if (err) {
 							throw err;
 						} else {

@@ -366,5 +366,8 @@
       "version": "1.1.2"
     },
     "xml-js": "^1.6.2"
+  },
+  "devDependencies": {
+    "dalek-browser-chrome": "0.0.11"
   }
 }
