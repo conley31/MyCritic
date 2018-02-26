@@ -8,6 +8,12 @@
 		<% include ./partials/header %>
     </header>
     <div id="gameInfo"></div>
+    
+    <form style="text-align: center; font-family: Helvetica; font-size: 1.25em;" action="/submitReview" method="post">
+    <label for="email">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Review: </label>
+    <input id="idForHiding" style="color: green" type="submit" value="Submit Review">
+    </form>
+
 	</body>
 	<% include ./partials/gameTitleScripts %>
 </html>

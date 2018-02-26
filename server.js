@@ -149,6 +149,41 @@ app.get('/getGame', function(req,res){
     });
 });
 
+app.post('/submitReview', function(req,res){
+    // use to get userId key
+    var email = req.session.user;
+    console.log(email);
+    // find the userId
+        // use in inserting review
+    var apiId = 'TESTAPI';
+    var type = 'TESTTYPE';
+    var userId;
+    var reviewTxt= 'TESTREVIEW';
+    var rating = 11;
+    var votes = 12;
+    var time = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    console.log(time);
+    var userIdPromise = getUserIdByEmail(email);
+    userIdPromise.then(function(result){
+        userId = result;
+        console.log(userId);
+        con.query('INSERT INTO Reviews(apiId,type,userId,reviewTxt,rating,votes,time) VALUES (?,?,?,?,?,?,?)',[apiId,type,
+        userId,reviewTxt,rating,votes,time], function(err, result){
+            if(err) throw err;
+            console.log(result);
+        });
+    })
+});
+
+function getUserIdByEmail(email){
+    return new Promise(function(resolve, reject){
+        con.query('SELECT * FROM Users WHERE email = ?', [email], function(err, result){
+            if(err) throw err;
+            else resolve(result[0].userId);
+        });   
+    })
+}
+
 
 app.get('/bookInfo/:name', function(req,res){
     res.render('bookInfo.ejs');
