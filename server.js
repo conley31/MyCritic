@@ -150,29 +150,51 @@ app.get('/getGame', function(req,res){
 });
 
 app.post('/submitReview', function(req,res){
-    // use to get userId key
     var email = req.session.user;
-    console.log(email);
-    // find the userId
-        // use in inserting review
-    var apiId = 'TESTAPI';
-    var type = 'TESTTYPE';
     var userId;
-    var reviewTxt= 'TESTREVIEW';
-    var rating = 11;
-    var votes = 12;
+
+    //inputs given by the user
+    var reviewTxt= req.body.review;
+    var rating = req.body.rating;
+
+    //get the URL, then split it to extract the type and api id.
+    var type;
+    var urlString = req.headers.referer;
+    var splitUrl = urlString.split('/');
+    var mediaPage = splitUrl[3];
+    var apiId = splitUrl[4];
+    switch(mediaPage){
+        case 'movie':
+            type = 'movie';
+            break;
+        case 'song':
+            type = 'song';
+            break;
+        case 'gameTitle':
+            type = 'game';
+            break;
+        case 'bookInfo':
+            type = 'book';
+            break;
+    }
+    
+    /*votes not yet implemented */
+    var votes = 0;
+    /****************************/
+
     var time = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    console.log(time);
+
     var userIdPromise = getUserIdByEmail(email);
     userIdPromise.then(function(result){
         userId = result;
-        console.log(userId);
         con.query('INSERT INTO Reviews(apiId,type,userId,reviewTxt,rating,votes,time) VALUES (?,?,?,?,?,?,?)',[apiId,type,
         userId,reviewTxt,rating,votes,time], function(err, result){
             if(err) throw err;
-            console.log(result);
+            //refresh page
+            res.redirect(req.get('referer'));
         });
     })
+    
 });
 
 function getUserIdByEmail(email){
@@ -236,7 +258,6 @@ app.get('/search', function(req,res){
 });
 
 app.get('/searchQ', function(req,res){
-    console.log(req.query.search);
     var searchFor = req.query.search;
     var requestSong = require('request');
     var gamesList;
