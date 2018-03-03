@@ -19,7 +19,7 @@ con.connect(function(err){
         if (err) throw err;
     });
 
-    sql = "CREATE TABLE IF NOT EXISTS Reviews (reviewId INT AUTO_INCREMENT PRIMARY KEY, apiId VARCHAR(32),type VARCHAR(16), userId INT, reviewTxt VARCHAR(10000), rating INT, votes INT, time DATETIME)";
+    sql = "CREATE TABLE IF NOT EXISTS Reviews (reviewId INT AUTO_INCREMENT PRIMARY KEY, apiId VARCHAR(32),type VARCHAR(16), userId INT, title VARCHAR(256) ,reviewTxt VARCHAR(10000), rating INT, votes INT, time DATETIME)";
     con.query(sql, function(err, res){
         if (err) throw err;
     });
