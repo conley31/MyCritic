@@ -9,7 +9,7 @@ request2.onload = function() {
 }
 request2.send();
 
-request.open('GET', "/reviews");
+request.open('GET', "/userReviews");
 request.responseType = 'json';
 var token = "";
 request.onload = function() {

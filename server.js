@@ -385,9 +385,33 @@ app.get('/username', function(req,res){
     });
 });
 
-app.get('/reviews', function(req,res){
+app.get('/userReviews', function(req,res){
     var userID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
     con.query('SELECT * FROM Reviews WHERE userId = ? order by time desc', [userID], function(err,result){
+        if(err){
+            throw err;
+        }
+        else{
+            res.send(result);
+        }
+    });
+});
+
+app.get('/mediaReviews', function(req,res){
+    var apiID 
+    if(req.headers.referer.indexOf("/song/") != -1){
+        apiID = req.headers.referer.substring(req.headers.referer.indexOf("/song/")+ 6, req.headers.referer.length );
+    }
+    else if (req.headers.referer.indexOf("/gameTitle/") != -1){
+        apiID = req.headers.referer.substring(req.headers.referer.indexOf("/gameTitle/")+ 11, req.headers.referer.length );
+    }
+    else if (req.headers.referer.indexOf("/bookInfo/") != -1){
+        apiID = req.headers.referer.substring(req.headers.referer.indexOf("/bookInfo/")+ 10, req.headers.referer.length );
+    }
+    else if (req.headers.referer.indexOf("/movie/") != -1){
+        apiID = req.headers.referer.substring(req.headers.referer.indexOf("/movie/")+ 7, req.headers.referer.length );
+    }
+    con.query('SELECT r.userId, u.username, r.reviewTxt, r.time, r.rating FROM Reviews as r, Users as u WHERE r.apiId = ? AND r.userId = u.userId order by time desc', [apiID], function(err,result){
         if(err){
             throw err;
         }
