@@ -21,8 +21,16 @@ request.onload = function(){
 
     html += "</div>";
     bodyDiv.innerHTML = html;
+    //add hidden field to pass the title without having to make another api request
+    var titleInput = document.createElement('input');
+    titleInput.setAttribute('type','hidden');
+    titleInput.setAttribute('name','title');
+    titleInput.setAttribute('value',gameObj[0].name);
+    document.getElementById('reviewForm').appendChild(titleInput);
 };
 request.send();
+
+
 
 
 var request2 = new XMLHttpRequest();

@@ -156,6 +156,7 @@ app.post('/submitReview', function(req,res){
     //inputs given by the user
     var reviewTxt= req.body.review;
     var rating = req.body.rating;
+    var title = req.body.title;
 
     //get the URL, then split it to extract the type and api id.
     var type;
@@ -187,8 +188,8 @@ app.post('/submitReview', function(req,res){
     var userIdPromise = getUserIdByEmail(email);
     userIdPromise.then(function(result){
         userId = result;
-        con.query('INSERT INTO Reviews(apiId,type,userId,reviewTxt,rating,votes,time) VALUES (?,?,?,?,?,?,?)',[apiId,type,
-        userId,reviewTxt,rating,votes,time], function(err, result){
+        con.query('INSERT INTO Reviews(apiId,type,userId,title,reviewTxt,rating,votes,time) VALUES (?,?,?,?,?,?,?,?)',[apiId,type,
+        userId,title,reviewTxt,rating,votes,time], function(err, result){
             if(err) throw err;
             //refresh page
             res.redirect(req.get('referer'));
