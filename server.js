@@ -509,6 +509,37 @@ app.post('/changePassword', function(req, res) {
 	});
 });
 
+//delete account function
+app.post('/deleteAccount', function(req,res){
+    var email = req.session.user;
+    var password = req.body.password_delete;
+    console.log(email);
+    con.query('SELECT * FROM Users WHERE email = ?', [email], function(err,result){
+        if(err) throw err;
+        else{
+            console.log('exist');
+            if(result.length > 0){
+                console.log(password);
+                console.log(result[0].password);
+                if(result[0].password == password){
+                    con.query('DELETE FROM Users WHERE email = ?',[email], function(err,result){
+                        if(err) throw err;
+                        else{
+                            res.render('home.ejs');
+                        }
+                    });
+                }
+                else{
+                 res.render('profile',{message: "INCORRECT PASSWORD"});
+                }
+            }
+            else{
+                res.render('profile',{message: "Account not found"});
+            }
+        }
+    });
+});
+
 //login function
 app.post('/login', function (req, res) {
     var email;
