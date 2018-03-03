@@ -369,6 +369,34 @@ app.get('/song/:id', function(req,res){
     res.render('song.ejs');
 });
 
+app.get('/user/:id', function(req,res){
+    res.render('users.ejs');
+});
+
+app.get('/username', function(req,res){
+    var userID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
+    con.query('SELECT username FROM Users WHERE userId = ?', [userID], function(err,result){
+        if(err){
+            throw err;
+        }
+        else{
+            res.send(result);
+        }
+    });
+});
+
+app.get('/reviews', function(req,res){
+    var userID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
+    con.query('SELECT * FROM Reviews WHERE userId = ? order by time desc', [userID], function(err,result){
+        if(err){
+            throw err;
+        }
+        else{
+            res.send(result);
+        }
+    });
+});
+
 //register function
 app.post('/register', function(req, res) {
     //first, ensure that the email is not already in use

@@ -24,9 +24,7 @@ var songList = function(){
 			if(song.indexOf("(feat.") != -1){
 				tempSong = song.slice(0, song.indexOf("(feat."))
 			}
-			console.log(json["feed"]["entry"][i]["im:artist"]["label"]);
 			await spotifyApi.searchTracks(tempSong, {limit: 5, artist: json["feed"]["entry"][i]["im:artist"]["label"]}).then(function(data) {
-				console.log(data["tracks"]["items"][0]["name"]);
 				html += "<div id=\"" + i + "\" style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/song/" + data["tracks"]["items"][0]["id"] + "\'\"'><h1>" + data["tracks"]["items"][0]["name"] + "</h1></div>";
 			});
 		}
