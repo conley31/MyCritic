@@ -19,7 +19,7 @@ var populateHtml = function(){
         html += "\'\"'> <img height=\"50px\" src=\"./staticImages/gameIcon.png\" align=\"right\"><h3 style=\"font-family: Arial\">"
         html += json[i].name;
         if(json[i].total_rating != null){
-            html += "</h3> <font color=\"black\"> Average Score</font> : "+json[i].total_rating+"</font> </div>";
+            html += "</h3> <font color=\"black\"> Average Score</font> : "+ parseInt(json[i].total_rating).toFixed(0) +"</font> </div>";
         }
         else {
             html += "</h3> <font color=\"black\"> Average Score</font> : No Rating</font> </div>";
