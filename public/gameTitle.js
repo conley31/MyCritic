@@ -30,6 +30,7 @@ request.onload = function(){
     titleInput.setAttribute('type','hidden');
     titleInput.setAttribute('name','title');
     titleInput.setAttribute('value',gameObj[0].name);
+    if (document.getElementById('reviewForm') != null)
     document.getElementById('reviewForm').appendChild(titleInput);
 };
 request.send();

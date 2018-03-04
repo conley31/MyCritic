@@ -23,6 +23,7 @@ $.getJSON(url, function(json){
 			}*/
 			bookID[i].open('GET', "/getBookID?author="+json["results"][i]["author"]+"&title="+json["results"][i]["title"], true);
 			bookID[i].onreadystatechange = await function() {
+				console.log(bookID);
 				if(bookID[i].response != null){
 					if(bookID[i].response["GoodreadsResponse"]["book"]["title"]["_text"] == null){
 						//html += "<div id=\"" + i + "\" style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/bookInfo/" + bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"] + "\'\"'><h1>" + bookID[i].response["GoodreadsResponse"]["book"]["title"]["_cdata"] + "</h1></div>";
