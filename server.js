@@ -74,10 +74,14 @@ con.connect(function(err){
 
 //main launch page
 app.get('/', function(req, res){
-	res.render('home.ejs', {
-		production: app.get('env') == 'production',
-		title: 'MyCritic'
-	});
+	if (res.locals.login) {
+		res.render('feeds.ejs');
+	} else {
+		res.render('home.ejs', {
+			production: app.get('env') == 'production',
+			title: 'MyCritic'
+		});
+	}
 });
 
 //signup page
@@ -599,7 +603,8 @@ app.post('/login', function (req, res) {
                     //set sesion
                     req.session.user = email;
                     res.locals.login = true;
-                    res.render('login', { message: "USER LOGIN SUCCESSFUL!" });                
+			res.render('feeds.ejs');
+  //                  res.render('login', { message: "USER LOGIN SUCCESSFUL!" });                
                     console.log("USER LOGIN SUCCESSFUL");  
                 }
                 else{
