@@ -19,6 +19,7 @@ var songList = function(){
 	//get the top 50 songs and display them
 	$.getJSON('https://itunes.apple.com/us/rss/topsongs/limit=25/json', async function(json){
 		for( i = 0; i < 25; i++){
+			console.log(json);
 			var song = json["feed"]["entry"][i]["im:name"]["label"];
 			var tempSong = song;
 			if(song.indexOf("(feat.") != -1){
