@@ -82,11 +82,22 @@ app.get('/', function(req, res){
 
 //signup page
 app.get('/register', function(req,res){
+    if(req.session.user != null){
+        res.setHeader('Content-Type', 'text/plain');
+        res.send("Already Logged In");
+        return;
+    }
     res.render('register.ejs');
 });
 
 //view the profile page
 app.get('/profile', function(req,res){
+    console.log(req.session)
+    if(req.session.user == null){
+        res.setHeader('Content-Type', 'text/plain');
+        res.send("Access Denied");
+        return;
+    }
     res.render('profile.ejs');
 });
 
@@ -482,6 +493,11 @@ app.post('/register', function(req, res) {
 
 //login page
 app.get('/login', function (req, res) {
+    if(req.session.user != null){
+        res.setHeader('Content-Type', 'text/plain');
+        res.send("Already Logged In");
+        return;
+    }
     res.render('login.ejs');
 });
 
