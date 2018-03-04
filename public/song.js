@@ -24,16 +24,18 @@ var songInfo = function(){
 	spotifyApi.setAccessToken(token);
 	var songName = window.location.pathname;
 	var songName = songName.slice(6, songName.length);
-	
+
 	console.log(songName);
 	var bodyDiv = document.getElementById("songInfo");
 
 	prev = spotifyApi.getTrack(songName);
 	prev.then(function(data) {
-		var html = "<h1 id=\"title\" style=\"margin-left: 10%\">" + data["name"] + "</h1>";
-		html += "<h3 id=\"artist\" style=\"margin-left: 10%\">" + data["artists"][0]["name"] + "</h3>";
-		html += "<h5 id=\"popularity\" style=\"margin-left: 10%\">Popularity " + data["popularity"] + "</h5>";
-				
+        console.log(data);
+		var html = "<h1 id=\"title\" style=\"text-align: center;\">" + data["name"] + "</h1>";
+		html += "<h3 id=\"artist\" style=\"text-align: center;\"><font color=\"green\">Artist: </font>" + data["artists"][0]["name"] + "</h3>";
+		html += "<h4 id=\"popularity\" style=\"text-align: center; padding-bottom: 2%;\"><font color=\"orange\">Rating: </font>" + data["popularity"] + "%</h4>";
+        html += "<img style=\"margin-left: 37%; margin-bottom: 2%;\" width=25% src=\"" + data["album"]["images"][0]["url"] + "\" />";
+
 		bodyDiv.innerHTML = html;
 		// ...render list of search results...
 		//add hidden field to pass the title without having to make another api request
@@ -41,12 +43,12 @@ var songInfo = function(){
 	    titleInput.setAttribute('type','hidden');
 	    titleInput.setAttribute('name','title');
 	    titleInput.setAttribute('value', data["name"]);
-	    document.getElementById('reviewForm').appendChild(titleInput);	
+	    document.getElementById('reviewForm').appendChild(titleInput);
 	}, function(err) {
 		console.error(err);
 	});
 
-	
+
 }
 
 var reviewsfunc = function(){
@@ -61,10 +63,10 @@ var reviewsfunc = function(){
 	}
 
 	for(i = 0; i < display; i++){
-        html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>" 
+        html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>"
 
         //add back for the type src=\"./staticImages/movieIcon.jpg\"
-        html += "<img height=\"50px\" align=\"right\"><h3 style=\"font-family: Arial\">" 
+        html += "<img height=\"50px\" align=\"right\"><h3 style=\"font-family: Arial\">"
 
         html += reviews[i]["reviewTxt"] + "</h3> <span><font color=\"#dd4300\"> rating </font> : " + reviews[i]["rating"] + "</span><span style=\"margin-left:75%\"><font color=\"#dd4300\">user</font>: "+reviews[i]["username"]+"</span></font> </div>";
     }
