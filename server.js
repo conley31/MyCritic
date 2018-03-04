@@ -484,9 +484,10 @@ app.post('/changePassword', function(req, res) {
 	var email;
 	var password;
 	var newPassword;
-	email = req.body.email;
+	email = req.session.user;
 	password = req.body.password;
 	newPassword = req.body.newPassword;
+    console.log(req.session.user);
 	con.query('SELECT * FROM Users WHERE email = ?', [email], function (err, result) {
 		if (err) {
 			throw err;
