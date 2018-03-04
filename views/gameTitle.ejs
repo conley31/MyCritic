@@ -9,8 +9,8 @@
     </header>
     <div id="gameInfo"></div>
    <% if(login) { %>
-	   <h2 style="text-align: center; margin-top: 5%; ">Review this game</h2>
-    <form style="text-align: center; margin-top: 1%; font-family: Helvetica; font-size: 1.25em;" action="/submitReview" method="post" id="reviewForm">
+	   <h2 style="color: green; text-align: center; margin-top: 5%; ">Review this game</h2>
+    <form style="text-align: center; margin-top: 3.5%; font-family: Helvetica; font-size: 1.25em;" action="/submitReview" method="post" id="reviewForm">
         <label for="review">Rating: </label>
 
 		<select name="rating" required >
@@ -22,12 +22,14 @@
 		</select>
 		<br>
 
-        <textarea name="review" cols="100" rows="7" id="review" style="width: 40%; display:block; margin-left:auto; margin-top: 1%; margin-right:auto"  form="reviewForm" placeholder="Your comments on this game.."></textarea>
-        <input id="idForHiding" style="color: green; margin-top: 10px; margin-left: auto; margin-right: 10%" type="submit" value="Submit Review">
+        <textarea name="review" cols="100" rows="7" id="review" style="width: 40%; display:block; margin-left:auto; margin-top: 1%; margin-right:auto"  form="reviewForm" placeholder="Your comments here.."></textarea>
+        <input id="idForHiding" style="color: green; margin-top: 10px; margin-left: auto;" type="submit" value="Submit Review">
     </form>
+	<h2 style="text-align: center; margin-top: 5%; margin-bottom: 3.5%;">User Reviews</h2>
 
     <% } %>
     <div id="gameReviewsList"></div>
+	<div style="margin-bottom: 5%;"></div>
 	</body>
 	<% include ./partials/gameTitleScripts %>
 </html>

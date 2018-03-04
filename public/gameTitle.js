@@ -61,12 +61,12 @@ var reviewsfunc = function(){
     console.log(reviews);
 
     for(i = 0; i < display; i++){
-        html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>"
+        html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"padding-left: 30%; padding-right: 30%; margin-bottom: 2%; width: 100%; background-color: \'white\';\";>"
 
         //add back for the type src=\"./staticImages/movieIcon.jpg\"
         html += "<img height=\"50px\" align=\"right\"><h3 style=\"font-family: Arial\">"
 
-        html += reviews[i]["reviewTxt"] + "</h3> <span><font color=\"#dd4300\"> rating </font> : " + reviews[i]["rating"] + "</span><span style=\"margin-left:75%\"><font color=\"#dd4300\">user</font>: "+reviews[i]["username"]+"</span></font> </div>";
+        html += reviews[i]["reviewTxt"] + "</h3> <span><font color=\"#dd4300\"> Rating </font> : " + reviews[i]["rating"] + "</span><span style=\"margin-left:75%\"><font color=\"#dd4300\">Review By</font>: "+reviews[i]["username"]+"</span></font> </div>";
     }
 
     bodyDiv.innerHTML = html;
