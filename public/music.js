@@ -19,6 +19,9 @@ var songList = function(){
 	spotifyApi.setAccessToken(token);
 	//get the top 50 songs and display them
 	$.getJSON('https://itunes.apple.com/us/rss/topsongs/limit=25/json', async function(json){
+        if (json == null) {
+            throw "Music fetch error.";
+        }
 		for( i = 0; i < 25; i++){
 			var song = json["feed"]["entry"][i]["im:name"]["label"];
 			var tempSong = song;
