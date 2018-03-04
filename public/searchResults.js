@@ -38,7 +38,12 @@ var populateHtml = function(){
         html += games[i].id;
         html += "\'\"'> <img height=\"50px\" src=\"./staticImages/gameIcon.png\" align=\"right\"><h3 style=\"font-family: Arial\">"
         html += games[i].name;
-        html += "</h3> <font color=\"black\"> Average Score</font> : 6.2</font> </div>";
+         if(games[i].total_rating != null){
+            html += "</h3> <font color=\"black\"> Average Score</font> : "+games[i].total_rating+"</font> </div>";
+        }
+        else {
+            html += "</h3> <font color=\"black\"> Average Score</font> : No Rating</font> </div>";
+        }
     }
 
     //list movies

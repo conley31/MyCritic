@@ -127,7 +127,7 @@ etime.toString();
 etime += "000";
 const igdbOptions = {
     //gets most popular games
-    url:' https://api-2445582011268.apicast.io/games/?fields=name,popularity&order=popularity:desc&limit=50',
+    url:' https://api-2445582011268.apicast.io/games/?fields=name,total_rating,popularity&order=popularity:desc&limit=50',
     method: 'GET',
     headers: {
         //'user-agent': 'request'
@@ -313,7 +313,7 @@ app.get('/searchQ', function(req,res){
 
     //search through games..
     var gameSearchRequest = {
-        url: 'https://api-2445582011268.apicast.io/games/?search=' + searchFor + '&fields=name&limit=5',
+        url: 'https://api-2445582011268.apicast.io/games/?search=' + searchFor + '&fields=name,total_rating&limit=5',
         method: 'GET',
         headers: {
             'user-key' : '8b727bcfa8aac10e024257ebf5494be3',
