@@ -28,7 +28,7 @@ var songList = function(){
 			console.log(tempSong);
             loadingDiv.innerHTML = "<center>Loading...</center>";
 			await spotifyApi.searchTracks(tempSong, {limit: 1, artist: json["feed"]["entry"][i]["im:artist"]["label"]}).then(function(data) {
-				html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/song/"
+				html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'; this.style.cursor=\'pointer\' \" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/song/"
        			html += data["tracks"]["items"][0]["id"]
         		html += "\'\"'> <img height=\"50px\" src=\"./staticImages/musicIcon.jpg\" align=\"right\"><h3 style=\"font-family: Arial\">"
         		html += data["tracks"]["items"][0]["name"] + "</h3> <font color=\"#dd4300\"> Average Score</font> : "+data["tracks"]["items"][0]["popularity"]+"</font> </div>";

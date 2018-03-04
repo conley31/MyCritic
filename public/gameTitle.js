@@ -7,16 +7,22 @@ request.onload = function(){
 
     gameObj = request.response;
 
+    console.log(gameObj);
+
     var rating = gameObj[0].total_rating;
 
     if(rating == undefined){
-        rating = "This game currently has no ratings!"
+        rating = "This game currently has no ratings!";
     }
 
     else rating += '%';
     var html = "<h1 style=\"font-size: 3.5em; text-align: center; margin-top: 3%\">" + gameObj[0].name + "</h1>";
 
-    html += "<h3 style=\"margin-left: 24%; font-size: 2em; margin-top: 5%; margin-bottom: 1%; font-family: Arial; width: 80%;\">Average Score: <font color=\"#78dc52\">" + parseInt(rating).toFixed(0) + "%</font></h3>";
+    html += "<img style=\"margin-left: 47%; margin-top: 2%;\" src=\"" + gameObj[0]["cover"]["url"] + "\" />";
+
+    html += "<h3 style=\"margin-left: 24%; font-size: 2em; margin-top: 2%; margin-bottom: 1%; font-family: Arial; width: 80%;\">Average Score: <font color=\"#78dc52\">" + parseInt(rating).toFixed(0) + "%</font></h3>";
+
+
 
     html += "<div width=\"60%\" style=\"margin-top: 1%; margin-left: 24%\">";
 
