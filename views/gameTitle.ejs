@@ -7,9 +7,9 @@
 	<header>
 		<% include ./partials/header %>
     </header>
-    <div id="gameInfo"></div>
+    <div id="gameInfo"></div><hr>
    <% if(login) { %>
-	   <h2 style="color: green; text-align: center; margin-top: 5%; ">Review this game</h2>
+	   <h2 style="color: green; text-align: center; margin-top: 3%; ">Review this game</h2>
     <form style="text-align: center; margin-top: 3.5%; font-family: Helvetica; font-size: 1.25em;" action="/submitReview" method="post" id="reviewForm">
         <label for="review">Rating: </label>
 
@@ -23,9 +23,9 @@
 		<br>
 
         <textarea name="review" cols="100" rows="7" id="review" style="width: 40%; display:block; margin-left:auto; margin-top: 1%; margin-right:auto"  form="reviewForm" placeholder="Your comments here.."></textarea>
-        <input id="idForHiding" style="color: green; margin-top: 10px; margin-left: auto;" type="submit" value="Submit Review">
-    </form>
-	<h2 style="text-align: center; margin-top: 5%; margin-bottom: 3.5%;">User Reviews</h2>
+        <input id="idForHiding" style="color: green; margin-top: 2%; margin-left: auto; margin-bottom: 3%;" type="submit" value="Submit Review">
+    </form><hr>
+	<h2 style="text-align: center; margin-top: 4%; margin-bottom: 3.5%;">User Reviews</h2>
 
     <% } %>
     <div id="gameReviewsList"></div>
