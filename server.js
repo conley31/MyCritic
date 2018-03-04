@@ -296,7 +296,6 @@ app.get('/searchQ', function(req,res){
     cache.get(cachedSearch, function(err,reply){
         if(reply != null){
             console.log('got from cache');
-            console.log(reply);
             searchResultJson = JSON.parse(reply);
             res.send('/search');
         }
@@ -320,8 +319,7 @@ app.get('/searchQ', function(req,res){
                  }
                 requestSong(songSearchRequest, function(err,response,body){
                 songsList = body;
-                searchResultJson.songs = songsList;
-                //res.send('/search')    
+                resolve(songsList);
                 });             
             });
 
@@ -330,7 +328,8 @@ app.get('/searchQ', function(req,res){
                 var bookSearchRequest = {url: "https://www.goodreads.com/search/index.xml?key="+ GRAPI+ "&q=" + searchFor};
                 request(bookSearchRequest, function(err,response,body){
                     var booksList = convert.xml2json(body, {compact: true, spaces: 4});
-                    searchResultJson.books = json.parse(booksList);
+                    
+                    resolve(JSON.parse(booksList));
                 });
 
              });
@@ -340,7 +339,7 @@ app.get('/searchQ', function(req,res){
                  var movieSearchRequest = {url: 'https://api.themoviedb.org/3/search/movie?api_key=d26e26ba96250fb462f04e8c480e3351&language=en-US&query=' + searchFor + '&page=1&include_adult=false'};
                  request(movieSearchRequest, function(err, response, body){
                      var moviesList = body;
-                     searchResultJson.movies = JSON.parse(moviesList);
+                     resolve(JSON.parse(moviesList));
                  });  
              });
              var gamePromise = new Promise(function(resolve, reject){
@@ -354,13 +353,20 @@ app.get('/searchQ', function(req,res){
                     };
                     request(gameSearchRequest, function(err,response,body){
                     gamesList = body;
-                    searchResultJson.games = JSON.parse(gamesList); 
+                    resolve(JSON.parse(gamesList));
                     });
                });
-             
-                 console.log(searchResultJson.books);
+                
+               Promise.all([songPromise,bookPromise,moviePromise,gamePromise]).then(function(results){
+                 searchResultJson.songs = results[0];
+                 searchResultJson.books = results[1];
+                 searchResultJson.movies = results[2];
+                 searchResultJson.games = results[3];
                  cache.set(cachedSearch,JSON.stringify(searchResultJson));
                  res.send('/search');
+               });
+             
+                 
         }
     });
 });
