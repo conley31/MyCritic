@@ -184,6 +184,21 @@ app.get('/accessNewMovies', function(req,res){
         url: 'https://api.themoviedb.org/3/discover/movie?api_key=d26e26ba96250fb462f04e8c480e3351&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2018-01-15&primary_release_date.lte=2018-02-08',
         method: 'GET'        
     }
+    //check if already in cache
+    cache.get('newMoviesList', function(err,reply){
+        if(reply != null){
+            console.log('got from cache');
+            res.send(reply);
+        }
+        else{
+            console.log('got from API');
+            request(newMoviesRequest, function(err,response, body){
+                cache.set('newMoviesList',body);
+                res.send(body);
+            });
+        }
+    });
+
 });
 
 app.post('/submitReview', function(req,res){
