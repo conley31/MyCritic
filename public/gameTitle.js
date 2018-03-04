@@ -18,7 +18,7 @@ request.onload = function(){
     else rating += '%';
     var html = "<h1 style=\"font-size: 3.5em; text-align: center; margin-top: 3%\">" + gameObj[0].name + "</h1>";
 
-    html += "<img style=\"margin-left: 47%; margin-top: 2%;\" src=\"" + gameObj[0]["cover"]["url"] + "\" />";
+    html += "<img style=\"margin-left: 42%; margin-top: 2%;\" src=\"https://images.igdb.com/igdb/image/upload/t_cover_big/" + gameObj[0]["cover"].cloudinary_id + ".jpg\" />";
 
     html += "<h3 style=\"margin-left: 24%; font-size: 2em; margin-top: 2%; margin-bottom: 1%; font-family: Arial; width: 80%;\">Average Score: <font color=\"#78dc52\">" + parseInt(rating).toFixed(0) + "%</font></h3>";
 
