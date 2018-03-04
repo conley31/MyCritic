@@ -8,20 +8,24 @@
 		<% include ./partials/header %>
     </header>
     <div id="gameInfo"></div>
-   <% if(login) { %> 
-    <form style="text-align: center; font-family: Helvetica; font-size: 1.25em;" action="/submitReview" method="post" id="reviewForm">
-        <label for="review">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Review: </label>
+   <% if(login) { %>
+	   <h2 style="text-align: center; margin-top: 5%; ">Review this game</h2>
+    <form style="text-align: center; margin-top: 1%; font-family: Helvetica; font-size: 1.25em;" action="/submitReview" method="post" id="reviewForm">
+        <label for="review">Rating: </label>
 
-        <input type="radio" name="rating" value="1" checked> 1
-        <input type="radio" name="rating" value="2"> 2
-        <input type="radio" name="rating" value="3"> 3
-        <input type="radio" name="rating" value="4"> 4
-        <input type="radio" name="rating" value="5"> 5<br>
+		<select name="rating" required >
+	        <option type="option" value="1"> Terrible!
+	        <option type="option" value="2"> Could have been better?
+	        <option type="option" value="3" selected> Meh..
+	        <option type="option" value="4"> Pretty good game!
+	        <option type="option" value="5"> I LOVE IT!!
+		</select>
+		<br>
 
-        <textarea name="review" cols="100" rows="7" id="review" style="display:block; margin-left:auto; margin-right:auto"  form="reviewForm">Enter Review...</textarea>
+        <textarea name="review" cols="100" rows="7" id="review" style="width: 40%; display:block; margin-left:auto; margin-top: 1%; margin-right:auto"  form="reviewForm" placeholder="Your comments on this game.."></textarea>
         <input id="idForHiding" style="color: green; margin-top: 10px; margin-left: auto; margin-right: 10%" type="submit" value="Submit Review">
     </form>
-   
+
     <% } %>
     <div id="gameReviewsList"></div>
 	</body>

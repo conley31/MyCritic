@@ -6,10 +6,13 @@ request.onload = function(){
     var bodyDiv = document.getElementById('gameInfo');
 
     gameObj = request.response;
+
     var rating = gameObj[0].total_rating;
+
     if(rating == undefined){
         rating = "This game currently has no ratings!"
     }
+
     else rating += '%';
     var html = "<h1 style=\"font-size: 3.5em; text-align: center; margin-top: 3%\">" + gameObj[0].name + "</h1>";
 
