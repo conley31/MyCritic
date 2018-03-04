@@ -13,13 +13,11 @@
     <form style="text-align: center; margin-top: 3.5%; font-family: Helvetica; font-size: 1.25em;" action="/submitReview" method="post" id="reviewForm">
         <label for="review">Rating: </label>
 
-		<select name="rating" required >
-	        <option type="option" value="1"> Terrible!
-	        <option type="option" value="2"> Could have been better?
-	        <option type="option" value="3" selected> Meh..
-	        <option type="option" value="4"> Pretty good game!
-	        <option type="option" value="5"> I LOVE IT!!
-		</select>
+	        <input type="radio" value="1" name="rating"> Terrible!
+	        <input type="radio" value="2" name="rating"> Could have been better?
+	        <input checked type="radio" value="3" name="rating"> Meh..
+	        <input type="radio" value="4" name="rating"> Pretty good game!
+	        <input type="radio" value="5" name="rating"> I LOVE IT!!
 		<br>
 
         <textarea name="review" cols="100" rows="7" id="review" style="width: 40%; display:block; margin-left:auto; margin-top: 1%; margin-right:auto"  form="reviewForm" placeholder="Your comments here.."></textarea>

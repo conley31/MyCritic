@@ -66,7 +66,7 @@ var reviewsfunc = function(){
         //add back for the type src=\"./staticImages/movieIcon.jpg\"
         html += "<img height=\"50px\" align=\"right\"><h3 style=\"font-family: Arial\">"
 
-        html += reviews[i]["reviewTxt"] + "</h3> <span><font color=\"#2263ab\"> Rating </font> : <font color=\"#c12020\">" + reviews[i]["rating"] + " / 5</font></span><br><span style=\"margin-top: 2 %\"><font color=\"#2263ab\">Review By</font>: "+reviews[i]["username"]+"</span></font> </div>";
+        html += reviews[i]["reviewTxt"] + "</h3> <span><font color=\"#324fb6\"> Rating </font> : <font color=\"#c12020\">" + reviews[i]["rating"] + " / 5</font></span><br><span style=\"margin-top: 2 %\"><font color=\"#324fb6\">Review By</font>: "+reviews[i]["username"]+"</span></font> </div>";
     }
 
     bodyDiv.innerHTML = html;

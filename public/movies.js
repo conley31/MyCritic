@@ -5,13 +5,13 @@ console.log(bodyDiv);
 	var html = "";
 	console.log(json);
 	for ( i = 0; i < 20; i++) {
-		html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/movie/" 
-        html += json["results"][i]["id"] 
-        html += "\'\"'> <img height=\"50px\" src=\"./staticImages/movieIcon.jpg\" align=\"right\"><h3 style=\"font-family: Arial\">" 
-        html += json["results"][i]["title"] + "</h3> <font color=\"#dd4300\"> Average Score</font> : "+json["results"][i]["popularity"]+"</font> </div>";
+		html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/movie/"
+        html += json["results"][i]["id"]
+        html += "\'\"'> <img height=\"50px\" src=\"./staticImages/movieIcon.jpg\" align=\"right\"><h3 style=\"font-family: Arial\">"
+        html += json["results"][i]["title"] + "</h3> <font color=\"#dd4300\"> Average Score</font> : "+ parseInt(json["results"][i]["popularity"]).toFixed(0) +"</font> </div>";
 	}
 
 	console.log(html);
 	bodyDiv.innerHTML = html;
-	
+
 });
