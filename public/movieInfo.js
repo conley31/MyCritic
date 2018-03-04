@@ -45,9 +45,49 @@ var movieInfo = function() {
         html += "</div>";
 
 		bodyDiv.innerHTML = html;
+		var titleInput = document.createElement('input');
+	    titleInput.setAttribute('type','hidden');
+	    titleInput.setAttribute('name','title');
+	    titleInput.setAttribute('value', json["title"]);
+	    document.getElementById('reviewForm').appendChild(titleInput);
 
 	});
 	console.log(html);
 	bodyDiv.innerHTML = html;
 
+}
+
+var request2 = new XMLHttpRequest();
+request2.open('GET', "/mediaReviews");
+request2.responseType = 'json';
+var reviews = "";
+request2.onload = function() {
+  reviews = request2.response;
+  reviewsfunc();
+};
+
+request2.send();
+
+var reviewsfunc = function(){
+    var bodyDiv = document.getElementById("movieReviewsList");
+    var html = "";
+    var display = 0;
+    if(reviews.length > 20){
+        display = 20;
+    }
+    else {
+        display = reviews.length;
+    }
+    console.log(reviews);
+
+    for(i = 0; i < display; i++){
+        html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>" 
+
+        //add back for the type src=\"./staticImages/movieIcon.jpg\"
+        html += "<img height=\"50px\" align=\"right\"><h3 style=\"font-family: Arial\">" 
+
+        html += reviews[i]["reviewTxt"] + "</h3> <span><font color=\"#dd4300\"> rating </font> : " + reviews[i]["rating"] + "</span><span style=\"margin-left:75%\"><font color=\"#dd4300\">user</font>: "+reviews[i]["username"]+"</span></font> </div>";
+    }
+
+    bodyDiv.innerHTML = html;
 }
