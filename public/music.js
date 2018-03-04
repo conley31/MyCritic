@@ -17,14 +17,15 @@ var html = "";
 var songList = function(){
 	spotifyApi.setAccessToken(token);
 	//get the top 50 songs and display them
-	$.getJSON('https://itunes.apple.com/us/rss/topsongs/limit=50/json', async function(json){
-		for( i = 0; i < 50; i++){
+	$.getJSON('https://itunes.apple.com/us/rss/topsongs/limit=25/json', async function(json){
+		for( i = 0; i < 25; i++){
 			var song = json["feed"]["entry"][i]["im:name"]["label"];
 			var tempSong = song;
 			if(song.indexOf("(feat.") != -1){
 				tempSong = song.slice(0, song.indexOf("(feat."))
 			}
-			await spotifyApi.searchTracks(tempSong, {limit: 5, artist: json["feed"]["entry"][i]["im:artist"]["label"]}).then(function(data) {
+			console.log(tempSong);
+			await spotifyApi.searchTracks(tempSong, {limit: 1, artist: json["feed"]["entry"][i]["im:artist"]["label"]}).then(function(data) {
 				html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/song/" 
        			html += data["tracks"]["items"][0]["id"] 
         		html += "\'\"'> <img height=\"50px\" src=\"./staticImages/musicIcon.jpg\" align=\"right\"><h3 style=\"font-family: Arial\">" 
