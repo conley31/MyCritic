@@ -12,15 +12,16 @@
     <form style="text-align: center; font-family: Helvetica; font-size: 1.25em;" action="/submitReview" method="post" id="reviewForm">
         <label for="review">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Review: </label>
 
-        <input type="radio" name="rating" value="1" checked> 1<br>
-        <input type="radio" name="rating" value="2"> 2<br>
+        <input type="radio" name="rating" value="1" checked> 1
+        <input type="radio" name="rating" value="2"> 2
         <input type="radio" name="rating" value="3"> 3
-        <input type="radio" name="rating" value="4"> 4<br>
+        <input type="radio" name="rating" value="4"> 4
         <input type="radio" name="rating" value="5"> 5<br>
 
-        <input id="idForHiding" style="color: green" type="submit" value="Submit Review">
+        <textarea name="review" cols="100" rows="7" id="review" style="display:block; margin-left:auto; margin-right:auto"  form="reviewForm">Enter Review...</textarea>
+        <input id="idForHiding" style="color: green; margin-top: 10px; margin-left: auto; margin-right: 10%" type="submit" value="Submit Review">
     </form>
-    <textarea name="review" cols="100" rows="7" id="review" style="display:block; margin-left:auto; margin-right:auto"  form="reviewForm">Enter Review...</textarea>
+   
     <% } %>
     <div id="gameReviewsList"></div>
 	</body>
