@@ -14,7 +14,6 @@ $.getJSON(url, function(json){
 		(async function (i) {
 			bookID[i] = new XMLHttpRequest();
 			bookID[i].responseType = 'json';
-			console.log("/getBookID?author="+json["results"][i]["author"]+"&title="+json["results"][i]["title"]);
 			/*var title = "";
 			if(json["results"][i]["title"].indexOf("#") != -1){
 				title = "\\"+json["results"][i]["title"];
@@ -25,12 +24,19 @@ $.getJSON(url, function(json){
 			bookID[i].open('GET', "/getBookID?author="+json["results"][i]["author"]+"&title="+json["results"][i]["title"], true);
 			bookID[i].onreadystatechange = await function() {
 				if(bookID[i].response != null){
-					console.log(bookID[i].response["GoodreadsResponse"]["book"]["id"]);
 					if(bookID[i].response["GoodreadsResponse"]["book"]["title"]["_text"] == null){
-						html += "<div id=\"" + i + "\" style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/bookInfo/" + bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"] + "\'\"'><h1>" + bookID[i].response["GoodreadsResponse"]["book"]["title"]["_cdata"] + "</h1></div>";
+						//html += "<div id=\"" + i + "\" style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/bookInfo/" + bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"] + "\'\"'><h1>" + bookID[i].response["GoodreadsResponse"]["book"]["title"]["_cdata"] + "</h1></div>";
+			  			html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/bookInfo/" 
+       					html += bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"] 
+        				html += "\'\"'> <img height=\"50px\" src=\"./staticImages/bookIcon.png\" align=\"right\"><h3 style=\"font-family: Arial\">" 
+        				html += bookID[i].response["GoodreadsResponse"]["book"]["title"]["_cdata"] + "</h3> <font color=\"#dd4300\"> Average Score</font> : "+bookID[i].response["GoodreadsResponse"]["book"]["average_rating"]["_text"]+"</font> </div>";
 			  		}
 			  		else {
-						html += "<div id=\"" + i + "\" style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/bookInfo/" + bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"] + "\'\"'><h1>" + bookID[i].response["GoodreadsResponse"]["book"]["title"]["_text"] + "</h1></div>";			  			
+						//html += "<div id=\"" + i + "\" style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/bookInfo/" + bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"] + "\'\"'><h1>" + bookID[i].response["GoodreadsResponse"]["book"]["title"]["_text"] + "</h1></div>";			  			
+			  			html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/bookInfo/" 
+       					html += bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"] 
+        				html += "\'\"'> <img height=\"50px\" src=\"./staticImages/bookIcon.png\" align=\"right\"><h3 style=\"font-family: Arial\">" 
+        				html += bookID[i].response["GoodreadsResponse"]["book"]["title"]["_text"] + "</h3> <font color=\"#dd4300\"> Average Score</font> : "+bookID[i].response["GoodreadsResponse"]["book"]["average_rating"]["_text"]+"</font> </div>";
 			  		}	
 			  		bodyDiv.innerHTML = html;
 			  	}
@@ -39,5 +45,4 @@ $.getJSON(url, function(json){
 			bookID[i].send();
 		})(i);
 	}
-	console.log("SHOULD BE HERE")
 });

@@ -25,7 +25,6 @@ var songList = function(){
 				tempSong = song.slice(0, song.indexOf("(feat."))
 			}
 			await spotifyApi.searchTracks(tempSong, {limit: 5, artist: json["feed"]["entry"][i]["im:artist"]["label"]}).then(function(data) {
-				//html += "<div id=\"" + i + "\" style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/song/" + data["tracks"]["items"][0]["id"] + "\'\"'><h1>" + data["tracks"]["items"][0]["name"] + "</h1></div>";
 				html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/song/" 
        			html += data["tracks"]["items"][0]["id"] 
         		html += "\'\"'> <img height=\"50px\" src=\"./staticImages/musicIcon.jpg\" align=\"right\"><h3 style=\"font-family: Arial\">" 
