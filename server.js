@@ -386,6 +386,18 @@ app.get('/username', function(req,res){
     });
 });
 
+app.get('/profileReviews', function(req,res){
+    var email = req.session.user
+    con.query('SELECT type, time, reviewTxt, rating, title FROM Users, Reviews WHERE email = ? AND Users.userId = Reviews.userId order by time desc', [email], function(err,result){
+        if(err){
+            throw err;
+        }
+        else{
+            res.send(result);
+        }
+    });
+});
+
 app.get('/userReviews', function(req,res){
     var userID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
     con.query('SELECT * FROM Reviews WHERE userId = ? order by time desc', [userID], function(err,result){
