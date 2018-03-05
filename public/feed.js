@@ -12,6 +12,7 @@ var bodyDiv = document.getElementById("feed-list");
 var html = "";
 
 var feedList = function(){
+	console.log(token);
 	for (i = 0; i < 20; i++) {
 		html += "<div id:\"" + i + "\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>" 
 

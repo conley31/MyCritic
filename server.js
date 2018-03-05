@@ -465,7 +465,7 @@ app.get('/followCheck', function(req,res){
 
 app.get('/feedFill', function(req,res){
 	var email = req.session.user;
-	con.query('SELECT type, time, reviewTxt, rating, title FROM Users, Reviews, Follows WHERE email = ? AND Follows.userId = Users.userId AND Follows.followingId = Reviews.userId order by time desc', [email], function(err, result){
+	con.query('SELECT type, time, reviewTxt, rating, title FROM Users, Reviews, Follows WHERE Users.email = ? AND Follows.userId = Users.userId AND Follows.followingId = Reviews.userId order by time desc', [email], function(err, result){
 		if(err) {
 			throw err;
 		}

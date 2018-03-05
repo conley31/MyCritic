@@ -15,17 +15,17 @@ request3.responseType = 'text';
 var follows = "";
 request3.onload = function() {
 	follows = request3.response;
+	console.log("followcheck sent");
+	console.log(follows);
+	if (follows.length > 0) {
+		document.getElementById('followButton').style.display = 'none';
+		document.getElementById('unfollowButton').style.display = 'block';
+	} else  {
+		document.getElementById('followButton').style.display = 'block';
+		document.getElementById('unfollowButton').style.display = 'none';
+	}
 }
 request3.send();
-console.log("followcheck sent");
-console.log(follows);
-if (follows.length > 0) {
-	document.getElementById('followButton').style.display = 'none';
-	document.getElementById('unfollowButton').style.display = 'block';
-} else  {
-	document.getElementById('followButton').style.display = 'block';
-	document.getElementById('unfollowButton').style.display = 'none';
-}
 
 request.open('GET', "/userReviews");
 request.responseType = 'json';
