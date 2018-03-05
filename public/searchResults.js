@@ -22,7 +22,7 @@ var populateHtml = function(){
    
     //list songs
     html += "<div style=\"margin-left: 5%\"><h1>Songs</h1></div>";
-    for(i = 0; i < songs["tracks"]["items"].length; i++){
+    for(i = 0; i < songs["tracks"]["items"].length && i < 5; i++){
         //html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/song/" + songs["tracks"]["items"][i]["id"] + "\'\"'><h1>" + songs["tracks"]["items"][i]["name"] + "</h1></div>";     
         html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/song/" 
         html += songs["tracks"]["items"][i]["id"] 
@@ -32,7 +32,7 @@ var populateHtml = function(){
 
     //list games
     html += "<div style=\"margin-left: 5%; margin-top: 15px\"><h1>Games</h1></div>";
-    for( i = 0; i < games.length; i++){
+    for( i = 0; i < games.length && i < 5; i++){
         //html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/gameTitle/" + games[i]["id"] + "\'\"'><h1>" + games[i]["name"] + "</h1></div>";
         html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#29dd00\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/gameTitle/"
         html += games[i].id;

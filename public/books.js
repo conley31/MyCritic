@@ -14,13 +14,7 @@ $.getJSON(url, function(json){
 		(async function (i) {
 			bookID[i] = new XMLHttpRequest();
 			bookID[i].responseType = 'json';
-			/*var title = "";
-			if(json["results"][i]["title"].indexOf("#") != -1){
-				title = "\\"+json["results"][i]["title"];
-			}
-			else{
-				title = json["results"][i]["title"];
-			}*/
+			
 			bookID[i].open('GET', "/getBookID?author="+json["results"][i]["author"]+"&title="+json["results"][i]["title"], true);
 			bookID[i].onreadystatechange = await function() {
 				console.log(bookID);

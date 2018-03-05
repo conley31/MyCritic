@@ -19,13 +19,11 @@ var songList = function(){
 	//get the top 50 songs and display them
 	$.getJSON('https://itunes.apple.com/us/rss/topsongs/limit=25/json', async function(json){
 		for( i = 0; i < 25; i++){
-			console.log(json);
 			var song = json["feed"]["entry"][i]["im:name"]["label"];
 			var tempSong = song;
 			if(song.indexOf("(feat.") != -1){
 				tempSong = song.slice(0, song.indexOf("(feat."))
 			}
-			console.log(tempSong);
 			await spotifyApi.searchTracks(tempSong, {limit: 1, artist: json["feed"]["entry"][i]["im:artist"]["label"]}).then(function(data) {
 				html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/song/" 
        			html += data["tracks"]["items"][0]["id"] 

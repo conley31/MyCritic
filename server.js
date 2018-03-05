@@ -278,7 +278,7 @@ app.get('/searchQ', function(req,res){
     var booksList;
 
     var songSearchRequest = {
-        url: "https://api.spotify.com/v1/search?q="+searchFor+"&type=artist,track,album&limit=5",
+        url: "https://api.spotify.com/v1/search?q="+searchFor+"&type=artist,track,album&limit=20",
         headers: {
             'Authorization': 'Bearer ' + token
         },
@@ -313,7 +313,7 @@ app.get('/searchQ', function(req,res){
 
     //search through games..
     var gameSearchRequest = {
-        url: 'https://api-2445582011268.apicast.io/games/?search=' + searchFor + '&fields=name,total_rating&limit=5',
+        url: 'https://api-2445582011268.apicast.io/games/?search=' + searchFor + '&fields=name,total_rating&limit=20',
         method: 'GET',
         headers: {
             'user-key' : '8b727bcfa8aac10e024257ebf5494be3',
