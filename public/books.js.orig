@@ -15,9 +15,20 @@ $.getJSON(url, function(json){
 		(async function (i) {
 			bookID[i] = new XMLHttpRequest();
 			bookID[i].responseType = 'json';
+<<<<<<< HEAD
+			
+=======
+			/*var title = "";
+			if(json["results"][i]["title"].indexOf("#") != -1){
+				title = "\\"+json["results"][i]["title"];
+			}
+			else{
+				title = json["results"][i]["title"];
+			}*/
             if (json == null) {
                 throw "Music fetch error.";
             }
+>>>>>>> f2a679a4fc65ecd85cbaf6c515614e6ff1b8cdfb
 			bookID[i].open('GET', "/getBookID?author="+json["results"][i]["author"]+"&title="+json["results"][i]["title"], true);
             loadingDiv.innerHTML = "<center>Loading...</center>";
 

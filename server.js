@@ -2,7 +2,7 @@ const PORT = process.env.PORT || 8080
 
 //Imports
 var express = require('express');
-	
+
 var app = express();
 var http = require('http').Server(app)
 var nconf = require('nconf');
@@ -52,7 +52,7 @@ module.exports = function(passport){
     });
     passport.deserializeUser(function(id,done){
         connection.query("select * from Users where userId = "+id, function(err,rows){
-         done(err, rows[0]);   
+         done(err, rows[0]);
         });
     });
 }
@@ -142,7 +142,7 @@ const igdbOptions = {
 app.get('/accessNewGames', function(req,res){
     request(igdbOptions, function(err, response, body){
         res.send(body);
-    });  
+    });
 });
 
 app.get('/gameTitle/:id', function(req,res){
@@ -193,7 +193,7 @@ app.post('/submitReview', function(req,res){
             type = 'book';
             break;
     }
-    
+
     /*votes not yet implemented */
     var votes = 0;
     /****************************/
@@ -210,7 +210,7 @@ app.post('/submitReview', function(req,res){
             res.redirect(req.get('referer'));
         });
     })
-    
+
 });
 
 function getUserIdByEmail(email){
@@ -218,7 +218,7 @@ function getUserIdByEmail(email){
         con.query('SELECT * FROM Users WHERE email = ?', [email], function(err, result){
             if(err) throw err;
             else resolve(result[0].userId);
-        });   
+        });
     })
 }
 
@@ -282,7 +282,7 @@ app.get('/searchQ', function(req,res){
     var booksList;
 
     var songSearchRequest = {
-        url: "https://api.spotify.com/v1/search?q="+searchFor+"&type=artist,track,album&limit=5",
+        url: "https://api.spotify.com/v1/search?q="+searchFor+"&type=artist,track,album&limit=20",
         headers: {
             'Authorization': 'Bearer ' + token
         },
@@ -295,7 +295,7 @@ app.get('/searchQ', function(req,res){
     requestSong(songSearchRequest, function(err,response,body){
         songsList = body;
         searchResultJson["songs"] = songsList;
-        //res.send('/search')    
+        //res.send('/search')
     });
 
     var GRAPI = "GhFElaxrPCsozAErWzDA";
@@ -317,7 +317,7 @@ app.get('/searchQ', function(req,res){
 
     //search through games..
     var gameSearchRequest = {
-        url: 'https://api-2445582011268.apicast.io/games/?search=' + searchFor + '&fields=name,total_rating&limit=5',
+        url: 'https://api-2445582011268.apicast.io/games/?search=' + searchFor + '&fields=name,total_rating&limit=20',
         method: 'GET',
         headers: {
             'user-key' : '8b727bcfa8aac10e024257ebf5494be3',
@@ -345,7 +345,7 @@ app.get('/getBook', function(req,res){
 	}
 
 	var bookName = req.headers.referer.substring(req.headers.referer.indexOf("/bookInfo/")+ 10, req.headers.referer.length );
-	
+
 	var options = { url: "https://www.goodreads.com/book/show/"+bookName+".xml?key=" + GRAPI};
 	request.get(options, function(error, response, body) {
 	  if (!error && response.statusCode === 200) {
@@ -500,7 +500,7 @@ app.get('/userReviews', function(req,res){
 });
 
 app.get('/mediaReviews', function(req,res){
-    var apiID 
+    var apiID
     if(req.headers.referer.indexOf("/song/") != -1){
         apiID = req.headers.referer.substring(req.headers.referer.indexOf("/song/")+ 6, req.headers.referer.length );
     }
@@ -563,10 +563,10 @@ app.post('/register', function(req, res) {
                     });
                 }
             });
-            
+
         }
         }
-        });    
+        });
 });
 
 //login page
@@ -666,8 +666,8 @@ app.post('/login', function (req, res) {
                     req.session.user = email;
                     res.locals.login = true;
 			res.render('feeds.ejs');
-  //                  res.render('login', { message: "USER LOGIN SUCCESSFUL!" });                
-                    console.log("USER LOGIN SUCCESSFUL");  
+  //                  res.render('login', { message: "USER LOGIN SUCCESSFUL!" });
+                    console.log("USER LOGIN SUCCESSFUL");
                 }
                 else{
                     res.render('login', { message: "INCORRECT PASSWORD"});
