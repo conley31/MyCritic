@@ -1,6 +1,7 @@
 //GET Spotify api Key
 var request = new XMLHttpRequest();
 var request2 = new XMLHttpRequest();
+var request3 = new XMLHttpRequest();
 request2.open('GET', "/username");
 request2.responseType = 'json';
 var name = "";
@@ -8,6 +9,23 @@ request2.onload = function() {
 	name = request2.response[0]["username"];
 }
 request2.send();
+
+request3.open('GET', "/followCheck");
+request3.responseType = 'text';
+var follows = "";
+request3.onload = function() {
+	follows = request3.response;
+}
+request3.send();
+console.log("followcheck sent");
+console.log(follows);
+if (follows.length > 0) {
+	document.getElementById('followButton').style.display = 'block';
+	document.getElementById('unfollowButton').style.display = 'none';
+} else  {
+	document.getElementById('followButton').style.display = 'none';
+	document.getElementById('unfollowButton').style.display = 'block';
+}
 
 request.open('GET', "/userReviews");
 request.responseType = 'json';

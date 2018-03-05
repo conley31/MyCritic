@@ -401,6 +401,68 @@ app.get('/username', function(req,res){
     });
 });
 
+app.post('/follow', function(req,res) {
+	console.log("inside follow function");
+	var email = req.session.user;
+	var userID;
+	var followID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
+	con.query('SELECT * FROM Users WHERE email = ?', [email], function(err, result){
+		if (err) {
+			throw err;
+		} else {
+			JSON.parse(result);
+			userID = result[0][userId];	
+		}
+	});
+	con.query('INSERT INTO Follows (userId, followingId) VALUES (?, ?)', [userID, followID], function(err, result) {
+		if (err) {
+			throw err;
+		} else {
+			console.log("followed successfully");
+		}
+	});
+});
+
+app.post('/unfollow', function(req, res) {
+	console.log("inside unfollow function");
+	var email = req.session.user;
+	var userID;
+	var followID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
+	var userIdPromise = getUserIdByEmail(email);
+	userIdPromise.then(function(result){
+		userID = result;
+		console.log(userID);
+		con.query('DELETE FROM Follows WHERE userId = ? AND followingId = ?', [userID, followID], function(err, result){
+			if (err) {
+				throw err;
+			}
+			res.redirect(req.get('referer'));
+		});
+	})
+	console.log("post promise");
+
+});
+
+app.get('/followCheck', function(req,res){
+	var userID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
+	console.log(userID);
+	var email = req.session.user;
+	con.query('SELECT followingId FROM Users, Follows WHERE email = ? AND Users.userId = Follows.userId AND Follows.followingId = ?', [email, userID], function(err, result){
+		if (err) {
+			throw err;
+		}
+		else {
+			if (result.length > 0) {
+				console.log("result length greater than 0, so they already follow them, load unfollow");
+				res.send(result);
+			} else {
+				console.log("result is 0, load follow");
+				res.send(result);
+			}
+		}
+	});
+});
+
 app.get('/feedFill', function(req,res){
 	var email = req.session.user;
 	con.query('SELECT type, time, reviewTxt, rating, title FROM Users, Reviews, Follows WHERE email = ? AND Follows.userId = Users.userId AND Follows.followingId = Reviews.userId order by time desc', [email], function(err, result){

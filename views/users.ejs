@@ -8,6 +8,21 @@
 		<% include ./partials/header %>
     </header>
     <div id="userReviewList"></div>
+    <button id ="followButton", onclick="followReq()">Follow</button>
+    <button id = "unfollowButton", onclick="unfollowReq()">Unfollow</button>
+    
+	<script>
+	function followReq() {
+		var request = new XMLHttpRequest();
+		request.open('POST', "/follow");
+		request.send();
+	}
+	function unfollowReq() {
+		var request = new XMLHttpRequest();
+		request.open('POST', "/unfollow");
+		request.send();
+	}
+	</script>
 	</body>
 	<% include ./partials/userScripts %>
 </html>
