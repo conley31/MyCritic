@@ -13,11 +13,15 @@
     
 	<script>
 	function followReq() {
+		document.getElementById('followButton').style.display = 'none';
+		document.getElementById('unfollowButton').style.display = 'block';
 		var request = new XMLHttpRequest();
 		request.open('POST', "/follow");
 		request.send();
 	}
 	function unfollowReq() {
+		document.getElementById('followButton').style.display = 'block';
+		document.getElementById('unfollowButton').style.display = 'none';
 		var request = new XMLHttpRequest();
 		request.open('POST', "/unfollow");
 		request.send();
