@@ -20,11 +20,11 @@ request3.send();
 console.log("followcheck sent");
 console.log(follows);
 if (follows.length > 0) {
-	document.getElementById('followButton').style.display = 'block';
-	document.getElementById('unfollowButton').style.display = 'none';
-} else  {
 	document.getElementById('followButton').style.display = 'none';
 	document.getElementById('unfollowButton').style.display = 'block';
+} else  {
+	document.getElementById('followButton').style.display = 'block';
+	document.getElementById('unfollowButton').style.display = 'none';
 }
 
 request.open('GET', "/userReviews");

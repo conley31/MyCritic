@@ -402,7 +402,7 @@ app.get('/username', function(req,res){
 });
 
 app.post('/follow', function(req,res) {
-	console.log("inside follow function");
+	console.log(req.session.user);
 	var email = req.session.user;
 	var userID;
 	var followID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
@@ -410,8 +410,8 @@ app.post('/follow', function(req,res) {
 		if (err) {
 			throw err;
 		} else {
-			JSON.parse(result);
-			userID = result[0][userId];	
+			console.log(result);
+			userID = result[0]["userId"];	
 		}
 	});
 	con.query('INSERT INTO Follows (userId, followingId) VALUES (?, ?)', [userID, followID], function(err, result) {
