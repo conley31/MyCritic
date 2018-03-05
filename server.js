@@ -226,6 +226,57 @@ app.get('/getMovie', function(req,res){
     });
 });
 
+app.get('/accessTopMusic',function(req,res){
+    var newSongsRequest = {
+        url: 'https://itunes.apple.com/us/rss/topsongs/limit=25/json',
+        method: 'GET'
+    }
+    //check if in cache
+    cache.get('topMusicList', function(err,reply){
+        if(reply != null){
+            res.send(reply);
+            
+        }
+        else{ 
+            var newMusicToSend = [];
+            request(newSongsRequest, function(err,response,body){
+                topmusic = JSON.parse(body);
+                //match with spotify songs ids
+                var promiseArray = [];
+                for(var i = 0; i < 25; i++){
+                    promiseArray.push(new Promise((resolve, reject) => {
+                    var song = topmusic["feed"]["entry"][i]["im:name"]["label"];
+                    var tempSong = song;
+                    if(song.indexOf("(feat.") != -1){
+                        tempSong = song.slice(0,song.indexOf("(feat."));
+                    }
+                    
+                    var songSearch = {
+                        url: "https://api.spotify.com/v1/search?q="+tempSong+"%20artist:"+topmusic["feed"]["entry"][i]["im:artist"]["label"]+"&type=track&limit=1",
+                        headers:{
+                            'Authorization': 'Bearer ' + token
+                        },
+                        form: {
+                            grant_type: 'client_credentials'
+                        },
+                        json:true
+                    }
+                    request(songSearch, function(err,response,body){
+                        resolve(body);
+                    });
+                }));
+                }
+                Promise.all(promiseArray).then(function(results){
+                    console.log(results[0].tracks);
+                    res.send(results);
+                });
+            });
+
+
+    }
+    });
+});
+
 app.post('/submitReview', function(req,res){
     var email = req.session.user;
     var userId;

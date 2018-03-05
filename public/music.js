@@ -1,6 +1,23 @@
 //GET Spotify api Key
-var spotifyApi = new SpotifyWebApi();
+var request = new XMLHttpRequest();
+request.open('GET','/accessTopMusic');
+request.responseType = 'json';
+request.onload = function(){
+    console.log(request.response[0].tracks.items[0].name);
+    populateHtml();
+}
+request.send();
 
+var populateHtml = function(){
+    console.log('func');
+}
+
+
+
+
+
+
+/*
 var request = new XMLHttpRequest();
 request.open('GET', "/access");
 request.responseType = 'text';
@@ -31,5 +48,4 @@ var songList = function(){
 		bodyDiv.innerHTML = html;
 	});
 }
-
-
+*/
