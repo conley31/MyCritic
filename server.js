@@ -201,6 +201,31 @@ app.get('/accessNewMovies', function(req,res){
 
 });
 
+app.get('/getMovie', function(req,res){
+    var movieId = req.headers.referer.substring(req.headers.referer.indexOf("/movie/") + 7, req.headers.referer.length);
+    console.log(movieId);
+    var movieRequest = {
+        url: 'http://api.themoviedb.org/3/movie/' + movieId + '?api_key=d26e26ba96250fb462f04e8c480e3351',
+        method: 'GET'
+    }
+    //check if in cahce
+    var cachedMovie = 'movieId:' + movieId;
+    cache.get(cachedMovie, function(err,reply){
+        if(reply != null){
+            console.log('got from cache');
+            res.send(reply);
+        }
+        else{
+            console.log('got form API');
+            request(movieRequest, function(err,response,body){
+                console.log(body);
+                cache.set(cachedMovie,body);
+                res.send(body);
+            });
+        }
+    });
+});
+
 app.post('/submitReview', function(req,res){
     var email = req.session.user;
     var userId;
