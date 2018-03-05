@@ -7,6 +7,7 @@ url += '?' + $.param({
 var bookID = [];
 
 var bodyDiv = document.getElementById("bookList");
+var loadingDiv = document.getElementById("loadingDiv");
 var html = "";
 
 $.getJSON(url, function(json){
@@ -14,25 +15,30 @@ $.getJSON(url, function(json){
 		(async function (i) {
 			bookID[i] = new XMLHttpRequest();
 			bookID[i].responseType = 'json';
-			
+            if (json == null) {
+                throw "Music fetch error.";
+            }
 			bookID[i].open('GET', "/getBookID?author="+json["results"][i]["author"]+"&title="+json["results"][i]["title"], true);
+            loadingDiv.innerHTML = "<center>Loading...</center>";
+
 			bookID[i].onreadystatechange = await function() {
 				console.log(bookID);
 				if(bookID[i].response != null){
 					if(bookID[i].response["GoodreadsResponse"]["book"]["title"]["_text"] == null){
 						//html += "<div id=\"" + i + "\" style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/bookInfo/" + bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"] + "\'\"'><h1>" + bookID[i].response["GoodreadsResponse"]["book"]["title"]["_cdata"] + "</h1></div>";
-			  			html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/bookInfo/" 
-       					html += bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"] 
-        				html += "\'\"'> <img height=\"50px\" src=\"./staticImages/bookIcon.png\" align=\"right\"><h3 style=\"font-family: Arial\">" 
+			  			html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/bookInfo/"
+       					html += bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"]
+        				html += "\'\"'> <img height=\"50px\" src=\"./staticImages/bookIcon.png\" align=\"right\"><h3 style=\"font-family: Arial\">"
         				html += bookID[i].response["GoodreadsResponse"]["book"]["title"]["_cdata"] + "</h3> <font color=\"#dd4300\"> Average Score</font> : "+bookID[i].response["GoodreadsResponse"]["book"]["average_rating"]["_text"]+"</font> </div>";
 			  		}
 			  		else {
-						//html += "<div id=\"" + i + "\" style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/bookInfo/" + bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"] + "\'\"'><h1>" + bookID[i].response["GoodreadsResponse"]["book"]["title"]["_text"] + "</h1></div>";			  			
-			  			html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/bookInfo/" 
-       					html += bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"] 
-        				html += "\'\"'> <img height=\"50px\" src=\"./staticImages/bookIcon.png\" align=\"right\"><h3 style=\"font-family: Arial\">" 
+						//html += "<div id=\"" + i + "\" style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/bookInfo/" + bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"] + "\'\"'><h1>" + bookID[i].response["GoodreadsResponse"]["book"]["title"]["_text"] + "</h1></div>";
+			  			html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/bookInfo/"
+       					html += bookID[i].response["GoodreadsResponse"]["book"]["id"]["_text"]
+        				html += "\'\"'> <img height=\"50px\" src=\"./staticImages/bookIcon.png\" align=\"right\"><h3 style=\"font-family: Arial\">"
         				html += bookID[i].response["GoodreadsResponse"]["book"]["title"]["_text"] + "</h3> <font color=\"#dd4300\"> Average Score</font> : "+bookID[i].response["GoodreadsResponse"]["book"]["average_rating"]["_text"]+"</font> </div>";
-			  		}	
+			  		}
+                    loadingDiv.style.visibility = "hidden";
 			  		bodyDiv.innerHTML = html;
 			  	}
 			};

@@ -7,16 +7,23 @@ request.onload = function(){
 
     gameObj = request.response;
 
+    console.log(gameObj);
+
     var rating = gameObj[0].total_rating;
 
     if(rating == undefined){
-        rating = "This game currently has no ratings!"
+        rating = "This game currently has no ratings!";
     }
 
-    else rating += '%';
+    else rating = parseInt(rating).toFixed(0) + '%';
+    
     var html = "<h1 style=\"font-size: 3.5em; text-align: center; margin-top: 3%\">" + gameObj[0].name + "</h1>";
 
-    html += "<h3 style=\"margin-left: 24%; font-size: 2em; margin-top: 5%; margin-bottom: 1%; font-family: Arial; width: 80%;\">Average Score: <font color=\"#78dc52\">" + parseInt(rating).toFixed(0) + "%</font></h3>";
+    html += "<img style=\"margin-left: 42%; margin-top: 2%;\" src=\"https://images.igdb.com/igdb/image/upload/t_cover_big/" + gameObj[0]["cover"].cloudinary_id + ".jpg\" />";
+
+    html += "<h3 style=\"margin-left: 24%; font-size: 2em; margin-top: 2%; margin-bottom: 1%; font-family: Arial; width: 80%;\">Average Score: <font color=\"#78dc52\">" + rating + "</font></h3>";
+
+
 
     html += "<div width=\"60%\" style=\"margin-top: 1%; margin-left: 24%\">";
 
@@ -30,6 +37,7 @@ request.onload = function(){
     titleInput.setAttribute('type','hidden');
     titleInput.setAttribute('name','title');
     titleInput.setAttribute('value',gameObj[0].name);
+    if (document.getElementById('reviewForm') != null)
     document.getElementById('reviewForm').appendChild(titleInput);
 };
 request.send();

@@ -43,6 +43,7 @@ var songInfo = function(){
 	    titleInput.setAttribute('type','hidden');
 	    titleInput.setAttribute('name','title');
 	    titleInput.setAttribute('value', data["name"]);
+        if (document.getElementById('reviewForm') != null)
 	    document.getElementById('reviewForm').appendChild(titleInput);
 	}, function(err) {
 		console.error(err);

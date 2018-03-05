@@ -2,7 +2,7 @@ const PORT = process.env.PORT || 8080
 
 //Imports
 var express = require('express');
-	
+
 var app = express();
 var http = require('http').Server(app)
 var nconf = require('nconf');
@@ -52,7 +52,7 @@ module.exports = function(passport){
     });
     passport.deserializeUser(function(id,done){
         connection.query("select * from Users where userId = "+id, function(err,rows){
-         done(err, rows[0]);   
+         done(err, rows[0]);
         });
     });
 }
@@ -74,10 +74,14 @@ con.connect(function(err){
 
 //main launch page
 app.get('/', function(req, res){
-	res.render('home.ejs', {
-		production: app.get('env') == 'production',
-		title: 'MyCritic'
-	});
+	if (res.locals.login) {
+		res.render('feeds.ejs');
+	} else {
+		res.render('home.ejs', {
+			production: app.get('env') == 'production',
+			title: 'MyCritic'
+		});
+	}
 });
 
 //signup page
@@ -138,7 +142,7 @@ const igdbOptions = {
 app.get('/accessNewGames', function(req,res){
     request(igdbOptions, function(err, response, body){
         res.send(body);
-    });  
+    });
 });
 
 app.get('/gameTitle/:id', function(req,res){
@@ -189,7 +193,7 @@ app.post('/submitReview', function(req,res){
             type = 'book';
             break;
     }
-    
+
     /*votes not yet implemented */
     var votes = 0;
     /****************************/
@@ -206,7 +210,7 @@ app.post('/submitReview', function(req,res){
             res.redirect(req.get('referer'));
         });
     })
-    
+
 });
 
 function getUserIdByEmail(email){
@@ -214,7 +218,7 @@ function getUserIdByEmail(email){
         con.query('SELECT * FROM Users WHERE email = ?', [email], function(err, result){
             if(err) throw err;
             else resolve(result[0].userId);
-        });   
+        });
     })
 }
 
@@ -291,7 +295,7 @@ app.get('/searchQ', function(req,res){
     requestSong(songSearchRequest, function(err,response,body){
         songsList = body;
         searchResultJson["songs"] = songsList;
-        //res.send('/search')    
+        //res.send('/search')
     });
 
     var GRAPI = "GhFElaxrPCsozAErWzDA";
@@ -341,7 +345,7 @@ app.get('/getBook', function(req,res){
 	}
 
 	var bookName = req.headers.referer.substring(req.headers.referer.indexOf("/bookInfo/")+ 10, req.headers.referer.length );
-	
+
 	var options = { url: "https://www.goodreads.com/book/show/"+bookName+".xml?key=" + GRAPI};
 	request.get(options, function(error, response, body) {
 	  if (!error && response.statusCode === 200) {
@@ -397,6 +401,18 @@ app.get('/username', function(req,res){
     });
 });
 
+app.get('/feedFill', function(req,res){
+	var email = req.session.user;
+	con.query('SELECT type, time, reviewTxt, rating, title FROM Users, Reviews, Follows WHERE email = ? AND Follows.userId = Users.userId AND Follows.followingId = Reviews.userId order by time desc', [email], function(err, result){
+		if(err) {
+			throw err;
+		}
+		else {
+			res.send(result);
+		}
+	});
+});
+
 app.get('/profileReviews', function(req,res){
     var email = req.session.user
     con.query('SELECT type, time, reviewTxt, rating, title FROM Users, Reviews WHERE email = ? AND Users.userId = Reviews.userId order by time desc', [email], function(err,result){
@@ -422,7 +438,7 @@ app.get('/userReviews', function(req,res){
 });
 
 app.get('/mediaReviews', function(req,res){
-    var apiID 
+    var apiID
     if(req.headers.referer.indexOf("/song/") != -1){
         apiID = req.headers.referer.substring(req.headers.referer.indexOf("/song/")+ 6, req.headers.referer.length );
     }
@@ -485,10 +501,10 @@ app.post('/register', function(req, res) {
                     });
                 }
             });
-            
+
         }
         }
-        });    
+        });
 });
 
 //login page
@@ -587,8 +603,9 @@ app.post('/login', function (req, res) {
                     //set sesion
                     req.session.user = email;
                     res.locals.login = true;
-                    res.render('login', { message: "USER LOGIN SUCCESSFUL!" });                
-                    console.log("USER LOGIN SUCCESSFUL");  
+			res.render('feeds.ejs');
+  //                  res.render('login', { message: "USER LOGIN SUCCESSFUL!" });
+                    console.log("USER LOGIN SUCCESSFUL");
                 }
                 else{
                     res.render('login', { message: "INCORRECT PASSWORD"});
