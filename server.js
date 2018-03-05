@@ -228,14 +228,13 @@ app.get('/getMovie', function(req,res){
 
 app.get('/accessTopMusic',function(req,res){
     var newSongsRequest = {
-        url: 'https://itunes.apple.com/us/rss/topsongs/limit=25/json',
+        url: 'https://itunes.apple.com/us/rss/topsongs/limit=50/json',
         method: 'GET'
     }
     //check if in cache
     cache.get('topMusicList', function(err,reply){
         if(reply != null){
             res.send(reply);
-            
         }
         else{ 
             var newMusicToSend = [];
@@ -243,7 +242,7 @@ app.get('/accessTopMusic',function(req,res){
                 topmusic = JSON.parse(body);
                 //match with spotify songs ids
                 var promiseArray = [];
-                for(var i = 0; i < 25; i++){
+                for(var i = 0; i < 50; i++){
                     promiseArray.push(new Promise((resolve, reject) => {
                     var song = topmusic["feed"]["entry"][i]["im:name"]["label"];
                     var tempSong = song;
@@ -267,12 +266,9 @@ app.get('/accessTopMusic',function(req,res){
                 }));
                 }
                 Promise.all(promiseArray).then(function(results){
-                    console.log(results[0].tracks);
                     res.send(results);
                 });
             });
-
-
     }
     });
 });
