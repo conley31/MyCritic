@@ -406,21 +406,17 @@ app.post('/follow', function(req,res) {
 	var email = req.session.user;
 	var userID;
 	var followID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
-	con.query('SELECT * FROM Users WHERE email = ?', [email], function(err, result){
-		if (err) {
-			throw err;
-		} else {
-			console.log(result);
-			userID = result[0]["userId"];	
-		}
-	});
-	con.query('INSERT INTO Follows (userId, followingId) VALUES (?, ?)', [userID, followID], function(err, result) {
-		if (err) {
-			throw err;
-		} else {
-			console.log("followed successfully");
-		}
-	});
+	var userIdPromise = getUserIdByEmail(email);
+	userIdPromise.then(function(result){
+		userID = result;
+		console.log(userID);
+		con.query('INSERT INTO Follows (userId, followingId) VALUES (?, ?)', [userID, followID], function(err, result){
+			if (err) {
+				throw err;
+			}
+			res.redirect(req.get('referer'));
+		});
+	})
 });
 
 app.post('/unfollow', function(req, res) {
@@ -453,6 +449,8 @@ app.get('/followCheck', function(req,res){
 		}
 		else {
 			if (result.length > 0) {
+				if (result);
+				console.log("Test:" + result);
 				console.log("result length greater than 0, so they already follow them, load unfollow");
 				res.send(result);
 			} else {
