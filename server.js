@@ -410,6 +410,9 @@ app.post('/follow', function(req,res) {
 	userIdPromise.then(function(result){
 		userID = result;
 		console.log(userID);
+		if (userID == followingID) {
+			return;
+		}
 		con.query('INSERT INTO Follows (userId, followingId) VALUES (?, ?)', [userID, followID], function(err, result){
 			if (err) {
 				throw err;
