@@ -1,11 +1,21 @@
 var request = new XMLHttpRequest();
-request.open('GET', "/access");
-request.responseType = 'text';
-var token = "";
+request.open('GET', "/getSong");
+request.responseType = 'json';
+var songObj;
 request.onload = function() {
-  token = request.response;
-  songInfo();
+  songObj = request.response;
+  populateHtml();
 };
+
+var populateHtml = function(){
+    var bodyDiv = document.getElementById("songInfo");
+    console.log(songObj);
+    var html = "<h1 id=\"title\" style=\"margin-left: 10%\">" + songObj["name"] + "</h1>";
+		html += "<h3 id=\"artist\" style=\"margin-left: 10%\">" + songObj["artists"][0]["name"] + "</h3>";
+		html += "<h5 id=\"popularity\" style=\"margin-left: 10%\">Popularity " + songObj["popularity"] + "</h5>";
+				
+		bodyDiv.innerHTML = html;
+}
 
 var request2 = new XMLHttpRequest();
 request2.open('GET', "/mediaReviews");

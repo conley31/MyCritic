@@ -275,6 +275,34 @@ app.get('/accessTopMusic',function(req,res){
     }
     });
 });
+app.get('/getSong', function(req,res){
+    var songId = req.headers.referer.substring(req.headers.referer.indexOf("/song/") + 6, req.headers.referer.length);
+    var cachedSong = 'songId:' + songId;
+    cache.get(cachedSong, function(err,reply){
+        if(reply != null){
+            console.log('from cache');
+            res.send(reply);
+        }
+        else{
+            console.log('from api');
+            var songRequest = {
+                url: "https://api.spotify.com/v1/tracks/" + songId,
+                headers:{
+                    'Authorization': 'Bearer ' + token
+                },
+                form: {
+                    grant_type: 'client_credentials'
+                },
+                json:true
+            }
+            request(songRequest, function(err,response,body){
+                cache.set(cachedSong, JSON.stringify(body));
+                res.send(body);
+            });
+        }
+    });
+
+});
 
 app.post('/submitReview', function(req,res){
     var email = req.session.user;
