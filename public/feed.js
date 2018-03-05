@@ -14,7 +14,7 @@ var html = "";
 var feedList = function(){
 
 	for (i = 0; i < 20 && i < token.length; i++) {
-		html += "<div id:\"" + i + "\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>"; 
+		html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/" + token[i]["userId"] + "\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>"; 
 
         	html += "<img height=\"50px\" align=\"right\"><h2 style=\"font-family: Arial\">"+token[i]["title"]+" ("+token[i]["type"]+")"+"</h2><h3 style=\"font-family: Arial\">"; 
 
