@@ -234,9 +234,11 @@ app.get('/accessTopMusic',function(req,res){
     //check if in cache
     cache.get('topMusicList', function(err,reply){
         if(reply != null){
+            console.log('from cache');
             res.send(reply);
         }
         else{ 
+            console.log('from api');
             var newMusicToSend = [];
             request(newSongsRequest, function(err,response,body){
                 topmusic = JSON.parse(body);
@@ -266,6 +268,7 @@ app.get('/accessTopMusic',function(req,res){
                 }));
                 }
                 Promise.all(promiseArray).then(function(results){
+                    cache.set('topMusicList',JSON.stringify(results));
                     res.send(results);
                 });
             });
