@@ -409,8 +409,9 @@ app.post('/follow', function(req,res) {
 	var userIdPromise = getUserIdByEmail(email);
 	userIdPromise.then(function(result){
 		userID = result;
-		console.log(userID);
-		if (userID == followingID) {
+		console.log("Here is the current user's id:" + userID);
+		console.log("Here is the followingID:" + followID);
+		if (userID == followID) {
 			return;
 		}
 		con.query('INSERT INTO Follows (userId, followingId) VALUES (?, ?)', [userID, followID], function(err, result){
