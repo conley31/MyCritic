@@ -3,26 +3,28 @@
 <head>
     <% include ./partials/head %>
 </head>
-    <body background = "./backgroundimagemycritic.jpg">
+    <body style="background-image: url('backgroundimagemycritic.jpg'); height: 100vh; background-position: center; background-repeat: no-repeat; background-size: cover;">
         <header>
             <% include ./partials/header %>
         </header>
 
-        <h1 style = "padding-top: 10vh; font-family: Georgia, serif; font-size: 4.8em; text-align: center; 
-        letter-spacing: 0.2px; word-spacing: -4px; color: #0D870B; font-weight: 700; text-decoration: none; font-style:
-        italic; font-variant: normal;">myCritic</h1>
-        <h2 style="font-size: 1.5em; text-align: center; font-family: Helvetica; padding-bottom: 4vh">Login</h2>
-        <h2 id="greeting" style="color: green; font-size: 1.23em; text-align: center; font-family: Helvetica; font-style: italic; padding-bottom: 4.5vh">Good to see you again!</h2>
-        <form style="text-align: center; font-family: Helvetica; font-size: 1.25em;" action="/login" method="post">
-            <label for="email">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: </label>
-            <input style="margin-bottom: 3vh; padding: 3px 10px; border-radius: 4px; border: 1px solid black;" placeholder="Email" id="email" type="text" name="email"><br>
-            <label for="password"> Password: </label>
-            <input style="margin-bottom: 8vh; padding: 3px 10px; border-radius: 4px;
-             border: 1px solid black;" placeholder="Password" id="password" type="password"
-              name="password" required pattern="[a-zA-Z0-9!@#$%^&*_-]{6,16}"
-              title="Password may contain alphanumerics and !@#$%^&*-_ special characters. Must be between 6 and 16 characters" ><br>
-            <input id="idForHiding" style="color: green" type="submit" value="Login">
-        </form>
+        <div style="border: solid 10px black; border-radius: 40px; background-color: white; margin-left: 24%; margin-right: 24%; padding-bottom: 12%;">
+            <h1 style = "padding-top: 10vh; font-family: Georgia, serif; font-size: 4.8em; text-align: center;
+            letter-spacing: 0.2px; word-spacing: -4px; color: #0D870B; font-weight: 700; text-decoration: none; font-style:
+            italic; font-variant: normal;">myCritic</h1>
+            <h2 style="font-size: 1.5em; text-align: center; font-family: Helvetica; padding-bottom: 4vh">Login</h2>
+            <h2 id="greeting" style="color: green; font-size: 1.23em; text-align: center; font-family: Helvetica; font-style: italic; padding-bottom: 4.5vh">Good to see you again!</h2>
+            <form style="text-align: center; font-family: Helvetica; font-size: 1.25em;" action="/login" method="post">
+                <label for="email">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: </label>
+                <input style="margin-bottom: 3vh; padding: 3px 10px; border-radius: 4px; border: 1px solid black;" placeholder="Email" id="email" type="text" name="email"><br>
+                <label for="password"> Password: </label>
+                <input style="margin-bottom: 8vh; padding: 3px 10px; border-radius: 4px;
+                 border: 1px solid black;" placeholder="Password" id="password" type="password"
+                  name="password" required pattern="[a-zA-Z0-9!@#$%^&*_-]{6,16}"
+                  title="Password may contain alphanumerics and !@#$%^&*-_ special characters. Must be between 6 and 16 characters" ><br>
+                <input id="idForHiding" style="color: green" type="submit" value="Login">
+            </form>
+        </div>
 
 
         <% if(typeof message != 'undefined') { %>
