@@ -411,7 +411,7 @@ app.post('/follow', function(req,res) {
 			throw err;
 		} else {
 			console.log(result);
-			userID = result[0]["userId"];	
+			userID = result[0]["userId"];
 		}
 	});
 	con.query('INSERT INTO Follows (userId, followingId) VALUES (?, ?)', [userID, followID], function(err, result) {
@@ -610,7 +610,7 @@ app.post('/changePassword', function(req, res) {
 						}
 					});
 				} else {
-					res.render('profile', { message: "INCORRECT PASSWORD"});
+					res.render('profile', { message: "Incorrect Password"});
 				}
 			}
 		}
