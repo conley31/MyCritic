@@ -45,6 +45,8 @@ app.set('view engine', 'ejs');
 app.set('views',__dirname + '/views');
  app.engine('html', require('ejs').renderFile);
 
+var igdbApiKey = "14858233c32b0616a3aa703b998ee989"
+
 
 //Passport configuration
 var LocalStrategy = require('passport-local').Strategy;
@@ -125,7 +127,7 @@ const igdbOptions = {
     method: 'GET',
     headers: {
         //'user-agent': 'request'
-        'user-key' : '8b727bcfa8aac10e024257ebf5494be3',
+        'user-key' : igdbApiKey,
         'Accept': 'application/json'
      }
 };
@@ -140,7 +142,9 @@ app.get('/accessNewGames', function(req,res){
        else{
            console.log('got from API');
            request(igdbOptions, function(err, response, body){
+           console.log(body);
                cache.set('popularGamesList',body);
+               
                res.send(body);
            });  
        }
@@ -157,7 +161,7 @@ app.get('/getGame', function(req,res){
         url: 'https://api-2445582011268.apicast.io/games/' + gameId + '/?fields=name,total_rating,summary,cover,screenshots',
         method: 'GET',
         headers: {
-            'user-key' : '8b727bcfa8aac10e024257ebf5494be3',
+            'user-key' : igdbApiKey,
             'Accept': 'application/json'
         }
     };
@@ -167,12 +171,14 @@ app.get('/getGame', function(req,res){
     cache.get(cachedGame, function(err,reply){
         if(reply !== null){
             console.log('got from cache');
+            console.log(reply);
             res.send(reply);
         }
         else{
            console.log('got from API');
            request(gameRequest, function(err, response, body){
                cache.set(cachedGame,body);
+               console.log(body);
                res.send(body);
            });  
        }
@@ -302,6 +308,49 @@ app.get('/getSong', function(req,res){
         }
     });
 
+});
+
+app.get('/accessTopBooks',function(req,res){
+    var GRAPI = "GhFElaxrPCsozAErWzDA"; 
+    var topBooksRequest = {
+        url: "https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json",
+        method: 'GET',
+        headers: {
+            'api-key': "2e30dfd30ca7408a957ee54dc4aa2bc3"
+        }
+    }
+    cache.get('topBooksList', function(err, reply){
+        if(reply != null){
+            console.log('from cache');
+            res.send(reply);
+        }
+        else{
+            var booksToSend = [];
+            console.log('from api');
+            request(topBooksRequest, function(err, response, body){
+               var NYTbooks = JSON.parse(body);
+               var promiseArray = [];
+               for(var i = 0; i < 20; i++){
+                    promiseArray.push(new Promise((resolve,reject) => {
+                    var bookRequest = {
+                        url: "https://www.goodreads.com/book/title.xml?key=" + GRAPI + "&title="+NYTbooks.results[i].title
+                    }
+                    setTimeout(function(){
+                        request(bookRequest, function(err,response,body){
+                            var json = convert.xml2json(body, {compact: true, spaces: 4});
+                            resolve(JSON.parse(json));
+                        });
+                    },1000 * i);
+
+                    }));
+                }
+                Promise.all(promiseArray).then(function(results){
+                    cache.set('topBooksList',JSON.stringify(results));
+                    res.send(results);
+                });
+            });
+        }
+    });
 });
 
 app.post('/submitReview', function(req,res){
@@ -472,7 +521,7 @@ app.get('/searchQ', function(req,res){
                         url: 'https://api-2445582011268.apicast.io/games/?search=' + searchFor + '&fields=name&limit=5',
                         method: 'GET',
                         headers: {
-                            'user-key' : '8b727bcfa8aac10e024257ebf5494be3',
+                            'user-key' : igdbApiKey,
                             'Accept': 'application/json'
                         }
                     };
@@ -510,19 +559,25 @@ app.get('/getBook', function(req,res){
     }
 
     var bookName = req.headers.referer.substring(req.headers.referer.indexOf("/bookInfo/")+ 10, req.headers.referer.length );
+    cache.get('book:' + bookName, function(err,reply){
+        if(reply != null){
 
-    var options = { url: "https://www.goodreads.com/book/show/"+bookName+".xml?key=" + GRAPI};
-    request.get(options, function(error, response, body) {
-        if (!error && response.statusCode === 200) {
-
-        var json = convert.xml2json(body, {compact: true, spaces: 4});
-
-        // use the access token to access the Spotify Web API
-        res.setHeader('Content-Type', 'application/json');
-        res.send(json);
-
+            console.log('cache');
+            res.send(reply);
         }
-        });
+        else{
+
+            var options = { url: "https://www.goodreads.com/book/show/"+bookName+".xml?key=" + GRAPI};
+            request.get(options, function(error, response, body) {
+                if (!error && response.statusCode === 200) {
+                    var json = convert.xml2json(body, {compact: true, spaces: 4});
+                    res.setHeader('Content-Type', 'application/json');
+                    cache.set('book:' + bookName,json);
+                    res.send(json);
+                }
+            });
+        }
+     });
 });
 
 app.get('/getBookID', function(req, res){
