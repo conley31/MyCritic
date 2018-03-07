@@ -7,30 +7,37 @@
 		<header>
 			<% include ./partials/header %>
 		</header>
-		<h1>MyCritic</h1>
-		<h3>Change your password</h3>
-		<form action="/changePassword" method="post">
-			<p>
-			<label for="email">Enter your email: </label>
-			<input id="email" type="text" name="email">
-			</p>
-			<p>
-			<label for="password"> Enter your current password: </label>
-			<input id="password" type="password" name="password" required pattern="[a-zA-Z0-9!@#$%^&*_-]{6,16}">
-			</p>
-			<p>
-			<label for="newPassword"> Enter your desired new password: </label>
-			<input id="newPassword" type="text" name="newPassword" required pattern="[a-zA-Z0-9!@#$%^&*_-]{6,16}"title="Password may contain alphanumerics and !@#$%^&*-_ special characters. Must be between 6 and 16 characters" >
-			<input type="submit" value="OK">
-			</p>
-		</form>
-        <h3>Delete Account (Permanent!) </h3>
-        <form action="/deleteAccount" method="post">
-            <label for="password_delete">Verify your password to delete your account</label>
-            <input id="password_delete" type="password" name="password_delete">
-            <input type="submit" value="Delete My Account">
-        </form>
-
+		<!-- <h1>MyCritic</h1> -->
+		<div style="width: 160px; position: fixed; z-index: 1; left: 0; overflow-x: hidden; padding-top: 20px;">
+		  <a style="padding: 6px 8px 6px 16px; text-decoration: none; font-size: 25px; color: #818181; display: block;" onclick="reviews()">Reviews</a>
+		  <a style="padding: 6px 8px 6px 16px; text-decoration: none; font-size: 25px; color: #818181; display: block;" onclick="changePassword()">Change Password</a>
+		  <a style="padding: 6px 8px 6px 16px; text-decoration: none; font-size: 25px; color: #818181; display: block;" onclick="deleteAccount()">Delete Account</a>
+		</div>
+		
+		<div id="changePassword" style="display: none; margin-left: 20%">
+			<h3>Change your password</h3>
+			<form action="/changePassword" method="post">
+				<p>
+				<label for="password"> Enter your current password: </label>
+				<input id="password" type="password" name="password" required pattern="[a-zA-Z0-9!@#$%^&*_-]{6,16}">
+				</p>
+				<p>
+				<label for="newPassword"> Enter your desired new password: </label>
+				<input id="newPassword" type="text" name="newPassword" required pattern="[a-zA-Z0-9!@#$%^&*_-]{6,16}"title="Password may contain alphanumerics and !@#$%^&*-_ special characters. Must be between 6 and 16 characters" >
+				<input type="submit" value="OK">
+				</p>
+			</form>
+		</div>
+		<div id="deleteAccount" style="display: none; margin-left: 20%">
+	        <h3>Delete Account (Permanent!) </h3>
+	        <form action="/deleteAccount" method="post">
+	            <label for="password_delete">Verify your password to delete your account</label>
+	            <input id="password_delete" type="password" name="password_delete">
+	            <input type="submit" value="Delete My Account">
+	        </form>
+    	</div>
+    	<div id="reviewsList" style="margin-left: 20%"></div>
+    	<% include ./partials/profileScripts %>
         <% if(typeof message != 'undefined') { %>
             <h2><%= message %></h2>
         <% } %>

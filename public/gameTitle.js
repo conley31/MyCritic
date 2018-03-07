@@ -6,26 +6,38 @@ request.onload = function(){
     var bodyDiv = document.getElementById('gameInfo');
 
     gameObj = request.response;
+
+    console.log(gameObj);
+
     var rating = gameObj[0].total_rating;
+
     if(rating == undefined){
-        rating = "This game currently has no ratings!"
+        rating = "This game currently has no ratings!";
     }
-    else rating += '%';
+
+    else rating = parseInt(rating).toFixed(0) + '%';
+    
     var html = "<h1 style=\"font-size: 3.5em; text-align: center; margin-top: 3%\">" + gameObj[0].name + "</h1>";
 
-    html += "<div width=\"60%\" style=\"margin-top: 5%; margin-left: 24%\">";
+    html += "<img style=\"margin-left: 42%; margin-top: 2%;\" src=\"https://images.igdb.com/igdb/image/upload/t_cover_big/" + gameObj[0]["cover"].cloudinary_id + ".jpg\" />";
+
+    html += "<h3 style=\"margin-left: 24%; font-size: 2em; margin-top: 2%; margin-bottom: 1%; font-family: Arial; width: 80%;\">Average Score: <font color=\"#78dc52\">" + rating + "</font></h3>";
+
+
+
+    html += "<div width=\"60%\" style=\"margin-top: 1%; margin-left: 24%\">";
 
     html += "<h5 style=\"font-family: Arial; font-size: 1.2em; width: 70%; margin-bottom: 4%;\">" + gameObj[0].summary + "</h5>";
 
-    html += "<h5 style=\"margin-left: 10%\">Total Rating: " + rating + "</h5>";
-
     html += "</div>";
+
     bodyDiv.innerHTML = html;
     //add hidden field to pass the title without having to make another api request
     var titleInput = document.createElement('input');
     titleInput.setAttribute('type','hidden');
     titleInput.setAttribute('name','title');
     titleInput.setAttribute('value',gameObj[0].name);
+    if (document.getElementById('reviewForm') != null)
     document.getElementById('reviewForm').appendChild(titleInput);
 };
 request.send();
@@ -57,12 +69,12 @@ var reviewsfunc = function(){
     console.log(reviews);
 
     for(i = 0; i < display; i++){
-        html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>" 
+        html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"border-bottom: solid 1px; margin-left: 30%; padding-bottom: 1%; margin-right: 30%; margin-bottom: 2%; width: 40%; background-color: \'white\';\";>"
 
         //add back for the type src=\"./staticImages/movieIcon.jpg\"
-        html += "<img height=\"50px\" align=\"right\"><h3 style=\"font-family: Arial\">" 
+        html += "<img height=\"50px\" align=\"right\"><h3 style=\"font-family: Arial\">"
 
-        html += reviews[i]["reviewTxt"] + "</h3> <span><font color=\"#dd4300\"> rating </font> : " + reviews[i]["rating"] + "</span><span style=\"margin-left:75%\"><font color=\"#dd4300\">user</font>: "+reviews[i]["username"]+"</span></font> </div>";
+        html += reviews[i]["reviewTxt"] + "</h3> <span><font color=\"#324fb6\"> Rating </font> : <font color=\"#c12020\">" + reviews[i]["rating"] + " / 5</font></span><br><span style=\"margin-top: 2 %\"><font color=\"#324fb6\">Review By</font>: "+reviews[i]["username"]+"</span></font> </div>";
     }
 
     bodyDiv.innerHTML = html;

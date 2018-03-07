@@ -12,7 +12,7 @@ request.onload = function() {
 		html += "<h1 style=\"font-size: 3.5em; text-align: center; margin-top: 3%\">" + json["title"] + "</h1>";
 
         html += "<div width=\"60%\" style=\"margin-top: 5%; margin-left: 24%\">";
-        
+
         html += "<img style=\"height: 500px; float: left; margin-right: 8%;\" src=\"https://image.tmdb.org/t/p/w500/" + json["poster_path"] + "\" />";
 
 
@@ -27,6 +27,55 @@ request.onload = function() {
 
 
         html += "</div>";
+  
+		bodyDiv.innerHTML = html;
+		var titleInput = document.createElement('input');
+	    titleInput.setAttribute('type','hidden');
+	    titleInput.setAttribute('name','title');
+	    titleInput.setAttribute('value', json["title"]);
+        if (document.getElementById('reviewForm') != null)
+	    document.getElementById('reviewForm').appendChild(titleInput);
+
+	});
+	console.log(html);
+	bodyDiv.innerHTML = html;
+
+}
+
+var request2 = new XMLHttpRequest();
+request2.open('GET', "/mediaReviews");
+request2.responseType = 'json';
+var reviews = "";
+request2.onload = function() {
+  reviews = request2.response;
+  reviewsfunc();
+};
+
+request2.send();
+
+var reviewsfunc = function(){
+    var bodyDiv = document.getElementById("movieReviewsList");
+    var html = "";
+    var display = 0;
+    if(reviews.length > 20){
+        display = 20;
+    }
+    else {
+        display = reviews.length;
+    }
+    console.log(reviews);
+
+    for(i = 0; i < display; i++){
+        html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>"
+
+        //add back for the type src=\"./staticImages/movieIcon.jpg\"
+        html += "<img height=\"50px\" align=\"right\"><h3 style=\"font-family: Arial\">"
+
+        html += reviews[i]["reviewTxt"] + "</h3> <span><font color=\"#dd4300\"> rating </font> : " + reviews[i]["rating"] + "</span><span style=\"margin-left:75%\"><font color=\"#dd4300\">user</font>: "+reviews[i]["username"]+"</span></font> </div>";
+    }
+
+    bodyDiv.innerHTML = html;
+}
 
         console.log(html);
 	    bodydiv.innerHTML = html;

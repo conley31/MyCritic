@@ -1,6 +1,7 @@
 //GET Spotify api Key
 var request = new XMLHttpRequest();
 var request2 = new XMLHttpRequest();
+var request3 = new XMLHttpRequest();
 request2.open('GET', "/username");
 request2.responseType = 'json';
 var name = "";
@@ -8,6 +9,26 @@ request2.onload = function() {
 	name = request2.response[0]["username"];
 }
 request2.send();
+
+request3.open('GET', "/followCheck");
+request3.responseType = 'json';
+var follows = "";
+request3.onload = function() {
+	follows = request3.response;
+	console.log("followcheck sent");
+	console.log(follows);
+	console.log(follows.length);
+	if (follows.length > 0) {
+		console.log("this is unfollow, not supposed to be here");
+		document.getElementById('followButton').style.display = 'none';
+		document.getElementById('unfollowButton').style.display = 'block';
+	} else  {
+		console.log("making follow button appear and unfollow disappear");
+		document.getElementById('followButton').style.display = 'block';
+		document.getElementById('unfollowButton').style.display = 'none';
+	}
+}
+request3.send();
 
 request.open('GET', "/userReviews");
 request.responseType = 'json';
@@ -35,7 +56,7 @@ var reviewList = function(){
 		html += "<div id:\"" + i + "\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>" 
 
 		//add back for the type src=\"./staticImages/movieIcon.jpg\"
-        html += "<img height=\"50px\" align=\"right\"><h2 style=\"font-family: Arial\">"+token[i]["title"]+"</h2><h3 style=\"font-family: Arial\">" 
+        html += "<img height=\"50px\" align=\"right\"><h2 style=\"font-family: Arial\">"+token[i]["title"]+" ("+token[i]["type"]+")"+"</h2><h3 style=\"font-family: Arial\">" 
 
         html += token[i]["reviewTxt"] + "</h3> <font color=\"#dd4300\"> rating </font> : " + token[i]["rating"] + "</font> </div>";
 	}

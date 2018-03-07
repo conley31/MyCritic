@@ -2,7 +2,7 @@ const PORT = process.env.PORT || 8080
 
 //Imports
 var express = require('express');
-	
+
 var app = express();
 var http = require('http').Server(app)
 var nconf = require('nconf');
@@ -57,7 +57,7 @@ module.exports = function(passport){
     });
     passport.deserializeUser(function(id,done){
         connection.query("select * from Users where userId = "+id, function(err,rows){
-         done(err, rows[0]);   
+         done(err, rows[0]);
         });
     });
 }
@@ -79,19 +79,34 @@ con.connect(function(err){
 
 //main launch page
 app.get('/', function(req, res){
-	res.render('home.ejs', {
-		production: app.get('env') == 'production',
-		title: 'MyCritic'
-	});
+	if (res.locals.login) {
+		res.render('feeds.ejs');
+	} else {
+		res.render('home.ejs', {
+			production: app.get('env') == 'production',
+			title: 'MyCritic'
+		});
+	}
 });
 
 //signup page
 app.get('/register', function(req,res){
+    if(req.session.user != null){
+        res.setHeader('Content-Type', 'text/plain');
+        res.send("Already Logged In");
+        return;
+    }
     res.render('register.ejs');
 });
 
 //view the profile page
 app.get('/profile', function(req,res){
+    console.log(req.session)
+    if(req.session.user == null){
+        res.setHeader('Content-Type', 'text/plain');
+        res.send("Access Denied");
+        return;
+    }
     res.render('profile.ejs');
 });
 
@@ -121,9 +136,8 @@ etime.toString();
 etime += "000";
 const igdbOptions = {
     //gets most popular games
-    
+    url:' https://api-2445582011268.apicast.io/games/?fields=name,total_rating,popularity&order=popularity:desc&limit=50',
 
-    url:' https://api-2445582011268.apicast.io/games/?fields=name,popularity&order=popularity:desc&limit=50',
     method: 'GET',
     headers: {
         //'user-agent': 'request'
@@ -132,6 +146,7 @@ const igdbOptions = {
      }
 };
 app.get('/accessNewGames', function(req,res){
+
 
     //check if already in cache
     cache.get('popularGamesList', function(err, reply) {
@@ -382,7 +397,7 @@ app.post('/submitReview', function(req,res){
             type = 'book';
             break;
     }
-    
+
     /*votes not yet implemented */
     var votes = 0;
     /****************************/
@@ -399,7 +414,7 @@ app.post('/submitReview', function(req,res){
             res.redirect(req.get('referer'));
         });
     })
-    
+
 });
 
 function getUserIdByEmail(email){
@@ -407,7 +422,7 @@ function getUserIdByEmail(email){
         con.query('SELECT * FROM Users WHERE email = ?', [email], function(err, result){
             if(err) throw err;
             else resolve(result[0].userId);
-        });   
+        });
     })
 }
 
@@ -497,6 +512,7 @@ app.get('/searchQ', function(req,res){
                 });             
             });
 
+
             var bookPromise = new Promise(function(resolve, reject){
                 var GRAPI = "GhFElaxrPCsozAErWzDA";
                 var bookSearchRequest = {url: "https://www.goodreads.com/search/index.xml?key="+ GRAPI+ "&q=" + searchFor};
@@ -551,12 +567,19 @@ app.get('/searchResults', function(req, res){
 
 
 app.get('/getBook', function(req,res){
-    var GRAPI = "GhFElaxrPCsozAErWzDA";
-    if(req.headers.referer == null){
-    res.setHeader('Content-Type', 'text/plain');
-    res.send("Access Denied");
-    return;
-    }
+
+	var GRAPI = "GhFElaxrPCsozAErWzDA";
+	if(req.headers.referer == null){
+		res.setHeader('Content-Type', 'text/plain');
+    	res.send("Access Denied");
+    	return;
+	}
+
+	var bookName = req.headers.referer.substring(req.headers.referer.indexOf("/bookInfo/")+ 10, req.headers.referer.length );
+
+	var options = { url: "https://www.goodreads.com/book/show/"+bookName+".xml?key=" + GRAPI};
+	request.get(options, function(error, response, body) {
+	  if (!error && response.statusCode === 200) {
 
     var bookName = req.headers.referer.substring(req.headers.referer.indexOf("/bookInfo/")+ 10, req.headers.referer.length );
     cache.get('book:' + bookName, function(err,reply){
@@ -621,6 +644,95 @@ app.get('/username', function(req,res){
         });
     });
 
+app.post('/follow', function(req,res) {
+	console.log(req.session.user);
+	var email = req.session.user;
+	var userID;
+	var followID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
+	var userIdPromise = getUserIdByEmail(email);
+	userIdPromise.then(function(result){
+		userID = result;
+		console.log("Here is the current user's id:" + userID);
+		console.log("Here is the followingID:" + followID);
+		if (userID == followID) {
+			return;
+		}
+		con.query('INSERT INTO Follows (userId, followingId) VALUES (?, ?)', [userID, followID], function(err, result){
+			if (err) {
+				throw err;
+			}
+			//window.location.reload();
+		});
+	})
+
+});
+
+app.post('/unfollow', function(req, res) {
+	console.log("inside unfollow function");
+	var email = req.session.user;
+	var userID;
+	var followID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
+	var userIdPromise = getUserIdByEmail(email);
+	userIdPromise.then(function(result){
+		userID = result;
+		console.log(userID);
+		con.query('DELETE FROM Follows WHERE userId = ? AND followingId = ?', [userID, followID], function(err, result){
+			if (err) {
+				throw err;
+			}
+			//window.location.reload();
+		});
+	})
+	console.log("post promise");
+
+});
+
+app.get('/followCheck', function(req,res){
+	var userID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
+	console.log(userID);
+	var email = req.session.user;
+	con.query('SELECT followingId FROM Users, Follows WHERE email = ? AND Users.userId = Follows.userId AND Follows.followingId = ?', [email, userID], function(err, result){
+		if (err) {
+			throw err;
+		}
+		else {
+			if (result.length > 0) {
+				if (result);
+				console.log("Test:" + result);
+				console.log("result length greater than 0, so they already follow them, load unfollow");
+				res.send(result);
+			} else {
+				console.log("result is 0, load follow");
+				res.send(result);
+			}
+		}
+	});
+});
+
+app.get('/feedFill', function(req,res){
+	var email = req.session.user;
+	con.query('SELECT type, time, reviewTxt, Reviews.userId, rating, title FROM Users, Reviews, Follows WHERE Users.email = ? AND Follows.userId = Users.userId AND Follows.followingId = Reviews.userId order by time desc', [email], function(err, result){
+		if(err) {
+			throw err;
+		}
+		else {
+			res.send(result);
+		}
+	});
+});
+
+app.get('/profileReviews', function(req,res){
+    var email = req.session.user
+    con.query('SELECT type, time, reviewTxt, rating, title FROM Users, Reviews WHERE email = ? AND Users.userId = Reviews.userId order by time desc', [email], function(err,result){
+        if(err){
+            throw err;
+        }
+        else{
+            res.send(result);
+        }
+    });
+});
+
 app.get('/userReviews', function(req,res){
     var userID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
     con.query('SELECT * FROM Reviews WHERE userId = ? order by time desc', [userID], function(err,result){
@@ -634,7 +746,7 @@ app.get('/userReviews', function(req,res){
     });
 
 app.get('/mediaReviews', function(req,res){
-    var apiID 
+    var apiID
     if(req.headers.referer.indexOf("/song/") != -1){
     apiID = req.headers.referer.substring(req.headers.referer.indexOf("/song/")+ 6, req.headers.referer.length );
     }
@@ -700,11 +812,17 @@ app.post('/register', function(req, res) {
 
         }
         }
-    });    
+        });
+
 });
 
 //login page
 app.get('/login', function (req, res) {
+    if(req.session.user != null){
+        res.setHeader('Content-Type', 'text/plain');
+        res.send("Already Logged In");
+        return;
+    }
     res.render('login.ejs');
     });
 
@@ -716,33 +834,35 @@ app.get('/logout', function(req, res){
 
 //change password function
 app.post('/changePassword', function(req, res) {
-    var email;
-    var password;
-    var newPassword;
-    email = req.body.email;
-    password = req.body.password;
-    newPassword = req.body.newPassword;
-    con.query('SELECT * FROM Users WHERE email = ?', [email], function (err, result) {
-        if (err) {
-        throw err;
-        } else {
-        if (result.length > 0) {
-        //user exists
-        if (result[0].password == password){
-        con.query('UPDATE Users SET password = ? WHERE email = ?', [newPassword, email], function(err, result){
-            if (err) {
-            throw err;
-            } else {
-            res.render('profile', { message: "PASSWORD CHANGE SUCCESSFUL" });
-            console.log("password change successful!");
-            }
-            });
-        } else {
-        res.render('profile', { message: "INCORRECT PASSWORD"});
-        }
-        }
-        }
-        });
+	var email;
+	var password;
+	var newPassword;
+	email = req.session.user;
+	password = req.body.password;
+	newPassword = req.body.newPassword;
+    console.log(req.session.user);
+	con.query('SELECT * FROM Users WHERE email = ?', [email], function (err, result) {
+		if (err) {
+			throw err;
+		} else {
+			if (result.length > 0) {
+				//user exists
+				if (result[0].password == password){
+					con.query('UPDATE Users SET password = ? WHERE email = ?', [newPassword, email], function(err, result){
+						if (err) {
+							throw err;
+						} else {
+							res.render('profile', { message: "PASSWORD CHANGE SUCCESSFUL" });
+							console.log("password change successful!");
+						}
+					});
+				} else {
+					res.render('profile', { message: "Incorrect Password"});
+				}
+			}
+		}
+	});
+
 });
 
 //delete account function
@@ -787,23 +907,25 @@ app.post('/login', function (req, res) {
         throw err;
         }
         else {
-        if (result.length > 0) {
-        //user exists
-        if(result[0].password == password){
-        //set sesion
-        req.session.user = email;
-        res.locals.login = true;
-        res.render('login', { message: "USER LOGIN SUCCESSFUL!" });                
-        console.log("USER LOGIN SUCCESSFUL");  
-        }
-        else{
-        res.render('login', { message: "INCORRECT PASSWORD"});
-        }
-        }
-        else{
-        //user does not exist
-        res.render('login', { message: "USER NOT REGISTERED"});
-        }
+            if (result.length > 0) {
+                //user exists
+                if(result[0].password == password){
+                    //set sesion
+                    req.session.user = email;
+                    res.locals.login = true;
+			res.render('feeds.ejs');
+  //                  res.render('login', { message: "USER LOGIN SUCCESSFUL!" });
+                    console.log("USER LOGIN SUCCESSFUL");
+                }
+                else{
+                    res.render('login', { message: "INCORRECT PASSWORD"});
+                }
+            }
+            else{
+                //user does not exist
+                res.render('login', { message: "USER NOT REGISTERED"});
+            }
+
         }
     }
     );

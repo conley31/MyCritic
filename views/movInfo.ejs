@@ -8,6 +8,24 @@
             <% include ./partials/header %>
         </header>
         <div id="movInfo"></div>
+        <% if(login) { %>
+            <form style="text-align: center; font-family: Helvetica; font-size: 1.25em;" action="/submitReview" method="post" id="reviewForm">
+                <label for="review">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Review: </label>
+
+				<select name="rating">
+			        <option type="option" value="1"> Terrible!
+			        <option type="option" value="2"> Could have been better?
+			        <option selected type="option" value="3"> Meh..
+			        <option type="option" value="4"> Pretty good game!
+			        <option type="option" value="5"> I LOVE IT!!
+				</select>
+
+                <textarea name="review" cols="100" rows="7" id="review" style="display:block; margin-left:auto; margin-right:auto"  form="reviewForm">Enter Review...</textarea>
+                <input id="idForHiding" style="color: green; margin-top: 10px; margin-left: auto; margin-right: 10%" type="submit" value="Submit Review">
+            </form>
+
+        <% } %>
+        <div id="movieReviewsList"></div>
     </body>
     <% include ./partials/movieInfoScripts %>
 </html>
