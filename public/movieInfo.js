@@ -2,7 +2,7 @@ var request = new XMLHttpRequest();
 request.open('GET', "/getMovie");
 request.responseType = 'json';
 request.onload = function() {
-	var bodydiv = document.getElementById("movInfo");
+	var bodyDiv = document.getElementById("movInfo");
 	json = request.response;
     //var json = JSON.parse(movieObj);
     console.log(json);
@@ -36,7 +36,6 @@ request.onload = function() {
         if (document.getElementById('reviewForm') != null)
 	    document.getElementById('reviewForm').appendChild(titleInput);
 
-	});
 	console.log(html);
 	bodyDiv.innerHTML = html;
 
@@ -75,9 +74,7 @@ var reviewsfunc = function(){
     }
 
     bodyDiv.innerHTML = html;
-}
 
         console.log(html);
-	    bodydiv.innerHTML = html;
 };	
 request.send();

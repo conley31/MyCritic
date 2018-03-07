@@ -24,7 +24,7 @@ var populateHtml = function(){
 	bodyDiv.innerHTML = html;
 
 
-});
+};
 	
-}
+
 

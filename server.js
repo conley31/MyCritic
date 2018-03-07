@@ -601,7 +601,9 @@ app.get('/getBook', function(req,res){
             });
         }
      });
+};
 });
+})
 
 app.get('/getBookID', function(req, res){
     var GRAPI = "GhFElaxrPCsozAErWzDA";
