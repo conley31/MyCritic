@@ -1,7 +1,7 @@
 var filt = 0
 var request = new XMLHttpRequest();
 request.open('GET', '/searchResults');
-request.responseType = 'json';
+request.responseType = 'text';
 request.onload = function() {
     results = request.response;
     populateHtml();
@@ -31,14 +31,18 @@ var change = function(opt){
 };
 
 var populateHtml = function(){
-    var games = JSON.parse(results["games"]);
+    //console.log(results);
+    results = JSON.parse(results);
+
+    //console.log(results);
+    var games = results["games"];
     var songs = results["songs"];
-    var books = JSON.parse(results["books"]);
-    var movies = JSON.parse(results["movies"]);
+    var movies = results["movies"];
+    var books = results["books"];
     //console.log(movies);
     //console.log(songs);
     //console.log(games);
-    //console.log(books);
+    console.log(books);
     var html = '';
     var bodyDiv = document.getElementById("searchList");
    

@@ -296,6 +296,7 @@
       "resolved": "https://registry.npmjs.org/raw-body/-/raw-body-2.3.2.tgz",
       "version": "2.3.2"
     },
+    "redis": "^2.8.0",
     "safe-buffer": {
       "integrity": "sha512-kKvNJn6Mm93gAczWVJg7wH+wGYWNrDHdWvpUmHyEsgCtIwwo3bqPtV4tR5tuPaUhTOo/kvhVwd8XwwOllGYkbg==",
       "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.1.tgz",
