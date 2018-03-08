@@ -5,7 +5,6 @@ request.onload = function() {
 	var bodyDiv = document.getElementById("movInfo");
 	json = request.response;
     //var json = JSON.parse(movieObj);
-    console.log(json);
 
 	var html = "";
 
@@ -36,7 +35,6 @@ request.onload = function() {
         if (document.getElementById('reviewForm') != null)
 	    document.getElementById('reviewForm').appendChild(titleInput);
 
-	console.log(html);
 	bodyDiv.innerHTML = html;
 
 }
@@ -62,7 +60,6 @@ var reviewsfunc = function(){
     else {
         display = reviews.length;
     }
-    console.log(reviews);
 
     for(i = 0; i < display; i++){
         html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>"
@@ -75,6 +72,5 @@ var reviewsfunc = function(){
 
     bodyDiv.innerHTML = html;
 
-        console.log(html);
         }
 request.send();

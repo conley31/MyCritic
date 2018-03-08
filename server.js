@@ -101,7 +101,6 @@ app.get('/register', function(req,res){
 
 //view the profile page
 app.get('/profile', function(req,res){
-    console.log(req.session)
     if(req.session.user == null){
         res.setHeader('Content-Type', 'text/plain');
         res.send("Access Denied");
@@ -151,13 +150,10 @@ app.get('/accessNewGames', function(req,res){
     //check if already in cache
     cache.get('popularGamesList', function(err, reply) {
        if(reply !== null){
-           console.log('got from cache');
            res.send(reply);
        }        
        else{
-           console.log('got from API');
            request(igdbOptions, function(err, response, body){
-           console.log(body);
                cache.set('popularGamesList',body);
                
                res.send(body);
@@ -185,15 +181,11 @@ app.get('/getGame', function(req,res){
     var cachedGame = 'gameId:' + gameId;
     cache.get(cachedGame, function(err,reply){
         if(reply !== null){
-            console.log('got from cache');
-            console.log(reply);
             res.send(reply);
         }
         else{
-           console.log('got from API');
            request(gameRequest, function(err, response, body){
                cache.set(cachedGame,body);
-               console.log(body);
                res.send(body);
            });  
        }
@@ -208,11 +200,9 @@ app.get('/accessNewMovies', function(req,res){
     //check if already in cache
     cache.get('newMoviesList', function(err,reply){
         if(reply != null){
-            console.log('got from cache');
             res.send(reply);
         }
         else{
-            console.log('got from API');
             request(newMoviesRequest, function(err,response, body){
                 cache.set('newMoviesList',body);
                 res.send(body);
@@ -224,7 +214,6 @@ app.get('/accessNewMovies', function(req,res){
 
 app.get('/getMovie', function(req,res){
     var movieId = req.headers.referer.substring(req.headers.referer.indexOf("/movie/") + 7, req.headers.referer.length);
-    console.log(movieId);
     var movieRequest = {
         url: 'http://api.themoviedb.org/3/movie/' + movieId + '?api_key=d26e26ba96250fb462f04e8c480e3351',
         method: 'GET'
@@ -233,13 +222,10 @@ app.get('/getMovie', function(req,res){
     var cachedMovie = 'movieId:' + movieId;
     cache.get(cachedMovie, function(err,reply){
         if(reply != null){
-            console.log('got from cache');
             res.send(reply);
         }
         else{
-            console.log('got form API');
             request(movieRequest, function(err,response,body){
-                console.log(body);
                 cache.set(cachedMovie,body);
                 res.send(body);
             });
@@ -255,11 +241,9 @@ app.get('/accessTopMusic',function(req,res){
     //check if in cache
     cache.get('topMusicList', function(err,reply){
         if(reply != null){
-            console.log('from cache');
             res.send(reply);
         }
         else{ 
-            console.log('from api');
             var newMusicToSend = [];
             request(newSongsRequest, function(err,response,body){
                 topmusic = JSON.parse(body);
@@ -268,7 +252,6 @@ app.get('/accessTopMusic',function(req,res){
                 for(var i = 0; i < 50; i++){
                     promiseArray.push(new Promise((resolve, reject) => {
                     var song = topmusic["feed"]["entry"][i]["im:name"]["label"];
-                    console.log(song);
                     var tempSong = song;
                     if(song.indexOf("(feat.") != -1){
                         tempSong = song.slice(0,song.indexOf("(feat."));
@@ -302,11 +285,9 @@ app.get('/getSong', function(req,res){
     var cachedSong = 'songId:' + songId;
     cache.get(cachedSong, function(err,reply){
         if(reply != null){
-            console.log('from cache');
             res.send(reply);
         }
         else{
-            console.log('from api');
             var songRequest = {
                 url: "https://api.spotify.com/v1/tracks/" + songId,
                 headers:{
@@ -337,12 +318,10 @@ app.get('/accessTopBooks',function(req,res){
     }
     cache.get('topBooksList', function(err, reply){
         if(reply != null){
-            console.log('from cache');
             res.send(reply);
         }
         else{
             var booksToSend = [];
-            console.log('from api');
             request(topBooksRequest, function(err, response, body){
                var NYTbooks = JSON.parse(body);
                var promiseArray = [];
@@ -485,12 +464,10 @@ app.get('/searchQ', function(req,res){
     var cachedSearch = 'search:' + searchFor;
     cache.get(cachedSearch, function(err,reply){
         if(reply != null){
-            console.log('got from cache');
             searchResultJson = JSON.parse(reply);
             res.send('/search');
         }
         else{
-            console.log('got from APIs');
             var requestSong = require('request');
             var gamesList;
             var songsList;
@@ -586,7 +563,6 @@ app.get('/getBook', function(req,res){
     cache.get('book:' + bookName, function(err,reply){
         if(reply != null){
 
-            console.log('cache');
             res.send(reply);
         }
         else{
@@ -787,7 +763,6 @@ app.post('/register', function(req, res) {
         else{
         if(result.length > 0){
         res.render('register.ejs',{message:'That email is already in-use!'});
-        console.log("USER NOT REGISTERED, email in use");
         }
         else{
         //check if username is taken
@@ -795,7 +770,6 @@ app.post('/register', function(req, res) {
             if(err) throw err;
             if(result.length > 0){
             res.render('register.ejs', {message:"that username is already in use..."});
-            console.log("USER NOT REGISTERED, uername in use");
             }
             else{
             //add the user to the database
@@ -806,7 +780,6 @@ app.post('/register', function(req, res) {
                 req.session.user = email;
                 res.locals.login = true;
                 res.render('register.ejs', {message: "Registration Successful!"});
-                console.log("USER REGISTERED SUCCESSFULLY");
                 }
                 });
             }
@@ -842,7 +815,6 @@ app.post('/changePassword', function(req, res) {
 	email = req.session.user;
 	password = req.body.password;
 	newPassword = req.body.newPassword;
-    console.log(req.session.user);
 	con.query('SELECT * FROM Users WHERE email = ?', [email], function (err, result) {
 		if (err) {
 			throw err;
@@ -855,7 +827,6 @@ app.post('/changePassword', function(req, res) {
 							throw err;
 						} else {
 							res.render('profile', { message: "PASSWORD CHANGE SUCCESSFUL" });
-							console.log("password change successful!");
 						}
 					});
 				} else {
@@ -871,14 +842,10 @@ app.post('/changePassword', function(req, res) {
 app.post('/deleteAccount', function(req,res){
     var email = req.session.user;
     var password = req.body.password_delete;
-    console.log(email);
     con.query('SELECT * FROM Users WHERE email = ?', [email], function(err,result){
         if(err) throw err;
         else{
-        console.log('exist');
         if(result.length > 0){
-        console.log(password);
-        console.log(result[0].password);
         if(result[0].password == password){
         con.query('DELETE FROM Users WHERE email = ?',[email], function(err,result){
             if(err) throw err;
@@ -917,7 +884,6 @@ app.post('/login', function (req, res) {
                     res.locals.login = true;
 			res.render('feeds.ejs');
   //                  res.render('login', { message: "USER LOGIN SUCCESSFUL!" });
-                    console.log("USER LOGIN SUCCESSFUL");
                 }
                 else{
                     res.render('login', { message: "INCORRECT PASSWORD"});

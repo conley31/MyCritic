@@ -7,7 +7,6 @@ request.onload = function(){
 
     gameObj = request.response;
 
-    console.log(gameObj);
 
     var rating = gameObj[0].total_rating;
 
@@ -66,7 +65,6 @@ var reviewsfunc = function(){
     else {
         display = reviews.length;
     }
-    console.log(reviews);
 
     for(i = 0; i < display; i++){
         html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"border-bottom: solid 1px; margin-left: 30%; padding-bottom: 1%; margin-right: 30%; margin-bottom: 2%; width: 40%; background-color: \'white\';\";>"

@@ -31,18 +31,12 @@ var change = function(opt){
 };
 
 var populateHtml = function(){
-    //console.log(results);
     results = JSON.parse(results);
 
-    //console.log(results);
     var games = results["games"];
     var songs = results["songs"];
     var movies = results["movies"];
     var books = results["books"];
-    //console.log(movies);
-    //console.log(songs);
-    //console.log(games);
-    console.log(books);
     var html = '';
     var bodyDiv = document.getElementById("searchList");
    

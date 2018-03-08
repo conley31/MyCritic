@@ -5,7 +5,6 @@ request.responseType = 'json';
 var trackObj;
 request.onload = function(){
     trackObj = request.response;
-    console.log(trackObj);
     populateHtml();
 }
 request.send();
@@ -14,9 +13,8 @@ var populateHtml = function(){
     var bodyDiv = document.getElementById("songList");
     var html = "";
     for(var i = 0; i < 50; i++){
-        console.log(i);
        // html += "<div id=\"" + i + "\" style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/song/" + trackObj[i].tracks.items[0].id + "\'\"'><h1>" + trackObj[i].tracks.items[0].name + "</h1></div>";
-        if(trackObj[i] != null && trackObj[i].tracks.items[0] != undefined){
+        if(trackObj[i] != null && trackObj[i].tracks != null && trackObj[i].tracks.items[0] != undefined){
         html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'; this.style.cursor=\'pointer\' \" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/song/"
        			html += trackObj[i].tracks.items[0].id
         		html += "\'\"'> <img height=\"50px\" src=\"./staticImages/musicIcon.jpg\" align=\"right\"><h3 style=\"font-family: Arial\">"

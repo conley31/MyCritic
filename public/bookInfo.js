@@ -6,7 +6,6 @@ var book = "";
 request.onload = function() {
   	book = request.response;
   	var bodyDiv = document.getElementById("bookInfo");
-  	console.log(book);
 	var html = "";
 	 var titleInput = document.createElement('input');
 	 titleInput.setAttribute('type','hidden');
@@ -27,7 +26,6 @@ request.onload = function() {
 	}
 	html += "<h5 style=\"margin-left: 10%\">Popularity " + book["GoodreadsResponse"]["book"]["average_rating"]["_text"] + "</h5>";
 	
-	console.log(book["GoodreadsResponse"]["book"]["description"]);
 	if(book["GoodreadsResponse"]["book"]["description"]["_cdata"] == null){
 	html += "<p style=\"margin-left: 10%; margin-right: 10%\">" + "No Description For This Title" + "</p>";		
 	}
@@ -62,7 +60,6 @@ var reviewsfunc = function(){
     else {
         display = reviews.length;
     }
-    console.log(reviews);
 
     for(i = 0; i < display; i++){
         html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>" 

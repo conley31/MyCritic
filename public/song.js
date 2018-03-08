@@ -9,7 +9,6 @@ request.onload = function() {
 
 var populateHtml = function(){
     var bodyDiv = document.getElementById("songInfo");
-    console.log(songObj);
     var html = "<h1 id=\"title\" style=\"margin-left: 10%\">" + songObj["name"] + "</h1>";
 		html += "<h3 id=\"artist\" style=\"margin-left: 10%\">" + songObj["artists"][0]["name"] + "</h3>";
 		html += "<h5 id=\"popularity\" style=\"margin-left: 10%\">Popularity " + songObj["popularity"] + "</h5>";
@@ -35,12 +34,10 @@ var songInfo = function(){
 	var songName = window.location.pathname;
 	var songName = songName.slice(6, songName.length);
 
-	console.log(songName);
 	var bodyDiv = document.getElementById("songInfo");
 
 	prev = spotifyApi.getTrack(songName);
 	prev.then(function(data) {
-        console.log(data);
 		var html = "<h1 id=\"title\" style=\"text-align: center;\">" + data["name"] + "</h1>";
 		html += "<h3 id=\"artist\" style=\"text-align: center;\"><font color=\"green\">Artist: </font>" + data["artists"][0]["name"] + "</h3>";
 		html += "<h4 id=\"popularity\" style=\"text-align: center; padding-bottom: 2%;\"><font color=\"orange\">Rating: </font>" + data["popularity"] + "%</h4>";

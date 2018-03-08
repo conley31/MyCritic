@@ -11,9 +11,7 @@ request.send();
 var populateHtml = function(){
     var bodyDiv = document.getElementById("bookList");
     var loadingDiv =  document.getElementById("loadingDiv");
-    console.log(bookObj[0]["GoodreadsResponse"]);
     var html = "";
-    console.log(bookObj);
     for(var i = 0; i < 20; i++){
         if(bookObj[i]["GoodreadsResponse"] != undefined){
             if(bookObj[i]["GoodreadsResponse"]["book"]["title"]["_text"] == null){
