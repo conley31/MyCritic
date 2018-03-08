@@ -8,6 +8,8 @@ var http = require('http').Server(app)
 var nconf = require('nconf');
 var request = require('request');
 var convert = require('xml-js');
+var bcrypt = require('bcryptjs');
+const saltRounds = 10;
 
 const cache = require('./cache');
 
@@ -773,7 +775,8 @@ app.post('/register', function(req, res) {
             }
             else{
             //add the user to the database
-            con.query('INSERT INTO Users(email,username,password) VALUES (?,?,?)',[email,username,password], function(err,result){
+            bcrypt.hash(password, saltRounds, function(err, hash){
+            con.query('INSERT INTO Users(email,username,password) VALUES (?,?,?)',[email,username,hash], function(err,result){
                 if(err) throw err;
                 else{
                 //set session
@@ -782,6 +785,7 @@ app.post('/register', function(req, res) {
                 res.render('register.ejs', {message: "Registration Successful!"});
                 }
                 });
+            });
             }
             });
 
@@ -821,17 +825,21 @@ app.post('/changePassword', function(req, res) {
 		} else {
 			if (result.length > 0) {
 				//user exists
-				if (result[0].password == password){
-					con.query('UPDATE Users SET password = ? WHERE email = ?', [newPassword, email], function(err, result){
+                bcrypt.compare(password, result[0].password, function(err,check){
+				if (check){
+                    bcrypt.hash(newPassword, saltRounds, function(err, hash){                    
+					con.query('UPDATE Users SET password = ? WHERE email = ?', [hash, email], function(err, result){
 						if (err) {
 							throw err;
 						} else {
 							res.render('profile', { message: "PASSWORD CHANGE SUCCESSFUL" });
 						}
 					});
+                    });
 				} else {
 					res.render('profile', { message: "Incorrect Password"});
 				}
+                });
 			}
 		}
 	});
@@ -845,22 +853,35 @@ app.post('/deleteAccount', function(req,res){
     con.query('SELECT * FROM Users WHERE email = ?', [email], function(err,result){
         if(err) throw err;
         else{
-        if(result.length > 0){
-        if(result[0].password == password){
-        con.query('DELETE FROM Users WHERE email = ?',[email], function(err,result){
-            if(err) throw err;
-            else{
-            res.render('home.ejs');
+            if(result.length > 0){
+                bcrypt.compare(password, result[0].password, function(err,check){
+                    if(check){
+                        var userIdPromise = getUserIdByEmail(email);
+                        userIdPromise.then(function(result){
+                            con.query('DELETE FROM Reviews WHERE userId = ?',[result],function(err,result){
+                                if(err)throw err;
+                            });
+                            con.query('DELETE FROM Follows WHERE userId = ? OR followingId = ?',[result, result],function(err,result){
+                                if(err) throw err;
+                            });
+                        });
+                        con.query('DELETE FROM Users WHERE email = ?',[email], function(err,result){
+                            if(err) throw err;
+                            else{
+                                req.session.reset();
+                                res.render('home.ejs');
+                            }
+                        });
+
+                    }  
+                    else{
+                        res.render('profile',{message: "INCORRECT PASSWORD"});
+                    }
+                });
             }
-            });
-        }
-        else{
-        res.render('profile',{message: "INCORRECT PASSWORD"});
-        }
-        }
-        else{
-        res.render('profile',{message: "Account not found"});
-        }
+            else{
+                res.render('profile',{message: "Account not found"});
+            }
         }
     });
 });
@@ -878,7 +899,8 @@ app.post('/login', function (req, res) {
         else {
             if (result.length > 0) {
                 //user exists
-                if(result[0].password == password){
+                bcrypt.compare(password, result[0].password, function(err,check){
+                if(check){
                     //set sesion
                     req.session.user = email;
                     res.locals.login = true;
@@ -888,6 +910,8 @@ app.post('/login', function (req, res) {
                 else{
                     res.render('login', { message: "INCORRECT PASSWORD"});
                 }
+
+                });
             }
             else{
                 //user does not exist

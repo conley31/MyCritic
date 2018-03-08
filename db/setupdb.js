@@ -14,7 +14,7 @@ var con = mysql.createConnection(nconf.get('mysql'));
 
 con.connect(function(err){
     if(err) throw err;
-    var sql = "CREATE TABLE IF NOT EXISTS Users (userId INT AUTO_INCREMENT PRIMARY KEY, email VARCHAR(255), username VARCHAR(16), password VARCHAR(16))";
+    var sql = "CREATE TABLE IF NOT EXISTS Users (userId INT AUTO_INCREMENT PRIMARY KEY, email VARCHAR(255), username VARCHAR(16), password VARCHAR(256))";
     con.query(sql, function(err, res){
         if (err) throw err;
     });
