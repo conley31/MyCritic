@@ -21,7 +21,7 @@ Public contains the javascript for the functionality. Its the directory the serv
 
 ## Running The server
 1. Start the Redis caching server `redis-server`
-2. Start the node server `npm start`
+2. Start the node server `sudo npm start`
 3. In your browser, navigate to `localhost:8080`
 
 ## Additional Info
