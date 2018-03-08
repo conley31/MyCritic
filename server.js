@@ -268,6 +268,7 @@ app.get('/accessTopMusic',function(req,res){
                 for(var i = 0; i < 50; i++){
                     promiseArray.push(new Promise((resolve, reject) => {
                     var song = topmusic["feed"]["entry"][i]["im:name"]["label"];
+                    console.log(song);
                     var tempSong = song;
                     if(song.indexOf("(feat.") != -1){
                         tempSong = song.slice(0,song.indexOf("(feat."));
@@ -284,7 +285,7 @@ app.get('/accessTopMusic',function(req,res){
                         json:true
                     }
                     request(songSearch, function(err,response,body){
-                        resolve(body);
+                            resolve(body);
                     });
                 }));
                 }
@@ -601,8 +602,9 @@ app.get('/getBook', function(req,res){
             });
         }
      });
+};
 });
-
+});
 app.get('/getBookID', function(req, res){
     var GRAPI = "GhFElaxrPCsozAErWzDA";
     if(req.headers.referer == null){
