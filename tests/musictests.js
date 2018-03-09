@@ -18,8 +18,8 @@ test('First test', async t => {
 
 test('Music Test', async t => {
     const music = Selector(elementWithIdOrClassName('music')); 
-    var choice1 = Math.floor(Math.random() * 50);
-    var choice2 = Math.floor(Math.random() * 50);
+    var choice1 = Math.floor(Math.random() * 25);
+    var choice2 = Math.floor(Math.random() * 25);
 
     const choice1Cli = Selector(elementWithIdOrClassName(choice1));
     const choice2Cli = Selector(elementWithIdOrClassName(choice2));

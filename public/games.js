@@ -13,7 +13,7 @@ var populateHtml = function(){
     var bodyDiv = document.getElementById("newGameList");
     var html = "";
     for( i = 0; i < 50; i++){
-        html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#29dd00\'; this.style.cursor=\'pointer\' \" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/gameTitle/"
+        html += "<div id=\""+i+"\"onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#29dd00\'; this.style.cursor=\'pointer\' \" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/gameTitle/"
         html += json[i].id;
         html += "\'\"'> <img height=\"50px\" src=\"./staticImages/gameIcon.png\" align=\"right\"><h3 style=\"font-family: Arial\">"
         html += json[i].name;
