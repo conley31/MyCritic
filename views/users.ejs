@@ -9,8 +9,11 @@
     </header>
 
     <span id="userTitle"></span>
-    <button style="display: none; float: right; margin-right: 25%; color: #4CAF50; font-size: 16px" id ="followButton", onclick="followReq()">Follow</button>
-    <button style="display: none; float: right; margin-right: 25%; color: #FF0000; font-size: 16px" id = "unfollowButton", onclick="unfollowReq()">Unfollow</button>
+    <% if (login) { %>
+	    <button style="display: none; float: right; margin-right: 25%; color: #4CAF50; font-size: 16px" id ="followButton", onclick="followReq()">Follow</button>
+	    <button style="display: none; float: right; margin-right: 25%; color: #FF0000; font-size: 16px" id = "unfollowButton", onclick="unfollowReq()">Unfollow</button>
+	    <div id="name" style="display:none"><%= user %></div>
+    <% }%>
     <div id="userReviewList"></div>
     
     

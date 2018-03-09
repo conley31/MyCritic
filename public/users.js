@@ -20,15 +20,10 @@ request3.responseType = 'json';
 var follows = "";
 request3.onload = function() {
 	follows = request3.response;
-	console.log("followcheck sent");
-	console.log(follows);
-	console.log(follows.length);
 	if (follows.length > 0) {
-		console.log("this is unfollow, not supposed to be here");
 		document.getElementById('followButton').style.display = 'none';
 		document.getElementById('unfollowButton').style.display = 'block';
 	} else  {
-		console.log("making follow button appear and unfollow disappear");
 		document.getElementById('followButton').style.display = 'block';
 		document.getElementById('unfollowButton').style.display = 'none';
 	}
@@ -50,7 +45,7 @@ var html = "";
 var reviewList = function(){
 	var title = document.getElementById("userTitle");
 	var titleHTML = "";
-	console.log(name);
+	console.log(document.getElementById('name').innerHTML);
 	if(name != "null"){
 		titleHTML = "<h1 style=\"margin-left: 20%; display: inline; margin-bottom 2%; 50%; background-color: \'white\';\";>" + name + "\'s Reviews</h1>";
 	}
@@ -59,6 +54,11 @@ var reviewList = function(){
 		document.getElementById('followButton').style.display = 'none';
 		document.getElementById('unfollowButton').style.display = 'none';
 	}
+	if(name == document.getElementById('name').innerHTML){
+		document.getElementById('followButton').style.display = 'none';
+		document.getElementById('unfollowButton').style.display = 'none';
+	}
+
 	title.innerHTML = titleHTML;
 
 	var display = 0;
