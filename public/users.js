@@ -6,7 +6,12 @@ request2.open('GET', "/username");
 request2.responseType = 'json';
 var name = "";
 request2.onload = function() {
-	name = request2.response[0]["username"];
+	if(request2.response[0] == null){
+		name = null;
+	}
+	else {
+		name = request2.response[0]["username"];
+	}
 }
 request2.send();
 
@@ -43,7 +48,19 @@ var bodyDiv = document.getElementById("userReviewList");
 var html = "";
 
 var reviewList = function(){
-	html += "<h1 style=\"margin-left: 20%; margin-bottom 2%; 50%; background-color: \'white\';\";>" + name + "\'s Reviews</h1>";
+	var title = document.getElementById("userTitle");
+	var titleHTML = "";
+	console.log(name);
+	if(name != "null"){
+		titleHTML = "<h1 style=\"margin-left: 20%; display: inline; margin-bottom 2%; 50%; background-color: \'white\';\";>" + name + "\'s Reviews</h1>";
+	}
+	else {
+		titleHTML = "<h1 style=\"margin-left: 20%; margin-bottom 2%; 50%; background-color: \'white\';\";> User Doesnt Exist</h1>"
+		document.getElementById('followButton').style.display = 'none';
+		document.getElementById('unfollowButton').style.display = 'none';
+	}
+	title.innerHTML = titleHTML;
+
 	var display = 0;
 	if(token.length > 20){
 		display = 20;

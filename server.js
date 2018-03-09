@@ -782,7 +782,8 @@ app.post('/register', function(req, res) {
                 //set session
                 req.session.user = email;
                 res.locals.login = true;
-                res.render('register.ejs', {message: "Registration Successful!"});
+                res.render('feeds.ejs');
+                //res.render('register.ejs', {message: "Registration Successful!"});
                 }
                 });
             });
@@ -904,7 +905,7 @@ app.post('/login', function (req, res) {
                     //set sesion
                     req.session.user = email;
                     res.locals.login = true;
-			res.render('feeds.ejs');
+			        res.render('feeds.ejs');
   //                  res.render('login', { message: "USER LOGIN SUCCESSFUL!" });
                 }
                 else{

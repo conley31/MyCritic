@@ -7,20 +7,23 @@
 	<header>
 		<% include ./partials/header %>
     </header>
+
+    <span id="userTitle"></span>
+    <button style="display: none; float: right; margin-right: 25%; color: #4CAF50; font-size: 16px" id ="followButton", onclick="followReq()">Follow</button>
+    <button style="display: none; float: right; margin-right: 25%; color: #FF0000; font-size: 16px" id = "unfollowButton", onclick="unfollowReq()">Unfollow</button>
     <div id="userReviewList"></div>
-    <button id ="followButton", onclick="followReq()">Follow</button>
-    <button id = "unfollowButton", onclick="unfollowReq()">Unfollow</button>
+    
     
 	<script>
 	function followReq() {
 		document.getElementById('followButton').style.display = 'none';
-		document.getElementById('unfollowButton').style.display = 'block';
+		document.getElementById('unfollowButton').style.display = 'inline';
 		var request = new XMLHttpRequest();
 		request.open('POST', "/follow");
 		request.send();
 	}
 	function unfollowReq() {
-		document.getElementById('followButton').style.display = 'block';
+		document.getElementById('followButton').style.display = 'inline';
 		document.getElementById('unfollowButton').style.display = 'none';
 		var request = new XMLHttpRequest();
 		request.open('POST', "/unfollow");

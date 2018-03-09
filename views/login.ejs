@@ -9,6 +9,9 @@
         </header>
 
         <div style="border: solid 10px black; border-radius: 40px; background-color: white; margin-left: 24%; margin-right: 24%; padding-bottom: 12%;">
+            <% if(typeof message != 'undefined') { %>
+              <h2 style="color: #0000000; text-align: center"><%= message %></h2>
+            <% } %>
             <h1 style = "padding-top: 10vh; font-family: Georgia, serif; font-size: 4.8em; text-align: center;
             letter-spacing: 0.2px; word-spacing: -4px; color: #0D870B; font-weight: 700; text-decoration: none; font-style:
             italic; font-variant: normal;">myCritic</h1>
@@ -26,10 +29,6 @@
             </form>
         </div>
 
-
-        <% if(typeof message != 'undefined') { %>
-            <h2><%= message %></h2>
-        <% } %>
 
         <script>
 
