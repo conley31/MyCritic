@@ -1,3 +1,20 @@
+var request3 = new XMLHttpRequest();
+request3.open('GET', "/averages");
+request3.responseType = 'json';
+var average = "";
+request3.onload = function(){
+    if(request3.response[0]["AVG(rating)"] == null){
+        average = "No MyCritic Ratings";
+    }
+    else {
+        average = request3.response[0]["AVG(rating)"];      
+    }
+    //console.log(average);
+    request.send();
+}
+
+request3.send();
+
 var request = new XMLHttpRequest();
 request.open('GET', "/getSong");
 request.responseType = 'json';
@@ -11,8 +28,9 @@ var populateHtml = function(){
     var bodyDiv = document.getElementById("songInfo");
     var html = "<h1 id=\"title\" style=\"margin-left: 10%\">" + songObj["name"] + "</h1>";
 		html += "<h3 id=\"artist\" style=\"margin-left: 10%\">" + songObj["artists"][0]["name"] + "</h3>";
-		html += "<h5 id=\"popularity\" style=\"margin-left: 10%\">Popularity " + songObj["popularity"] + "</h5>";
-				
+		html += "<h5 id=\"popularity\" style=\"margin-left: 10%\">Spotify Popularity: " + songObj["popularity"] + "</h5>";
+		html += "<h5 id=\"popularity\" style=\"margin-left: 10%\">MyCritic Rating: " + average + "</h5>";
+
 		bodyDiv.innerHTML = html;
 }
 
@@ -25,7 +43,6 @@ request2.onload = function() {
   reviewsfunc();
 };
 
-request.send();
 request2.send();
 var songInfo = function(){
 	//initilize spotify api
@@ -40,7 +57,7 @@ var songInfo = function(){
 	prev.then(function(data) {
 		var html = "<h1 id=\"title\" style=\"text-align: center;\">" + data["name"] + "</h1>";
 		html += "<h3 id=\"artist\" style=\"text-align: center;\"><font color=\"green\">Artist: </font>" + data["artists"][0]["name"] + "</h3>";
-		html += "<h4 id=\"popularity\" style=\"text-align: center; padding-bottom: 2%;\"><font color=\"orange\">Rating: </font>" + data["popularity"] + "%</h4>";
+		html += "<h4 id=\"popularity\" style=\"text-align: center; padding-bottom: 2%;\"><font color=\"orange\">Spotify Rating: </font>" + data["popularity"] + "%</h4>";
         html += "<img style=\"margin-left: 37%; margin-bottom: 2%;\" width=25% src=\"" + data["album"]["images"][0]["url"] + "\" />";
 
 		bodyDiv.innerHTML = html;

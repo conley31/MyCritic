@@ -1,4 +1,18 @@
-	
+var request3 = new XMLHttpRequest();
+request3.open('GET', "/averages");
+request3.responseType = 'json';
+var average = "";
+request3.onload = function(){
+	if(request3.response[0]["AVG(rating)"] == null){
+		average = "No MyCritic Ratings";
+	}
+	else {
+		average = request3.response[0]["AVG(rating)"];		
+	}
+}
+
+request3.send();
+
 var request = new XMLHttpRequest();
 request.open('GET', "/getBook/");
 request.responseType = 'json';
@@ -24,7 +38,9 @@ request.onload = function() {
 	else {
 		html += "<h3 style=\"margin-left: 10%\">" + book["GoodreadsResponse"]["book"]["authors"]["author"]["name"]["_text"] + "</h3>";
 	}
-	html += "<h5 style=\"margin-left: 10%\">Popularity " + book["GoodreadsResponse"]["book"]["average_rating"]["_text"] + "</h5>";
+	html += "<h5 style=\"margin-left: 10%\">Good Reads Popularity: " + book["GoodreadsResponse"]["book"]["average_rating"]["_text"] + "</h5>";
+	html += "<h5 style=\"margin-left: 10%\">MyCritic Popularity: " + average + "</h5>";
+
 	
 	if(book["GoodreadsResponse"]["book"]["description"]["_cdata"] == null){
 	html += "<p style=\"margin-left: 10%; margin-right: 10%\">" + "No Description For This Title" + "</p>";		

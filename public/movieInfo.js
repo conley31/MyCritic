@@ -1,3 +1,18 @@
+var request3 = new XMLHttpRequest();
+request3.open('GET', "/averages");
+request3.responseType = 'json';
+var average = "";
+request3.onload = function(){
+    if(request3.response[0]["AVG(rating)"] == null){
+        average = "No MyCritic Ratings";
+    }
+    else {
+        average = request3.response[0]["AVG(rating)"];      
+    }
+}
+
+request3.send();
+
 var request = new XMLHttpRequest();
 request.open('GET', "/getMovie");
 request.responseType = 'json';
@@ -15,7 +30,9 @@ request.onload = function() {
         html += "<img style=\"height: 500px; float: left; margin-right: 8%;\" src=\"https://image.tmdb.org/t/p/w500/" + json["poster_path"] + "\" />";
 
 
-		html += "<h3 style=\"font-size: 2em; margin-bottom: 3%; font-family: arial; width: 80%;\">average score: <font color=\"#78dc52\">" + json["vote_average"] + "</font></h3>";
+		html += "<h3 style=\"font-size: 2em; margin-bottom: 3%; font-family: arial; width: 80%;\">The Movie Databse Average Score: <font color=\"#78dc52\">" + json["vote_average"] + "</font></h3>";
+
+        html += "<h3 style=\"font-size: 2em; margin-bottom: 3%; font-family: arial; width: 80%;\">MyCritic Average Score: <font color=\"#78dc52\">" + average + "</font></h3>";
 
 		html += "<h5 style=\"font-family: arial; font-size: 1.4em; width: 70%; margin-bottom: 4%;\">" + json["overview"] + "</h5>";
 

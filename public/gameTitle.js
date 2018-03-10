@@ -1,3 +1,20 @@
+var request3 = new XMLHttpRequest();
+request3.open('GET', "/averages");
+request3.responseType = 'json';
+var average = "";
+request3.onload = function(){
+    if(request3.response[0]["AVG(rating)"] == null){
+        average = "No MyCritic Ratings";
+    }
+    else {
+        average = request3.response[0]["AVG(rating)"];      
+    }
+    //console.log(average);
+    request.send();
+}
+
+request3.send();
+
 var request = new XMLHttpRequest();
 request.open('GET', "/getGame/");
 request.responseType = 'json';
@@ -6,7 +23,6 @@ request.onload = function(){
     var bodyDiv = document.getElementById('gameInfo');
 
     gameObj = request.response;
-
 
     var rating = gameObj[0].total_rating;
 
@@ -22,6 +38,7 @@ request.onload = function(){
 
     html += "<h3 style=\"margin-left: 24%; font-size: 2em; margin-top: 2%; margin-bottom: 1%; font-family: Arial; width: 80%;\">Average Score: <font color=\"#78dc52\">" + rating + "</font></h3>";
 
+    html += "<h3 style=\"margin-left: 24%; font-size: 2em; margin-top: 2%; margin-bottom: 1%; font-family: Arial; width: 80%;\">MyCritic Average Score: <font color=\"#78dc52\">" + average + "</font></h3>";
 
 
     html += "<div width=\"60%\" style=\"margin-top: 1%; margin-left: 24%\">";
@@ -39,7 +56,6 @@ request.onload = function(){
     if (document.getElementById('reviewForm') != null)
     document.getElementById('reviewForm').appendChild(titleInput);
 };
-request.send();
 
 
 

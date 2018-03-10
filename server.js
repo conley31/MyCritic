@@ -91,6 +91,33 @@ app.get('/', function(req, res){
 	}
 });
 
+app.get('/averages', function(req, res){
+    var id;
+    if(req.headers.referer.indexOf("/gameTitle/") != -1){
+        id = req.headers.referer.substring(req.headers.referer.indexOf("/gameTitle/") + 11, req.headers.referer.length);
+    }
+    if(req.headers.referer.indexOf("/bookInfo/") != -1){
+        id = req.headers.referer.substring(req.headers.referer.indexOf("/bookInfo/") + 10, req.headers.referer.length);
+    }
+    if(req.headers.referer.indexOf("/song/") != -1){
+        id = req.headers.referer.substring(req.headers.referer.indexOf("/song/") + 6, req.headers.referer.length);
+    }
+    if(req.headers.referer.indexOf("/movie/") != -1){
+        id = req.headers.referer.substring(req.headers.referer.indexOf("/movie/") + 7, req.headers.referer.length);
+    }
+    //req.headers.referer.substring(req.headers.referer.indexOf("/gameTitle/") + 11, req.headers.referer.length);
+    console.log(id);
+    con.query('SELECT AVG(rating) FROM Reviews WHERE apiId = ?', [id], function(err, result){
+        if(err) {
+            throw err;
+        }
+        else {
+            console.log(result);
+            res.send(result);
+        }
+    });
+});
+
 //signup page
 app.get('/register', function(req,res){
     if(req.session.user != null){
