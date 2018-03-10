@@ -385,6 +385,7 @@ app.post('/submitReview', function(req,res){
     var reviewTxt= req.body.review;
     var rating = req.body.rating;
     var title = req.body.title;
+    console.log(title);
 
     //get the URL, then split it to extract the type and api id.
     var type;

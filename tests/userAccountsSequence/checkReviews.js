@@ -21,6 +21,8 @@ test('Login, follow user, view feed', async t=>{
     const books = Selector(selectE('books'));
     const div = Selector(selectE('newMoviesList' || 'songList' || 'newGamesList' || 'bookList'));
     const reviewArea = Selector(selectE('review'));
+    const followButton = Selector(selectE('followButton'));
+    const homeFeed = Selector(selectE('home'));
     var mediaList = [movies,music,games,books];
     const emailInput = Selector(selectE('email'));
     const passInput = Selector(selectE('password'));
@@ -52,7 +54,12 @@ test('Login, follow user, view feed', async t=>{
         //click the username link
         rev = Selector(selectE(0));
         await t
-        .click(rev)
+        .click(rev);
+        await t
+        .click(followButton);
+        await t
+        .click(homeFeed);
+        await t
         .click(logoutButton)
         .click(login);
      }
