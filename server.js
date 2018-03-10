@@ -222,8 +222,34 @@ app.get('/getGame', function(req,res){
 });
 
 app.get('/accessNewMovies', function(req,res){
+	var today = new Date();
+	var day = today.getDate();
+	var month = today.getMonth() + 1; // January will be returned as 0
+	var year = today.getFullYear();
+	var monthAgo;
+	var yearAgo;
+	if (month > 1) {
+		monthAgo = month - 1;
+		yearAgo = year;
+	} else {
+		monthAgo = 12;
+		yearAgo = year - 1;
+	}
+	if (monthAgo < 10) {
+		monthAgo = '0' + monthAgo;
+	}
+	if (day < 10) {
+		day = '0' + day;
+	}
+	if (month < 10) {
+		month = '0' + month;
+	}
+	var date = year + '-' + month + '-' + day;
+	var monthAgoDate = yearAgo + '-' + monthAgo + '-' + "01";
+	console.log("Later date is: " + date);
+	console.log("Month ago is: " + monthAgoDate);
     var newMoviesRequest = {
-        url: 'https://api.themoviedb.org/3/discover/movie?api_key=d26e26ba96250fb462f04e8c480e3351&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2018-02-08&primary_release_date.lte=2018-03-10',
+        url: 'https://api.themoviedb.org/3/discover/movie?api_key=d26e26ba96250fb462f04e8c480e3351&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=' + monthAgoDate + '&primary_release_date.lte=' + date,
         method: 'GET'        
     }
     //check if already in cache
