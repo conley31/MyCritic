@@ -79,7 +79,7 @@ var reviewsfunc = function(){
     }
 
     for(i = 0; i < display; i++){
-        html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>"
+        html += "<div id=\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>"
 
         //add back for the type src=\"./staticImages/movieIcon.jpg\"
         html += "<img height=\"50px\" align=\"right\"><h3 style=\"font-family: Arial\">"
