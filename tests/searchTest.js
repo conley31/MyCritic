@@ -9,7 +9,7 @@ fs.readFile("1-1000.txt", function(err, data){
 });
 
 fixture('First fixture')
-.page('localhost:8087');
+.page('localhost:8080');
 
 const selectE = Selector(value => {
 	return document.getElementById(value) || document.getElementsByClassName(value);
