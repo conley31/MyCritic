@@ -223,7 +223,7 @@ app.get('/getGame', function(req,res){
 
 app.get('/accessNewMovies', function(req,res){
     var newMoviesRequest = {
-        url: 'https://api.themoviedb.org/3/discover/movie?api_key=d26e26ba96250fb462f04e8c480e3351&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2018-01-15&primary_release_date.lte=2018-02-08',
+        url: 'https://api.themoviedb.org/3/discover/movie?api_key=d26e26ba96250fb462f04e8c480e3351&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2018-02-08&primary_release_date.lte=2018-03-10',
         method: 'GET'        
     }
     //check if already in cache
