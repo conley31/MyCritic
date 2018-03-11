@@ -3,6 +3,8 @@ var request = new XMLHttpRequest();
 request.open('GET', "/accessNewMovies");
 request.responseType = 'text';
 var newMoviesList;
+var loadingDiv = document.getElementById("loadingDiv");
+loadingDiv.innerHTML = "<center>Loading...</center>";
 request.onload = function(){
     newMoviesList = request.response;
     populateHtml();
@@ -22,5 +24,6 @@ var populateHtml = function(){
 	}
 
 	bodyDiv.innerHTML = html;
+    loadingDiv.style.visibility = "hidden";
 }
 
