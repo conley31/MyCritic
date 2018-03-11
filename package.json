@@ -246,6 +246,7 @@
       "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-0.6.1.tgz",
       "version": "0.6.1"
     },
+    "nexe": "^2.0.0-rc.26",
     "nightwatch": "^0.9.19",
     "npm": "^5.7.1",
     "on-finished": {
