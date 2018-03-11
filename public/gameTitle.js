@@ -7,7 +7,7 @@ request3.onload = function(){
         average = "No MyCritic Ratings";
     }
     else {
-        average = request3.response[0]["AVG(rating)"];      
+        average = request3.response[0]["AVG(rating)"];
     }
     //console.log(average);
     request.send();
@@ -31,7 +31,7 @@ request.onload = function(){
     }
 
     else rating = parseInt(rating).toFixed(0) + '%';
-    
+
     var html = "<h1 style=\"font-size: 3.5em; text-align: center; margin-top: 3%\">" + gameObj[0].name + "</h1>";
 
     html += "<img style=\"margin-left: 42%; margin-top: 2%;\" src=\"https://images.igdb.com/igdb/image/upload/t_cover_big/" + gameObj[0]["cover"].cloudinary_id + ".jpg\" />";
@@ -83,12 +83,12 @@ var reviewsfunc = function(){
     }
 
     for(i = 0; i < display; i++){
-        html += "<div id=\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"border-bottom: solid 1px; margin-left: 30%; padding-bottom: 1%; margin-right: 30%; margin-bottom: 2%; width: 40%; background-color: \'white\';\";>"
+        html += "<div id=\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"textDecoration: border-bottom: solid 1px; margin-left: 30%; padding-bottom: 1%; margin-right: 30%; margin-bottom: 2%; width: 40%; background-color: \'white\';\";>"
 
         //add back for the type src=\"./staticImages/movieIcon.jpg\"
         html += "<img height=\"50px\" align=\"right\"><h3 style=\"font-family: Arial\">"
 
-        html += reviews[i]["reviewTxt"] + "</h3> <span><font color=\"#324fb6\"> Rating </font> : <font color=\"#c12020\">" + reviews[i]["rating"] + " / 5</font></span><br><span style=\"margin-top: 2 %\"><font color=\"#324fb6\">Review By</font>: "+reviews[i]["username"]+"</span></font> </div>";
+        html += reviews[i]["reviewTxt"] + "</h3> <span><font color=\"#324fb6\"> Rating </font> : <font color=\"#c12020\">" + reviews[i]["rating"] + " / 5</font></span><br><span style=\"margin-top: 2 %\"><font color=\"#324fb6\">Review By</font>: <u onmouseover=\"this.style.cursor='pointer'\">"+reviews[i]["username"]+"</u></span></font> </div>";
     }
 
     bodyDiv.innerHTML = html;
