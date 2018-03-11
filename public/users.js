@@ -21,11 +21,15 @@ var follows = "";
 request3.onload = function() {
 	follows = request3.response;
 	if (follows.length > 0) {
-		document.getElementById('followButton').style.display = 'none';
-		document.getElementById('unfollowButton').style.display = 'block';
+		if(document.getElementById('followButton') != null && document.getElementById('unfollowButton') != null){
+			document.getElementById('followButton').style.display = 'none';
+			document.getElementById('unfollowButton').style.display = 'block';
+		}
 	} else  {
-		document.getElementById('followButton').style.display = 'block';
-		document.getElementById('unfollowButton').style.display = 'none';
+		if(document.getElementById('followButton') != null && document.getElementById('unfollowButton') != null){
+			document.getElementById('followButton').style.display = 'block';
+			document.getElementById('unfollowButton').style.display = 'none';
+		}
 	}
 }
 request3.send();
@@ -45,18 +49,28 @@ var html = "";
 var reviewList = function(){
 	var title = document.getElementById("userTitle");
 	var titleHTML = "";
-	console.log(document.getElementById('name').innerHTML);
 	if(name != "null"){
 		titleHTML = "<h1 style=\"margin-left: 20%; display: inline; margin-bottom 2%; 50%; background-color: \'white\';\";>" + name + "\'s Reviews</h1>";
 	}
 	else {
 		titleHTML = "<h1 style=\"margin-left: 20%; margin-bottom 2%; 50%; background-color: \'white\';\";> User Doesnt Exist</h1>"
-		document.getElementById('followButton').style.display = 'none';
-		document.getElementById('unfollowButton').style.display = 'none';
+		if(document.getElementById('followButton') != null && document.getElementById('unfollowButton') != null){
+			document.getElementById('followButton').style.display = 'none';
+			document.getElementById('unfollowButton').style.display = 'none';
+		}
 	}
-	if(name == document.getElementById('name').innerHTML){
-		document.getElementById('followButton').style.display = 'none';
-		document.getElementById('unfollowButton').style.display = 'none';
+	var tempname;
+	if(document.getElementById('name') == null){
+		tempname = "null"
+	}
+	else {
+		tempname = document.getElementById('name').innerHTML;
+	}
+	if(name == tempname){
+		if(document.getElementById('followButton') != null && document.getElementById('unfollowButton') != null){
+			document.getElementById('followButton').style.display = 'none';
+			document.getElementById('unfollowButton').style.display = 'none';
+		}
 	}
 
 	title.innerHTML = titleHTML;
