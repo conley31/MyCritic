@@ -2,6 +2,8 @@ var request = new XMLHttpRequest();
 request.open('GET', "/accessNewGames");
 request.responseType = 'text';
 var newGamesList;
+var loadingDiv = document.getElementById("loadingDiv");
+loadingDiv.innerHTML = "<center>Loading...</center>";
 request.onload = function(){
     newGamesList = request.response;
     populateHtml();
@@ -25,4 +27,5 @@ var populateHtml = function(){
         }
     }
     bodyDiv.innerHTML = html;
+    loadingDiv.style.visibility = "hidden";
 }

@@ -2,6 +2,9 @@ var request = new XMLHttpRequest();
 request.open('GET', "/accessTopBooks");
 request.responseType = 'text';
 var bookObj;
+
+var loadingDiv =  document.getElementById("loadingDiv");
+loadingDiv.innerHTML = "<center>Loading...</center>";
 request.onload = function(){
     bookObj = JSON.parse(request.response);
     populateHtml();
@@ -10,9 +13,9 @@ request.send();
 
 var populateHtml = function(){
     var bodyDiv = document.getElementById("bookList");
-    var loadingDiv =  document.getElementById("loadingDiv");
     var html = "";
     for(var i = 0; i < 20; i++){
+        
         if(bookObj[i]["GoodreadsResponse"] != undefined){
             if(bookObj[i]["GoodreadsResponse"]["book"]["title"]["_text"] == null){
                 html += "<div id=\"" + i + "\"onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'; this.style.cursor=\'pointer\' \" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/bookInfo/"

@@ -3,6 +3,8 @@ var request = new XMLHttpRequest();
 request.open('GET','/accessTopMusic');
 request.responseType = 'json';
 var trackObj;
+var loadingDiv = document.getElementById("loadingDiv");
+loadingDiv.innerHTML = "<center>Loading...</center>";
 request.onload = function(){
     trackObj = request.response;
     populateHtml();
