@@ -7,7 +7,7 @@ request3.onload = function(){
 		average = "No MyCritic Ratings";
 	}
 	else {
-		average = request3.response[0]["AVG(rating)"];		
+		average = request3.response[0]["AVG(rating)"];
 	}
 }
 
@@ -29,7 +29,7 @@ request.onload = function() {
 		titleInput.setAttribute('value', book["GoodreadsResponse"]["book"]["title"]["_text"]);
 	}
 	else {
-		html += "<h1 style=\"margin-left: 10%; margin-right: 10%\">" + book["GoodreadsResponse"]["book"]["title"]["_cdata"] + "</h1>";		
+		html += "<h1 style=\"margin-left: 10%; margin-right: 10%\">" + book["GoodreadsResponse"]["book"]["title"]["_cdata"] + "</h1>";
 		titleInput.setAttribute('value', book["GoodreadsResponse"]["book"]["title"]["_cdata"]);
 	}
 	if(book["GoodreadsResponse"]["book"]["authors"]["author"].length > 1){
@@ -41,9 +41,9 @@ request.onload = function() {
 	html += "<h5 style=\"margin-left: 10%\">Good Reads Popularity: " + book["GoodreadsResponse"]["book"]["average_rating"]["_text"] + "</h5>";
 	html += "<h5 style=\"margin-left: 10%\">MyCritic Popularity: " + average + "</h5>";
 
-	
+
 	if(book["GoodreadsResponse"]["book"]["description"]["_cdata"] == null){
-	html += "<p style=\"margin-left: 10%; margin-right: 10%\">" + "No Description For This Title" + "</p>";		
+	html += "<p style=\"margin-left: 10%; margin-right: 10%\">" + "No Description For This Title" + "</p>";
 	}
 	else{
 		html += "<p style=\"margin-left: 10%; margin-right: 10%\">" + book["GoodreadsResponse"]["book"]["description"]["_cdata"] + "</p>";
@@ -78,10 +78,10 @@ var reviewsfunc = function(){
     }
 
     for(i = 0; i < display; i++){
-        html += "<div id=\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>" 
+        html += "<div id=\"" + i + "\" onclick=\"window.location=\'/user/"+reviews[i]["userId"] +"\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>"
 
         //add back for the type src=\"./staticImages/movieIcon.jpg\"
-        html += "<img height=\"50px\" align=\"right\"><h3 style=\"font-family: Arial\">" 
+        html += "<img height=\"50px\" align=\"right\"><h3 style=\"font-family: Arial\">"
 
         html += reviews[i]["reviewTxt"] + "</h3> <span><font color=\"#dd4300\"> rating </font> : " + reviews[i]["rating"] + "</span><span style=\"margin-left:75%\"><font color=\"#dd4300\">user</font>: "+reviews[i]["username"]+"</span></font> </div>";
     }

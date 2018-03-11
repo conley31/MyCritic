@@ -7,7 +7,7 @@ request3.onload = function(){
         average = "No MyCritic Ratings";
     }
     else {
-        average = request3.response[0]["AVG(rating)"];      
+        average = request3.response[0]["AVG(rating)"];
     }
     request.send();
 }
@@ -24,12 +24,15 @@ request.onload = function() {
 };
 
 var populateHtml = function(){
+    console.log(songObj);
     var bodyDiv = document.getElementById("songInfo");
-    var html = "<h1 id=\"title\" style=\"margin-left: 10%\">" + songObj["name"] + "</h1>";
-		html += "<h3 id=\"artist\" style=\"margin-left: 10%\">" + songObj["artists"][0]["name"] + "</h3>";
-		html += "<h5 id=\"popularity\" style=\"margin-left: 10%\">Spotify Popularity: " + songObj["popularity"] + "</h5>";
-		html += "<h5 id=\"popularity\" style=\"margin-left: 10%\">MyCritic Rating: " + average + "</h5>";
-				
+    var html = "<h1 id=\"title\" style=\"text-align: center; margin-bottom: 2%\">" + songObj["name"] + "</h1>";
+        html += "<p style=\"text-align: center; margin-bottom: 2%;\"><a href=\"" + songObj["preview_url"] + "\"><img width=\"500px\" src=\"" + songObj["album"]["images"][0]["url"] + "\" /></a></p>"
+		html += "<h3 id=\"artist\" style=\"text-align: center;\">" + songObj["artists"][0]["name"] + "</h3>";
+        html += "<h3 style=\"text-align: center; font-size: 2em; font-family: arial; width: 100%;\">The Movie Databse Average Score: <font color=\"#78dc52\">" + songObj["popularity"] + "</font></h3>";
+        html += "<h3 style=\"text-align: center; font-size: 2em; margin-bottom: 3%; font-family: arial; width: 100%;\">MyCritic Average Score: <font color=\"#78dc52\">" + average + "</font></h3>";
+
+
 		bodyDiv.innerHTML = html;
 		//add hidden field to pass the title without having to make another api request
 	    var titleInput = document.createElement('input');
@@ -68,8 +71,9 @@ var songInfo = function(){
 		html += "<h4 id=\"popularity\" style=\"text-align: center; padding-bottom: 2%;\"><font color=\"orange\">Rating: </font>" + data["popularity"] + "%</h4>";
         html += "<img style=\"margin-left: 37%; margin-bottom: 2%;\" width=25% src=\"" + data["album"]["images"][0]["url"] + "\" />";
 
+
 		bodyDiv.innerHTML = html;
-		
+
 	}, function(err) {
 		console.error(err);
 	});

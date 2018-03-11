@@ -15,7 +15,7 @@ var populateHtml = function(){
     for(var i = 0; i < 20; i++){
         if(bookObj[i]["GoodreadsResponse"] != undefined){
             if(bookObj[i]["GoodreadsResponse"]["book"]["title"]["_text"] == null){
-                html += "<div id=\"" + i + "\"onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/bookInfo/"
+                html += "<div id=\"" + i + "\"onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'; this.style.cursor=\'pointer\' \" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/bookInfo/"
                 html += bookObj[i]["GoodreadsResponse"]["book"]["id"]["_text"]
                 html += "\'\"'> <img height=\"50px\" src=\"./staticImages/bookIcon.png\" align=\"right\"><h3 style=\"font-family: Arial\">"
                 html += bookObj[i]["GoodreadsResponse"]["book"]["title"]["_cdata"] + "</h3> <font color=\"#dd4300\"> Average Score</font> : "+bookObj[i]["GoodreadsResponse"]["book"]["average_rating"]["_text"]+"</font> </div>";
@@ -25,10 +25,10 @@ var populateHtml = function(){
                 html += bookObj[i]["GoodreadsResponse"]["book"]["id"]["_text"]
                 html += "\'\"'> <img height=\"50px\" src=\"./staticImages/bookIcon.png\" align=\"right\"><h3 style=\"font-family: Arial\">"
                 html += bookObj[i]["GoodreadsResponse"]["book"]["title"]["_text"] + "</h3> <font color=\"#dd4300\"> Average Score</font> : "+bookObj[i]["GoodreadsResponse"]["book"]["average_rating"]["_text"]+"</font> </div>";
-	  
+
             }
         }
-	
+
 	}
     loadingDiv.style.visibility = "hidden";
     bodyDiv.innerHTML = html;

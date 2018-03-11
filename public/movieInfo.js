@@ -7,7 +7,7 @@ request3.onload = function(){
         average = "No MyCritic Ratings";
     }
     else {
-        average = request3.response[0]["AVG(rating)"];      
+        average = request3.response[0]["AVG(rating)"];
     }
 }
 
@@ -27,7 +27,7 @@ request.onload = function() {
 
         html += "<div width=\"60%\" style=\"margin-top: 5%; margin-left: 24%\">";
 
-        html += "<img style=\"height: 500px; float: left; margin-right: 8%;\" src=\"https://image.tmdb.org/t/p/w500/" + json["poster_path"] + "\" />";
+        html += "<img style=\"height: 450px; float: left; margin-right: 8%;\" src=\"https://image.tmdb.org/t/p/w500/" + json["poster_path"] + "\" />";
 
 
 		html += "<h3 style=\"font-size: 2em; margin-bottom: 3%; font-family: arial; width: 80%;\">The Movie Databse Average Score: <font color=\"#78dc52\">" + json["vote_average"] + "</font></h3>";
@@ -36,14 +36,14 @@ request.onload = function() {
 
 		html += "<h5 style=\"font-family: arial; font-size: 1.4em; width: 70%; margin-bottom: 4%;\">" + json["overview"] + "</h5>";
 
-		html += "<h5 style=\"font-family: arial; color: #6297bc; font-size: 1.4em; width: 70%;\">release date - " + json["release_date"] + "</h5>";
+		html += "<h5 style=\"font-family: arial; color: #6297bc; font-size: 1.4em; width: 70%;\">Release date - " + json["release_date"] + "</h5>";
 
-		html += "<h5 style=\"font-family: arial; color: #ee5622; font-size: 1.4em; width: 70%;\">runtime - " + json["runtime"] + " minutes</h5>";
+		html += "<h5 style=\"font-family: arial; color: #ee5622; font-size: 1.4em; width: 70%;\">Runtime - " + json["runtime"] + " minutes</h5>";
         //html += "</p>";
 
 
         html += "</div>";
-  
+
 		bodyDiv.innerHTML = html;
 		var titleInput = document.createElement('input');
 	    titleInput.setAttribute('type','hidden');

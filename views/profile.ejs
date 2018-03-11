@@ -9,12 +9,12 @@
 		</header>
 		<!-- <h1>MyCritic</h1> -->
 		<div style="width: 160px; position: fixed; z-index: 1; left: 0; overflow-x: hidden; padding-top: 20px;">
-		  <a style="padding: 6px 8px 6px 16px; text-decoration: none; font-size: 25px; color: #818181; display: block;" onclick="reviews()">Reviews</a>
-		  <a style="padding: 6px 8px 6px 16px; text-decoration: none; font-size: 25px; color: #818181; display: block;" onclick="changePassword()">Change Password</a>
-		  <a style="padding: 6px 8px 6px 16px; text-decoration: none; font-size: 25px; color: #818181; display: block;" onclick="deleteAccount()">Delete Account</a>
+		  <a style="padding: 6px 8px 6px 16px; text-decoration: none; font-size: 25px; color: #818181; display: block;" onmouseover="this.style.textDecoration = 'underline'; this.style.cursor= 'pointer'" onmouseout="this.style.textDecoration = 'none'; this.style.cursor= 'default'"  onclick="reviews()">Reviews</a>
+		  <a style="padding: 6px 8px 6px 16px; text-decoration: none; font-size: 25px; color: #818181; display: block;" onmouseover="this.style.textDecoration = 'underline'; this.style.cursor= 'pointer'" onmouseout="this.style.textDecoration = 'none'; this.style.cursor= 'default'" onclick="changePassword()">Change Password</a>
+		  <a style="padding: 6px 8px 6px 16px; text-decoration: none; font-size: 25px; color: #818181; display: block;" onmouseover="this.style.textDecoration = 'underline'; this.style.cursor= 'pointer'" onmouseout="this.style.textDecoration = 'none'; this.style.cursor= 'default'"  onclick="deleteAccount()">Delete Account</a>
 		</div>
-		
-		<div id="changePassword" style="display: none; margin-left: 20%">
+
+		<div id="changePassword" style="display: none; margin-left: 20%; background-color: '#818181'">
 			<h3>Change your password</h3>
 			<form action="/changePassword" method="post">
 				<p>
@@ -41,4 +41,3 @@
         <% if(typeof message != 'undefined') { %>
             <h2><%= message %></h2>
         <% } %>
-           
