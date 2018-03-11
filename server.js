@@ -586,7 +586,11 @@ app.get('/searchQ', function(req,res){
                  searchResultJson.books = results[1];
                  searchResultJson.movies = results[2];
                  searchResultJson.games = results[3];
-                 cache.set(cachedSearch,JSON.stringify(searchResultJson));
+                 if(results[0].tracks != null && results[1]["GoodreadsResponse"]["search"]["results"]["work"] != null && results[2]["results"] != null
+                 && results[3][0] != null){
+                    console.log('cache set');
+                    cache.set(cachedSearch,JSON.stringify(searchResultJson));
+                 }
                  res.send('/search');
                });
              
