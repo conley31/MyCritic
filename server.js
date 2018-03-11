@@ -839,6 +839,10 @@ app.post('/register', function(req, res) {
     email = req.body.email;
     username = req.body.username;
     password = req.body.password;
+    if(email.indexOf("@") == -1){
+        res.render('register.ejs',{message:'Invalid Email'});
+        return;    
+    }
     con.query('SELECT * FROM Users WHERE email = ?', [email], function(err,result){
         if(err){
         throw err;
