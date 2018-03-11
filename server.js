@@ -75,7 +75,6 @@ nconf.file({
 var con = mysql.createConnection(nconf.get('mysql'));
 con.connect(function(err){
     if(err) throw err;
-    console.log("Now connected to mysql db and can make queries");
 });
 
 
@@ -106,13 +105,11 @@ app.get('/averages', function(req, res){
         id = req.headers.referer.substring(req.headers.referer.indexOf("/movie/") + 7, req.headers.referer.length);
     }
     //req.headers.referer.substring(req.headers.referer.indexOf("/gameTitle/") + 11, req.headers.referer.length);
-    console.log(id);
     con.query('SELECT AVG(rating) FROM Reviews WHERE apiId = ?', [id], function(err, result){
         if(err) {
             throw err;
         }
         else {
-            console.log(result);
             res.send(result);
         }
     });
@@ -184,7 +181,6 @@ app.get('/accessNewGames', function(req,res){
        else{
            request(igdbOptions, function(err, response, body){
                if(JSON.parse(body)[0].id != null){
-                    console.log('cachedpopgames');
                     cache.set('popularGamesList',body);
                }
                res.send(body);
@@ -218,7 +214,6 @@ app.get('/getGame', function(req,res){
            request(gameRequest, function(err, response, body){
            if(JSON.parse(body)[0].name != null){
                cache.set(cachedGame,body);
-               console.log('gameCached')
            }
                res.send(body);
            });  
@@ -251,8 +246,6 @@ app.get('/accessNewMovies', function(req,res){
 	}
 	var date = year + '-' + month + '-' + day;
 	var monthAgoDate = yearAgo + '-' + monthAgo + '-' + "01";
-	console.log("Later date is: " + date);
-	console.log("Month ago is: " + monthAgoDate);
     var newMoviesRequest = {
         url: 'https://api.themoviedb.org/3/discover/movie?api_key=d26e26ba96250fb462f04e8c480e3351&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=' + monthAgoDate + '&primary_release_date.lte=' + date,
         method: 'GET'        
@@ -265,7 +258,6 @@ app.get('/accessNewMovies', function(req,res){
         else{
             request(newMoviesRequest, function(err,response, body){
                 if(JSON.parse(body)["results"][0] != null){
-                    console.log('topMovies cached');
                     cache.set('newMoviesList',body);
                 }
                 res.send(body);
@@ -290,7 +282,6 @@ app.get('/getMovie', function(req,res){
         else{
             request(movieRequest, function(err,response,body){
                 if(JSON.parse(body)['title'] != null){
-                    console.log('movie cached');
                     cache.set(cachedMovie,body);
                 }
                 res.send(body);
@@ -340,7 +331,6 @@ app.get('/accessTopMusic',function(req,res){
                 }
                 Promise.all(promiseArray).then(function(results){
                     if(results[0] != null && results[0].tracks != null && results[0].tracks.items[0] != null){
-                        console.log('topMusicCached');
                         cache.set('topMusicList',JSON.stringify(results));
                     }
                     res.send(results);
@@ -369,7 +359,6 @@ app.get('/getSong', function(req,res){
             }
             request(songRequest, function(err,response,body){
                 if(body["name"] != null){
-                    console.log('songCached');
                     cache.set(cachedSong, JSON.stringify(body));
                 }
                 res.send(body);
@@ -414,7 +403,6 @@ app.get('/accessTopBooks',function(req,res){
                 Promise.all(promiseArray).then(function(results){
                     if(results[0]["GoodreadsResponse"] != undefined && results[0]["GoodreadsResponse"]["book"]["title"] != null){
                         cache.set('topBooksList',JSON.stringify(results));
-                        console.log('topBooks cached');
                     }
                     res.send(results);
                 });
@@ -431,7 +419,6 @@ app.post('/submitReview', function(req,res){
     var reviewTxt= req.body.review;
     var rating = req.body.rating;
     var title = req.body.title;
-    console.log(title);
 
     //get the URL, then split it to extract the type and api id.
     var type;
@@ -608,7 +595,6 @@ app.get('/searchQ', function(req,res){
                  searchResultJson.games = results[3];
                  if(results[0].tracks != null && results[1]["GoodreadsResponse"]["search"]["results"]["work"] != null && results[2]["results"] != null
                  && results[3][0] != null){
-                    console.log('cache set');
                     cache.set(cachedSearch,JSON.stringify(searchResultJson));
                  }
                  res.send('/search');
@@ -653,7 +639,6 @@ app.get('/getBook', function(req,res){
                     var json = convert.xml2json(body, {compact: true, spaces: 4});
                     res.setHeader('Content-Type', 'application/json');
                     if(json["GoodreadsResponse"] != null){
-                        console.log('book cached');
                         cache.set('book:' + bookName,json);
                     }
                     res.send(json);
@@ -706,15 +691,12 @@ app.get('/username', function(req,res){
     });
 
 app.post('/follow', function(req,res) {
-	console.log(req.session.user);
 	var email = req.session.user;
 	var userID;
 	var followID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
 	var userIdPromise = getUserIdByEmail(email);
 	userIdPromise.then(function(result){
 		userID = result;
-		console.log("Here is the current user's id:" + userID);
-		console.log("Here is the followingID:" + followID);
 		if (userID == followID) {
 			return;
 		}
@@ -729,14 +711,12 @@ app.post('/follow', function(req,res) {
 });
 
 app.post('/unfollow', function(req, res) {
-	console.log("inside unfollow function");
 	var email = req.session.user;
 	var userID;
 	var followID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
 	var userIdPromise = getUserIdByEmail(email);
 	userIdPromise.then(function(result){
 		userID = result;
-		console.log(userID);
 		con.query('DELETE FROM Follows WHERE userId = ? AND followingId = ?', [userID, followID], function(err, result){
 			if (err) {
 				throw err;
@@ -744,13 +724,11 @@ app.post('/unfollow', function(req, res) {
 			//window.location.reload();
 		});
 	})
-	console.log("post promise");
 
 });
 
 app.get('/followCheck', function(req,res){
 	var userID = req.headers.referer.substring(req.headers.referer.indexOf("/user/")+ 6, req.headers.referer.length );
-	console.log(userID);
 	var email = req.session.user;
 	con.query('SELECT followingId FROM Users, Follows WHERE email = ? AND Users.userId = Follows.userId AND Follows.followingId = ?', [email, userID], function(err, result){
 		if (err) {
@@ -759,11 +737,8 @@ app.get('/followCheck', function(req,res){
 		else {
 			if (result.length > 0) {
 				if (result);
-				console.log("Test:" + result);
-				console.log("result length greater than 0, so they already follow them, load unfollow");
 				res.send(result);
 			} else {
-				console.log("result is 0, load follow");
 				res.send(result);
 			}
 		}
@@ -1034,7 +1009,7 @@ res.sendStatus(404);
 
 
 var server = http.listen(PORT, function() {
-    console.log('Running Server');
+    console.log('Running Server Use Control C To Close Server');
     })
 
 var exitHandler = function(){
