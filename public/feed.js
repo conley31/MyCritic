@@ -34,12 +34,17 @@ var change = function(opt){
 
 var feedList = function(){
 
-	for (i = 0; i < 20 && i < token.length; i++) {
-		html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/" + token[i]["userId"] + "\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>"; 
+	if(token.length != 0){
+		for (i = 0; i < 20 && i < token.length; i++) {
+			html += "<div id:\"" + i + "\" onclick=\"window.location=\'/user/" + token[i]["userId"] + "\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\";>"; 
 
-        	html += "<img height=\"50px\" align=\"right\"><h2 style=\"font-family: Arial\">"+token[i]["title"]+" ("+token[i]["type"]+")"+"</h2><h3 style=\"font-family: Arial\">"; 
+	        	html += "<img height=\"50px\" align=\"right\"><h2 style=\"font-family: Arial\">"+token[i]["title"]+" ("+token[i]["type"]+")"+"</h2><h3 style=\"font-family: Arial\">"; 
 
-	        html += token[i]["reviewTxt"] + "</h3> <font color=\"#dd4300\"> rating </font> : " + token[i]["rating"] + "</font> </div>";
+		        html += token[i]["reviewTxt"] + "</h3> <font color=\"#dd4300\"> rating </font> : " + token[i]["rating"] + "</font> </div>";
+		}
+	}
+	else {
+		html += "<h2 style=\"margin-left: 25%\">Feed Empty Follow Users To Fill</h2>";
 	}
 	bodyDiv.innerHTML = html;
 }
