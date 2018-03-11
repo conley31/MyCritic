@@ -183,8 +183,10 @@ app.get('/accessNewGames', function(req,res){
        }        
        else{
            request(igdbOptions, function(err, response, body){
-               cache.set('popularGamesList',body);
-               
+               if(JSON.parse(body)[0].id != null){
+                    console.log('cachedpopgames');
+                    cache.set('popularGamesList',body);
+               }
                res.send(body);
            });  
        }
@@ -214,7 +216,10 @@ app.get('/getGame', function(req,res){
         }
         else{
            request(gameRequest, function(err, response, body){
+           if(JSON.parse(body)[0].name != null){
                cache.set(cachedGame,body);
+               console.log('gameCached')
+           }
                res.send(body);
            });  
        }
@@ -259,7 +264,10 @@ app.get('/accessNewMovies', function(req,res){
         }
         else{
             request(newMoviesRequest, function(err,response, body){
-                cache.set('newMoviesList',body);
+                if(JSON.parse(body)["results"][0] != null){
+                    console.log('topMovies cached');
+                    cache.set('newMoviesList',body);
+                }
                 res.send(body);
             });
         }
@@ -281,7 +289,10 @@ app.get('/getMovie', function(req,res){
         }
         else{
             request(movieRequest, function(err,response,body){
-                cache.set(cachedMovie,body);
+                if(JSON.parse(body)['title'] != null){
+                    console.log('movie cached');
+                    cache.set(cachedMovie,body);
+                }
                 res.send(body);
             });
         }
@@ -328,7 +339,10 @@ app.get('/accessTopMusic',function(req,res){
                 }));
                 }
                 Promise.all(promiseArray).then(function(results){
-                    cache.set('topMusicList',JSON.stringify(results));
+                    if(results[0] != null && results[0].tracks != null && results[0].tracks.items[0] != null){
+                        console.log('topMusicCached');
+                        cache.set('topMusicList',JSON.stringify(results));
+                    }
                     res.send(results);
                 });
             });
@@ -354,7 +368,10 @@ app.get('/getSong', function(req,res){
                 json:true
             }
             request(songRequest, function(err,response,body){
-                cache.set(cachedSong, JSON.stringify(body));
+                if(body["name"] != null){
+                    console.log('songCached');
+                    cache.set(cachedSong, JSON.stringify(body));
+                }
                 res.send(body);
             });
         }
@@ -395,7 +412,10 @@ app.get('/accessTopBooks',function(req,res){
                     }));
                 }
                 Promise.all(promiseArray).then(function(results){
-                    cache.set('topBooksList',JSON.stringify(results));
+                    if(results[0]["GoodreadsResponse"] != undefined && results[0]["GoodreadsResponse"]["book"]["title"] != null){
+                        cache.set('topBooksList',JSON.stringify(results));
+                        console.log('topBooks cached');
+                    }
                     res.send(results);
                 });
             });
@@ -632,7 +652,10 @@ app.get('/getBook', function(req,res){
                 if (!error && response.statusCode === 200) {
                     var json = convert.xml2json(body, {compact: true, spaces: 4});
                     res.setHeader('Content-Type', 'application/json');
-                    cache.set('book:' + bookName,json);
+                    if(json["GoodreadsResponse"] != null){
+                        console.log('book cached');
+                        cache.set('book:' + bookName,json);
+                    }
                     res.send(json);
                 }
             });
