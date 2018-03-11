@@ -120,10 +120,10 @@ var populateHtml = function(){
 
 var filterSearch = function(){
     console.log("filtering");
-    var games = JSON.parse(results["games"]);
+    var games = results["games"];
     var songs = results["songs"];
-    var books = JSON.parse(results["books"]);
-    var movies = JSON.parse(results["movies"]);
+    var movies = results["movies"];
+    var books = results["books"];
     var html = '';
     var bodyDiv = document.getElementById("searchList");
 
@@ -155,7 +155,7 @@ var filterSearch = function(){
     }
     else if(filt == 2){
         html += "<div style=\"margin-left: 5%; margin-top: 15px\"><h1>Movies</h1></div>";
-        for (i = 0; i < movies["total_results"] && i < 5; i++){
+        for (i = 0; i < movies["total_results"] && i < 20; i++){
             //html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/movie/" + movies["results"][i]["id"] + "\'\"'><h1>" + movies["results"][i]["title"] + "</h1></div>";
             html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/movie/" 
             html += movies["results"][i]["id"] 
@@ -166,7 +166,7 @@ var filterSearch = function(){
     else if(filt == 4){
         html += "<div style=\"margin-left: 5%; margin-top: 15px\"><h1>Books</h1></div>";
         if(books["GoodreadsResponse"]["search"]["results"]["work"] != null){
-            for( i = 0; i < books["GoodreadsResponse"]["search"]["results"]["work"].length && i < 5; i++){
+            for( i = 0; i < books["GoodreadsResponse"]["search"]["results"]["work"].length && i < 20; i++){
                 if(books["GoodreadsResponse"]["search"]["results"]["work"][i]["best_book"]["title"]["_text"] == null){
                             html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/bookInfo/" 
                             html += books["GoodreadsResponse"]["search"]["results"]["work"][i]["best_book"]["id"]["_text"] 
