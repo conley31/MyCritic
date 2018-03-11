@@ -1,16 +1,23 @@
 var mysql = require('mysql');
-var nconf = require('nconf');
+//var nconf = require('nconf');
+var mysqlConfig = require('./config.json');
 
+/*
 nconf.file({
     file: 'db/config.json'
     });
     if(!Object.keys(nconf.get()).length){
         throw new Error('Unable to load config file. Make sure MyCritic/db/config.json exists');
     }
+*/
+var con = mysql .createConnection({
+    host: mysqlConfig["mysql"]["host"],
+    user: mysqlConfig["mysql"]["user"],
+    password: mysqlConfig["mysql"]["password"],
+    database: mysqlConfig["mysql"]["database"]
+});
 
-
-
-var con = mysql.createConnection(nconf.get('mysql'));
+//var con = mysql.createConnection(nconf.get('mysql'));
 
 con.connect(function(err){
     if(err) throw err;

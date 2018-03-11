@@ -5,7 +5,11 @@ var express = require('express');
 
 var app = express();
 var http = require('http').Server(app)
-var nconf = require('nconf');
+//var nconf = require('nconf');
+var mysql = require('mysql');
+
+var mysqlConfig = require('./db/config.json'); 
+
 var request = require('request');
 var convert = require('xml-js');
 var bcrypt = require('bcryptjs');
@@ -65,6 +69,7 @@ module.exports = function(passport){
 }
 
 //MySql connection
+/*
 var mysql = require('mysql');
 nconf.file({
     file: './db/config.json'
@@ -73,6 +78,13 @@ nconf.file({
         throw new Error('Unable to load config file. Make sure db/config.json exists');
     }
 var con = mysql.createConnection(nconf.get('mysql'));
+*/
+var con = mysql .createConnection({
+    host: mysqlConfig["mysql"]["host"],
+    user: mysqlConfig["mysql"]["user"],
+    password: mysqlConfig["mysql"]["password"],
+    database: mysqlConfig["mysql"]["database"]
+});
 con.connect(function(err){
     if(err) throw err;
     console.log("Now connected to mysql db and can make queries");
