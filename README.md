@@ -44,3 +44,6 @@ Public contains the javascript for the functionality. Its the directory the serv
 
 ## Link to blackbox testing environment
 https://purdue0-my.sharepoint.com/:f:/g/personal/hagedorj_purdue_edu/Esnm5wcb-YVJjVQJuIt_BKcBX-g9_q0ESGdEfaweEp4ErQ?e=jKiNvG
+
+## Link to server
+167.99.95.173:8080
