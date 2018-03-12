@@ -42,3 +42,5 @@ Public contains the javascript for the functionality. Its the directory the serv
 * If you need to clear the Redis cache, run `redis-cli flushall`
 * Upon first loading the top books, the request will be slow. The Goodreads API limits us to 1 request per second, and multiple requests are required to obtain these results.
 
+## Link to blackbox testing environment
+https://purdue0-my.sharepoint.com/:f:/g/personal/hagedorj_purdue_edu/Esnm5wcb-YVJjVQJuIt_BKcBX-g9_q0ESGdEfaweEp4ErQ?e=jKiNvG
