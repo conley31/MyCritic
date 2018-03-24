@@ -839,13 +839,6 @@ app.post('/register', function(req, res) {
         res.render('register.ejs',{message:'That email is already in-use!'});
         }
         else{
-        //check if username is taken
-        con.query('SELECT * FROM Users WHERE username = ?', [username], function(err,result){
-            if(err) throw err;
-            if(result.length > 0){
-            res.render('register.ejs', {message:"that username is already in use..."});
-            }
-            else{
             //add the user to the database
             bcrypt.hash(password, saltRounds, function(err, hash){
             con.query('INSERT INTO Users(email,username,password) VALUES (?,?,?)',[email,username,hash], function(err,result){
@@ -860,9 +853,7 @@ app.post('/register', function(req, res) {
                 });
             });
             }
-            });
 
-        }
         }
         });
 
