@@ -929,15 +929,7 @@ app.post('/deleteAccount', function(req,res){
             if(result.length > 0){
                 bcrypt.compare(password, result[0].password, function(err,check){
                     if(check){
-                        var userIdPromise = getUserIdByEmail(email);
-                        userIdPromise.then(function(result){
-                            con.query('DELETE FROM Reviews WHERE userId = ?',[result],function(err,result){
-                                if(err)throw err;
-                            });
-                            con.query('DELETE FROM Follows WHERE userId = ? OR followingId = ?',[result, result],function(err,result){
-                                if(err) throw err;
-                            });
-                        });
+                        
                         con.query('DELETE FROM Users WHERE email = ?',[email], function(err,result){
                             if(err) throw err;
                             else{
