@@ -839,13 +839,6 @@ app.post('/register', function(req, res) {
         res.render('register.ejs',{message:'That email is already in-use!'});
         }
         else{
-        //check if username is taken
-        con.query('SELECT * FROM Users WHERE username = ?', [username], function(err,result){
-            if(err) throw err;
-            if(result.length > 0){
-            res.render('register.ejs', {message:"that username is already in use..."});
-            }
-            else{
             //add the user to the database
             bcrypt.hash(password, saltRounds, function(err, hash){
             con.query('INSERT INTO Users(email,username,password) VALUES (?,?,?)',[email,username,hash], function(err,result){
@@ -860,9 +853,7 @@ app.post('/register', function(req, res) {
                 });
             });
             }
-            });
 
-        }
         }
         });
 
@@ -930,15 +921,7 @@ app.post('/deleteAccount', function(req,res){
             if(result.length > 0){
                 bcrypt.compare(password, result[0].password, function(err,check){
                     if(check){
-                        var userIdPromise = getUserIdByEmail(email);
-                        userIdPromise.then(function(result){
-                            con.query('DELETE FROM Reviews WHERE userId = ?',[result],function(err,result){
-                                if(err)throw err;
-                            });
-                            con.query('DELETE FROM Follows WHERE userId = ? OR followingId = ?',[result, result],function(err,result){
-                                if(err) throw err;
-                            });
-                        });
+                        
                         con.query('DELETE FROM Users WHERE email = ?',[email], function(err,result){
                             if(err) throw err;
                             else{

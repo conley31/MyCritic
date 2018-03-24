@@ -58,7 +58,7 @@ var populateHtml = function(){
     }
 
     //list games
-    html += "<div style=\"margin-left: 5%; margin-top: 15px\"><h1>Games</h1></div>";
+    html += "<div style=\"margin-left: 5%; margin-top: 15px\"><h1>Movies</h1></div>";
     if(games != null && games.length != 0){
         for( i = 0; i < games.length && i < 5; i++){
             //html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/gameTitle/" + games[i]["id"] + "\'\"'><h1>" + games[i]["name"] + "</h1></div>";
@@ -79,7 +79,7 @@ var populateHtml = function(){
     }
 
     //list movies
-    html += "<div style=\"margin-left: 5%; margin-top: 15px\"><h1>Movies</h1></div>";
+    html += "<div style=\"margin-left: 5%; margin-top: 15px\"><h1>Games</h1></div>";
     if(movies["results"] != null && movies["results"].length != 0){
         for (i = 0; i < movies["total_results"] && i < 5; i++){
     	    //html += "<div style=\"margin-left: 10%; border-bottom-style: solid; border-width: 2px\"; onclick=\"window.location=\'/movie/" + movies["results"][i]["id"] + "\'\"'><h1>" + movies["results"][i]["title"] + "</h1></div>";

@@ -41,7 +41,6 @@ var populateHtml = function(){
 	    titleInput.setAttribute('value', songObj["name"]);
         if (document.getElementById('reviewForm') != null){
             console.log('not null');
-	        document.getElementById('reviewForm').appendChild(titleInput);
         }
 }
 
