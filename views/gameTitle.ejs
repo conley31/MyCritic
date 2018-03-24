@@ -8,7 +8,6 @@
 		<% include ./partials/header %>
     </header>
     <div id="gameInfo"></div><hr>
-   <% if(login) { %>
 	   <h2 style="color: green; text-align: center; margin-top: 3%; ">Review this game</h2>
     <form style="text-align: center; margin-top: 3.5%; font-family: Helvetica; font-size: 1.25em;" action="/submitReview" method="post" id="reviewForm">
         <label for="review">Rating: </label>
@@ -25,7 +24,6 @@
     </form><hr>
 	<h2 style="text-align: center; margin-top: 4%; margin-bottom: 3.5%;">User Reviews</h2>
 
-    <% } %>
     <div id="gameReviewsList"></div>
 	<div style="margin-bottom: 5%;"></div>
 	</body>
