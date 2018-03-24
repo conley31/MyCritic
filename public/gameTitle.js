@@ -3,11 +3,11 @@ request3.open('GET', "/averages");
 request3.responseType = 'json';
 var average = "";
 request3.onload = function(){
-    if(request3.response[0]["AVG(rating)"] == null){
+    if(request3.response[0]["SUM(rating)"] == null){
         average = "No MyCritic Ratings";
     }
     else {
-        average = request3.response[0]["AVG(rating)"];
+        average = request3.response[0]["SUM(rating)"];
     }
     //console.log(average);
     request.send();

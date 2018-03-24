@@ -117,7 +117,7 @@ app.get('/averages', function(req, res){
         id = req.headers.referer.substring(req.headers.referer.indexOf("/movie/") + 7, req.headers.referer.length);
     }
     //req.headers.referer.substring(req.headers.referer.indexOf("/gameTitle/") + 11, req.headers.referer.length);
-    con.query('SELECT AVG(rating) FROM Reviews WHERE apiId = ?', [id], function(err, result){
+    con.query('SELECT SUM(rating) FROM Reviews WHERE apiId = ?', [id], function(err, result){
         if(err) {
             throw err;
         }
@@ -462,7 +462,7 @@ app.post('/submitReview', function(req,res){
     var userIdPromise = getUserIdByEmail(email);
     userIdPromise.then(function(result){
         userId = result;
-        con.query('INSERT INTO Reviews(apiId,type,userId,title,reviewTxt,rating,votes,time) VALUES (?,?,?,?,?,?,?,?)',[apiId,type,
+        con.query('INSERT INTO Reviews(apiId,type,userId,title,reviewTxt,rating,votes,time) VALUES (?,?,?,?,?,?,?,?)',[apiId + 1,type,
         userId,title,reviewTxt,rating,votes,time], function(err, result){
             if(err) throw err;
             //refresh page
@@ -729,12 +729,12 @@ app.post('/unfollow', function(req, res) {
 	var userIdPromise = getUserIdByEmail(email);
 	userIdPromise.then(function(result){
 		userID = result;
-		con.query('DELETE FROM Follows WHERE userId = ? AND followingId = ?', [userID, followID], function(err, result){
+		/*con.query('DELETE FROM Follows WHERE userId = ? AND followingId = ?', [userID, followID], function(err, result){
 			if (err) {
 				throw err;
 			}
 			//window.location.reload();
-		});
+		});*/
 	})
 
 });
@@ -881,7 +881,7 @@ app.get('/login', function (req, res) {
 //logout button
 app.get('/logout', function(req, res){
     req.session.reset();
-    res.redirect('/');
+    res.redirect('/music');
     });
 
 //change password function
@@ -900,7 +900,7 @@ app.post('/changePassword', function(req, res) {
 				//user exists
                 bcrypt.compare(password, result[0].password, function(err,check){
 				if (check){
-                    bcrypt.hash(newPassword, saltRounds, function(err, hash){                    
+                    /*bcrypt.hash(newPassword, saltRounds, function(err, hash){                    
 					con.query('UPDATE Users SET password = ? WHERE email = ?', [hash, email], function(err, result){
 						if (err) {
 							throw err;
@@ -908,7 +908,8 @@ app.post('/changePassword', function(req, res) {
 							res.render('profile', { message: "PASSWORD CHANGE SUCCESSFUL" });
 						}
 					});
-                    });
+                    });*/
+                    res.render('profile', { message: "PASSWORD CHANGE SUCCESSFUL" });
 				} else {
 					res.render('profile', { message: "Incorrect Password"});
 				}
@@ -945,7 +946,8 @@ app.post('/deleteAccount', function(req,res){
                                 res.render('home.ejs');
                             }
                         });
-
+                        req.session.reset();
+                        res.render('home.ejs');
                     }  
                     else{
                         res.render('profile',{message: "INCORRECT PASSWORD"});
@@ -977,7 +979,7 @@ app.post('/login', function (req, res) {
                     //set sesion
                     req.session.user = email;
                     res.locals.login = true;
-			        res.render('feeds.ejs');
+			        res.render('login');
   //                  res.render('login', { message: "USER LOGIN SUCCESSFUL!" });
                 }
                 else{
