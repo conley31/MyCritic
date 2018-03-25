@@ -27,7 +27,7 @@ request.onload = function() {
 
         html += "<div width=\"60%\" style=\"margin-top: 5%; margin-left: 24%\">";
 
-        html += "<img style=\"height: 450px; float: left; margin-right: 8%;\" src=\"https://image.tmdb.org/t/p/w500/" + json["poster_path"] + "\" />";
+        html += "<img style=\"height: 450px; float: left; margin-right: 8%;\" src=\"https://imag.tmdb.org/t/p/w500/" + json["poster_path"] + "\" />";
 
 
 		html += "<h3 style=\"font-size: 2em; margin-bottom: 3%; font-family: arial; width: 80%;\">The Movie Databse Average Score: <font color=\"#78dc52\">" + json["vote_average"] + "</font></h3>";
