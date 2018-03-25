@@ -1,3 +1,4 @@
+//get requests
 var filt = 0
 var request = new XMLHttpRequest();
 request.open('GET', '/searchResults');

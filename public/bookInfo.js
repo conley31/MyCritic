@@ -1,3 +1,4 @@
+// get requests
 var request3 = new XMLHttpRequest();
 request3.open('GET', "/averages");
 request3.responseType = 'json';

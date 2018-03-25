@@ -1,4 +1,4 @@
-//GET Spotify api Key
+//GET Spotify api Key and other requests
 var request = new XMLHttpRequest();
 var request2 = new XMLHttpRequest();
 var request3 = new XMLHttpRequest();

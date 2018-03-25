@@ -1,3 +1,4 @@
+//get requests
 var request = new XMLHttpRequest();
 request.open('GET', "/accessNewGames");
 request.responseType = 'text';
