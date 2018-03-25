@@ -7,6 +7,9 @@ var loadingDiv =  document.getElementById("loadingDiv");
 loadingDiv.innerHTML = "<center>Loading...</center>";
 request.onload = function(){
     bookObj = JSON.parse(request.response);
+
+    var searchBar = document.getElementById("searchBar");
+    searchBar.style.visibility = "hidden";
     populateHtml();
 }
 request.send();

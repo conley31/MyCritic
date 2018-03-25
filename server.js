@@ -710,7 +710,7 @@ app.post('/follow', function(req,res) {
 	userIdPromise.then(function(result){
 		userID = result;
 		if (userID == followID) {
-			return;
+            //return to avoid following yourself..
 		}
 		con.query('INSERT INTO Follows (userId, followingId) VALUES (?, ?)', [userID, followID], function(err, result){
 			if (err) {

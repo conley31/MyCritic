@@ -25,7 +25,7 @@ var change = function(opt){
         }
         else {
             console.log("here");
-            filterFeed();
+            feedList(); // bug: this should be filterFeed()
         }
     };
 
