@@ -905,12 +905,12 @@ app.post('/changePassword', function(req, res) {
 						if (err) {
 							throw err;
 						} else {
-							res.render('profile', { message: "PASSWORD CHANGE SUCCESSFUL" });
+							res.render('profile');
 						}
 					});
                     });
 				} else {
-					res.render('profile', { message: "Incorrect Password"});
+					res.render('profile');
 				}
                 });
 			}
