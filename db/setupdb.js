@@ -21,6 +21,20 @@ var con = mysql .createConnection({
 
 con.connect(function(err){
     if(err) throw err;
+
+    var sql = "DROP TABLE Users";
+    con.query(sql, function(err, res){
+        if (err) throw err;
+    });
+    var sql = "DROP TABLE Reviews";
+    con.query(sql, function(err, res){
+        if (err) throw err;
+    });
+    var sql = "DROP TABLE Follows";
+    con.query(sql, function(err, res){
+        if (err) throw err;
+    });
+
     var sql = "CREATE TABLE IF NOT EXISTS Users (userId INT AUTO_INCREMENT PRIMARY KEY, email VARCHAR(255), username VARCHAR(16), password VARCHAR(256))";
     con.query(sql, function(err, res){
         if (err) throw err;
