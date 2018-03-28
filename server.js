@@ -450,6 +450,7 @@ app.post('/submitReview', function(req,res){
             break;
         case 'bookInfo':
             type = 'book';
+            apiId += 1;
             break;
     }
 
@@ -462,7 +463,7 @@ app.post('/submitReview', function(req,res){
     var userIdPromise = getUserIdByEmail(email);
     userIdPromise.then(function(result){
         userId = result;
-        con.query('INSERT INTO Reviews(apiId,type,userId,title,reviewTxt,rating,votes,time) VALUES (?,?,?,?,?,?,?,?)',[apiId + 1,type,
+        con.query('INSERT INTO Reviews(apiId,type,userId,title,reviewTxt,rating,votes,time) VALUES (?,?,?,?,?,?,?,?)',[apiId,type,
         userId,title,reviewTxt,rating,votes,time], function(err, result){
             if(err) throw err;
             //refresh page
