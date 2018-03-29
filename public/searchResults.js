@@ -100,14 +100,14 @@ var populateHtml = function(){
     if(books["GoodreadsResponse"]["search"]["results"]["work"] != null){
         for( i = 0; i < books["GoodreadsResponse"]["search"]["results"]["work"].length && i < 5; i++){
             if(books["GoodreadsResponse"]["search"]["results"]["work"][i]["best_book"]["title"]["_text"] == null){
-                        html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/bookInfo/" 
-                        html += books["GoodreadsResponse"]["search"]["results"]["work"][i]["best_book"]["id"]["_text"] 
+                        html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"" 
+                        //html += books["GoodreadsResponse"]["search"]["results"]["work"][i]["best_book"]["id"]["_text"] 
                         html += "\'\"'> <img height=\"50px\" src=\"./staticImages/bookIcon.png\" align=\"right\"><h3 style=\"font-family: Arial\">" 
                         html += ["GoodreadsResponse"]["search"]["results"]["work"][i]["best_book"]["title"]["_cdata"] + "</h3> <font color=\"#dd4300\"> Average Score</font> : "+ books["GoodreadsResponse"]["search"]["results"]["work"][i]["average_rating"]["_text"] +"</font> </div>";
                     }
                     else {
-                        html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"; onclick=\"window.location=\'/bookInfo/" 
-                        html += books["GoodreadsResponse"]["search"]["results"]["work"][i]["best_book"]["id"]["_text"] 
+                        html += "<div onmouseout=\"this.style.color=\'black\'\" onmouseover=\"this.style.color=\'#4b6d93\'\" style=\"margin-left: 25%; margin-bottom: 2%; width: 50%; background-color: \'white\';\"" 
+                        //html += books["GoodreadsResponse"]["search"]["results"]["work"][i]["best_book"]["id"]["_text"] 
                         html += "\'\"'> <img height=\"50px\" src=\"./staticImages/bookIcon.png\" align=\"right\"><h3 style=\"font-family: Arial\">" 
                         html += books["GoodreadsResponse"]["search"]["results"]["work"][i]["best_book"]["title"]["_text"] + "</h3> <font color=\"#dd4300\"> Average Score</font> : "+ books["GoodreadsResponse"]["search"]["results"]["work"][i]["average_rating"]["_text"] +"</font> </div>";
                     }
