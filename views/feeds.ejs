@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ./partials/head %>
+</head>
+	<body>
+        <header>
+            <% include ./partials/header %>
+        </header>
+        <h1 style="text-align: center; font-size: 3.5em; padding-bottom: 2%;"> Following Feed </h1>
+	<h5 style="display: inline; margin-left:80%">Filter: </h5>
+        <select style="margin-right: 1%; display: inline" onchange="change(this.selectedIndex)" id="filterOptions">
+            <option selected >No Filter</option>
+            <option >Songs</option>
+            <option >Movies</option>
+            <option >Games</option>
+            <option >Books</option>
+        </select>
+        <div id="feed-list"></div>
+    </body>
+    <% include ./partials/feedScripts %>
+</html>

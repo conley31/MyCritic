@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<% include ./partials/head %>
+</head>
+	<body>
+	<header>
+		<% include ./partials/header %>
+    </header>
+
+    <span id="userTitle"></span>
+    <% if (login) { %>
+	    <button style="display: none; float: right; margin-right: 25%; color: #4CAF50; font-size: 16px" id ="followButton", onclick="followReq()">Follow</button>
+	    <button style="display: none; float: right; margin-right: 25%; color: #FF0000; font-size: 16px" id = "unfollowButton", onclick="unfollowReq()">Unfollow</button>
+	    <div id="name" style="display:none"><%= user %></div>
+    <% }%>
+    <div id="userReviewList"></div>
+    
+    
+	<script>
+	function followReq() {
+		document.getElementById('followButton').style.display = 'none';
+		document.getElementById('unfollowButton').style.display = 'inline';
+		var request = new XMLHttpRequest();
+		request.open('POST', "/follow");
+		request.send();
+	}
+	function unfollowReq() {
+		document.getElementById('followButton').style.display = 'inline';
+		document.getElementById('unfollowButton').style.display = 'none';
+		var request = new XMLHttpRequest();
+		request.open('POST', "/unfollow");
+		request.send();
+	}
+	</script>
+	</body>
+	<% include ./partials/userScripts %>
+</html>

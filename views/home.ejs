@@ -4,29 +4,22 @@
     <% include ./partials/head %>
 </head>
 
-	<body>
+	<body style="background-image: url('backgroundimagemycritic.jpg'); height: 100vh; background-position: center; background-repeat: no-repeat; background-size: cover;">
         <header>
             <% include ./partials/header %>
         </header>
-        <h1 style="padding-top: 10vh; font-size: 5em; text-align: center; font-family: Helvetica">MyCritic</h1>
-        <h2 style="font-size: 1.23em; text-align: center; font-style: italic; font-family: Helvetica">Movies, music, games, books, ratings</h2>
-        <div style="text-align: center; padding-top: 5vh;">
-          <a id="button" style="margin-right: 3vh;" class="btn btn-success btn-lg" href="/login">Login</button>
-          <a id="button2" class="btn btn-danger btn-lg" href="/register">Register</a></button>
+        <div style="border: solid 10px black; border-radius: 40px; background-color: white; margin-left: 24%; margin-right: 24%; padding-bottom: 12%;">
+            <h1 style = "padding-top: 10vh; font-family: Georgia, serif; font-size: 4.8em; text-align: center;
+            letter-spacing: 0.2px; word-spacing: -4px; color: #0D870B; font-weight: 700; text-decoration: none; font-style:
+            italic; font-variant: normal;">myCritic</h1>
+            <h2 style="color: black; font-size: 1.23em; text-align: center; font-style: italic; font-family: Helvetica"><b>Movies, music, games, books, ratings</b></h2>
+            <div style="text-align: center; padding-top: 5vh;">
+              <a id="button" style="margin-right: 3vh;" class="btn btn-success btn-lg" href="/login">Login</button>
+              <a id="button2" class="btn btn-danger btn-lg" href="/register">Register</a></button>
+            </div>
         </div>
 
 
-        <script>
-        $(document).ready(function(){
-          $(document.getElementById('button')).hide();
-          $(document.getElementById('button2')).hide();
-          $("h1").hide().fadeIn(1000);
-          $("h2").hide().fadeIn(1000, function() {
-            $(document.getElementById('button')).hide().fadeIn(800);
-            $(document.getElementById('button2')).hide().fadeIn(800);
-          });
-        });
-        </script>
 
 
     </body>

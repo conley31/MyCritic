@@ -1,0 +1,23 @@
+[
+{
+    "review": "This is amazing!",
+    "rating": 5
+},
+{
+    "review": "Pretty good",
+    "rating": 4
+},
+{
+    "review": "Decent",
+    "rating": 3
+},
+{
+    "review": "Did not enjoy",
+    "rating": 2
+},
+{
+    "review": "Hated it!",
+    "rating": 1
+}
+]
+    

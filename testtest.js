@@ -31,9 +31,11 @@ test('Music Test', async t => {
     .click(music)    
     //pick two random elements 0-49
     await t.click(choice1Cli)
-    .expect(title).notMatch("(n|e|d|undefined)")
-    //.expect(artist).notMatch("undefined")
+    .expect(title).notMatch(/(ned|undefined)/)
+    .expect(artist).notMatch(/(ned|undefined)/)
     //.expect(popularity).notMatch("undefined")
     .navigateTo('http://localhost:8080/music')
-    .click(choice2Cli);
+    .click(choice2Cli)
+    .expect(title).notMatch(/(ned|undefined)/)
+    .expect(artist).notMatch(/(ned|undefined)/);
 });

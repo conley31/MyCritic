@@ -3,44 +3,51 @@
 <head>
     <% include ./partials/head %>
 </head>
-    <body>
+    <body style="background-image: url('backgroundimagemycritic.jpg'); height: 100vh; background-position: center; background-repeat: no-repeat; background-size: cover;">
         <header>
             <% include ./partials/header %>
         </header>
-        <h1 style="font-size: 4em; text-align: center; font-family: Helvetica; padding-top: 10vh;">MyCritic</h1>
-        <h2 style="font-size: 1.5em; text-align: center; font-family: Helvetica; padding-bottom: 4vh">Registration</h2>
-        <h2 id="greeting" style="color: #df0000; font-size: 1.23em; text-align: center; font-family: Helvetica; font-style: italic; padding-bottom: 4.5vh">Get access to awesome content and ratings today!</h2>
-        <form style="text-align: center; font-family: Helvetica; font-size: 1.25em; " action="/register" method="post">
-            <label for="email">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email:</label>
-            <input style="margin-bottom: 3vh; padding: 3px 10px; border-radius: 4px; border: 1px solid black;" placeholder="Email" id="email" type="text" name="email"><br>
-            <label for="username">Username: </label>
-            <input style="margin-bottom: 3vh; padding: 3px 10px; border-radius: 4px; border: 1px solid black;" placeholder="Username" id="username" type="text" name="username" required pattern="[a-zA-Z0-9]{2,16}" title="Username must be alphanumeric and between 2 and 16 characters" ><br>
-            <label for="passwword">&nbsp;Password: </label>
-            <input style="margin-bottom: 8vh; padding: 3px 10px; border-radius: 4px; border: 1px solid black;" placeholder="Password" id="password" type="password" name="password" required pattern="[a-zA-Z0-9!@#$%^&*_-]{6,16}"title="Password may contain alphanumerics and !@#$%^&*-_ special characters. Must be between 6 and 16 characters" ><br>
-            <input id="anIdForHiding" style="color: red" type="submit" value="Register">
-        </form>
-        <% if(typeof message != 'undefined') { %>
-            <h2><%= message %></h2>
-        <% } %>
+        <div style="border: solid 10px black; border-radius: 40px; background-color: white; margin-left: 24%; margin-right: 24%; padding-bottom: 12%;">
+
+            <% if(typeof message != 'undefined') { %>
+                <h2 style="color: #0000000; text-align: center"><%= message %></h2>
+            <% } %>
+
+            <h1 style = "padding-top: 10vh; font-family: Georgia, serif; font-size: 4.8em; text-align: center;
+            letter-spacing: 0.2px; word-spacing: -4px; color: #0D870B; font-weight: 700; text-decoration: none; font-style:
+            italic; font-variant: normal;">myCritic</h1>
+            <h2 style="font-size: 1.5em; text-align: center; font-family: Helvetica; padding-bottom: 4vh">Registration</h2>
+            <h2 id="greeting" style="color: #df0000; font-size: 1.23em; text-align: center; font-family: Helvetica; font-style: italic; padding-bottom: 4.5vh">Get access to awesome content and ratings today!</h2>
+            <form style="text-align: center; font-family: Helvetica; font-size: 1.25em; " action="/register" method="post">
+                <label for="email">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email:</label>
+                <input style="margin-bottom: 3vh; padding: 3px 10px; border-radius: 4px; border: 1px solid black;" placeholder="Email" id="email" type="text" name="email"><br>
+                <label for="username">Username: </label>
+                <input style="margin-bottom: 3vh; padding: 3px 10px; border-radius: 4px; border: 1px solid black;" placeholder="Username" id="username" type="text" name="username" required pattern="[a-zA-Z0-9]{2,16}" title="Username must be alphanumeric and between 2 and 16 characters" ><br>
+                <label for="passwword">&nbsp;Password: </label>
+                <input style="margin-bottom: 8vh; padding: 3px 10px; border-radius: 4px; border: 1px solid black;" placeholder="Password" id="password" type="password" name="password" required pattern="[a-zA-Z0-9!@#$%^&*_-]{6,16}"title="Password may contain alphanumerics and !@#$%^&*-_ special characters. Must be between 6 and 16 characters" ><br>
+                <input id="anIdForHiding" style="color: red" type="submit" value="Register">
+            </form>
+            
+        </div>
 
         <script>
 
           $(document).ready(function() {
             $(document.getElementById('anIdForHiding')).hide();
-            
+
             $(document.getElementById('greeting')).hide().fadeIn(2000);
           });
 
           $(document.getElementById('email')).bind('input', function() {
-            $(document.getElementById('anIdForHiding')).fadeIn(1000);
+            $(document.getElementById('anIdForHiding')).fadeIn(500);
           });
 
           $(document.getElementById('username')).bind('input', function() {
-            $(document.getElementById('anIdForHiding')).fadeIn(1000);
+            $(document.getElementById('anIdForHiding')).fadeIn(500);
           });
 
           $(document.getElementById('password')).bind('input', function() {
-            $(document.getElementById('anIdForHiding')).fadeIn(1000);
+            $(document.getElementById('anIdForHiding')).fadeIn(500);
           });
 
         </script>

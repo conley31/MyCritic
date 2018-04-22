@@ -16,6 +16,7 @@
       "resolved": "https://registry.npmjs.org/array-flatten/-/array-flatten-1.1.1.tgz",
       "version": "1.1.1"
     },
+    "bcryptjs": "^2.4.3",
     "body-parser": {
       "integrity": "sha1-h2eKGdhLR9hZuDGZvVm84iKxBFQ=",
       "requires": {
@@ -150,6 +151,7 @@
       "resolved": "https://registry.npmjs.org/finalhandler/-/finalhandler-1.1.0.tgz",
       "version": "1.1.0"
     },
+    "forever": "^0.15.3",
     "forwarded": {
       "integrity": "sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=",
       "resolved": "https://registry.npmjs.org/forwarded/-/forwarded-0.1.2.tgz",
@@ -244,6 +246,9 @@
       "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-0.6.1.tgz",
       "version": "0.6.1"
     },
+    "nexe": "^2.0.0-rc.26",
+    "nightwatch": "^0.9.19",
+    "npm": "^5.7.1",
     "on-finished": {
       "integrity": "sha1-IPEzZIGwg811M3mSoWlxqi2QaUc=",
       "requires": {
@@ -294,6 +299,7 @@
       "resolved": "https://registry.npmjs.org/raw-body/-/raw-body-2.3.2.tgz",
       "version": "2.3.2"
     },
+    "redis": "^2.8.0",
     "safe-buffer": {
       "integrity": "sha512-kKvNJn6Mm93gAczWVJg7wH+wGYWNrDHdWvpUmHyEsgCtIwwo3bqPtV4tR5tuPaUhTOo/kvhVwd8XwwOllGYkbg==",
       "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.1.tgz",
