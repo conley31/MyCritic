@@ -16,17 +16,15 @@ test('Game Test', async t => {
     .click(games);
     var choice;
     var rating;
+    var vote_average;
     for(var i = 0; i < 50; i++){
         console.log(i);
          choice = Selector(selectE(i));
          await t
          .click(choice);
-//         console.log(await Selector(selectE('ratingNumber')).textContent);
-         rating = await Selector(selectE('ratingNumber')).textContent;
-
-         console.log(rating.textContent);
+         vote_average = await Selector('font').withAttribute('color','#78    dc52');
          await t
-         .expect(rating).match(/\d[\d|\.]+%/);
+         .expect(vote_average).notMatch(/undefined/)
          //.expect(Selector(selectE('trating'))).notMatch(/(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,})?$)/);
          const goBack = ClientFunction(() => window.history.back());
          await goBack();

@@ -20,7 +20,7 @@ test('Movie Test', async t => {
                 movie = Selector(selectE(i));
                 await t
                 .click(movie);
-                vote_average = await Selector(selectE('voteAverage')).textContent;
+                vote_average = await Selector('font').withAttribute('color','#78dc52');
                 //console.log(vote_average.textContent);
                 await t
                 .expect(vote_average).notMatch(/undefined/)
